@@ -1,6 +1,4 @@
-.yarn
 .storybook
 .git
 .github
 .node_models
-.yarnrc.yml
