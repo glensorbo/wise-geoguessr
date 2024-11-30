@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY ./package.json .
 COPY ./yarn.lock .
-COPY ./vite.config.ts . 
+COPY ./vite.config.mjs . 
 
 RUN yarn install --frozen-lockfile
 
