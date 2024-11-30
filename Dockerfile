@@ -6,7 +6,7 @@ COPY ./package.json .
 COPY ./yarn.lock .
 COPY ./vite.config.mjs . 
 
-RUN yarn install --immutable --immutable-cache --verbose
+RUN yarn install --immutable --immutable-cache
 
 COPY . .
 
