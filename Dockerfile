@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS build
+FROM node:21 AS build
 
 WORKDIR /src
 
