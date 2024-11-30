@@ -2,13 +2,13 @@ FROM node:20 AS build
 
 WORKDIR /src
 
-COPY ./package.json .
-COPY ./yarn.lock .
-COPY ./vite.config.mjs . 
+COPY ./package.json ./
+COPY ./yarn.lock ./
+COPY ./vite.config.mjs ./ 
 
 RUN yarn install --immutable --immutable-cache
 
-COPY . .
+COPY ./ ./
 
 RUN yarn build
 
