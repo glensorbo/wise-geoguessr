@@ -10,7 +10,7 @@ export const HomePage = () => {
       <LineChart
         h={300}
         w="75%"
-        data={data}
+        data={data.toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())}
         dataKey="date"
         curveType="natural"
         tickLine="x"
