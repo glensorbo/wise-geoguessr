@@ -5494,8 +5494,8 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-router-dom: "npm:^7.0.1"
-    recharts: "npm:2.14.0"
+    react-router-dom: "npm:^7.0.2"
+    recharts: "npm:2.14.1"
     storybook: "npm:^8.4.6"
     storybook-dark-mode: "npm:^4.0.2"
     stylelint: "npm:^16.11.0"
@@ -6378,21 +6378,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "react-router-dom@npm:7.0.1"
+"react-router-dom@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "react-router-dom@npm:7.0.2"
   dependencies:
-    react-router: "npm:7.0.1"
+    react-router: "npm:7.0.2"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/aebc0af4ea4ac4e9482b0501c06f3af42adc68b4064c556b00954dcb7a6ec233d41f3eac86e388b9a8068e8ba5d44b854b7e29c806af9ed6a8798682d6984b46
+  checksum: 10c0/eb6fe524792f6cf645872c15ed1beb6aeb778c7c5ebcf6c1d4ccf2bdab7a969313b3fc3b4ec6bc4516bbc91b238f0ef651d9ad2551b2aa9ea54b01653dcd1c98
   languageName: node
   linkType: hard
 
-"react-router@npm:7.0.1":
-  version: 7.0.1
-  resolution: "react-router@npm:7.0.1"
+"react-router@npm:7.0.2":
+  version: 7.0.2
+  resolution: "react-router@npm:7.0.2"
   dependencies:
     "@types/cookie": "npm:^0.6.0"
     cookie: "npm:^1.0.1"
@@ -6404,7 +6404,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/aac4c9989ae6b9cf989b5ddcda88f505ba0704a4e4b37ae04c819c2bd02f080361f9eb1793695e3ecf41080d91b79aee454c3163b586d1b19ceca13f6eacec0e
+  checksum: 10c0/f6c04939218a3d7f2b03b215c2299eab4dbb0dea4a16e0acfd8bf181ec69ff42d66abdba10a25cc3297c514f052a0d03bfb80431225eb763bb27e4e5b0b4a106
   languageName: node
   linkType: hard
 
@@ -6507,9 +6507,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recharts@npm:2.14.0":
-  version: 2.14.0
-  resolution: "recharts@npm:2.14.0"
+"recharts@npm:2.14.1":
+  version: 2.14.1
+  resolution: "recharts@npm:2.14.1"
   dependencies:
     clsx: "npm:^2.0.0"
     eventemitter3: "npm:^4.0.1"
@@ -6522,7 +6522,7 @@ __metadata:
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/8cb577424854da6a4a7340e92fa5f298607a4ec743340234213ec931475ac42ea07ad6fa6223b93b6242a284be84ff2e4dbb691294f9d3d4519a9f02d47429df
+  checksum: 10c0/dfc1840ee03a5a51d08e77b83e2120f6723ab5349fad012d3a29ea0299da0bf1f30d1955fad60aec830d29f44d6f7fd4d6f41a5017094a40c03429dfa8461ef5
   languageName: node
   linkType: hard
 
