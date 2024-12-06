@@ -61,7 +61,7 @@ export const getPlayerDetails = () => {
       }
 
       if (typeof value === 'number' && value > 0) {
-        player.played = +1;
+        player.played += 1;
       }
 
       const currentPoints = player.points.at(-1)?.total ?? 0;

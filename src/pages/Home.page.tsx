@@ -1,12 +1,41 @@
 import { BarChart, LineChart } from '@mantine/charts';
-import { Flex, Title } from '@mantine/core';
+import { Flex, Table, TableScrollContainer, Title } from '@mantine/core';
 import { data, getPlayerDetails } from '@/data';
 
 export const HomePage = () => {
   const { details, points } = getPlayerDetails();
+
+  const rows = data.map((el) => (
+    <Table.Tr key={el.date}>
+      <Table.Th>{el.date}</Table.Th>
+      <Table.Th>{el.Glen}</Table.Th>
+      <Table.Th>{el.Margaux}</Table.Th>
+      <Table.Th>{el.Marta}</Table.Th>
+      <Table.Th>{el.Thomas}</Table.Th>
+      <Table.Th>{el.Thorjan}</Table.Th>
+      <Table.Th>{el['Tor Arve']}</Table.Th>
+    </Table.Tr>
+  ));
   return (
     <Flex align="center" justify="center" direction="column" gap={50} pt={50}>
-      <Title>Wise GeoGuesser results</Title>
+      <Title>Points</Title>
+      <TableScrollContainer minWidth="75vw" mah="40vh">
+        <Table>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Date</Table.Th>
+              <Table.Th>Glen</Table.Th>
+              <Table.Th>Margaux</Table.Th>
+              <Table.Th>Marta</Table.Th>
+              <Table.Th>Thomas</Table.Th>
+              <Table.Th>Thorjan</Table.Th>
+              <Table.Th>Tor Arve</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+      </TableScrollContainer>
+      <Title>Wise GeoGuessr results</Title>
       <LineChart
         h={300}
         w="75%"
