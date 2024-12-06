@@ -2,6 +2,16 @@ type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Marta' | 'Thorjan' | 'Tor Arve';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
+    date: '2024-12-06',
+    Glen: 15675,
+    Thomas: 12790,
+    Margaux: 11038,
+    Thorjan: 20633,
+    'Tor Arve': 14877,
+    Marta: 0,
+    Winner: 'Thorjan',
+  },
+  {
     date: '2024-11-29',
     Glen: 12320,
     Thomas: 7825,
