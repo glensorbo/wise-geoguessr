@@ -610,15 +610,15 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mantine/charts@^7.15.0":
-  version "7.15.0"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.15.0.tgz#fe642390bd8d5347148c236f55f9f642cc07d400"
-  integrity sha512-Dgy6h6hzsWGyfTY40+ke5Rwgjn61msncqykDGlX6AwCcGJ42yn9OAjqU0q94jvC0phNlwt2xRWvaWJ+jrcUkqA==
+"@mantine/charts@^7.15.1":
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.15.1.tgz#bfc25d52473fd860744e5bd921598f8be29ae3e0"
+  integrity sha512-GBV2cG+FSfNyTUUr7XPTPFSsR82hD6M3E1xV8Nwj954e4e9+67bYpAMoqjy6CN8jpFUY2vDMsk2OMTVc6OL3VA==
 
-"@mantine/core@7.15.0":
-  version "7.15.0"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.15.0.tgz#009cd454170a089a6e679390d0c11d0e6036ca21"
-  integrity sha512-tZlRydfaEaaCNIi3tl1u+VtJxNyBoml2iCJAy6ZqcNNcjy/krJmta5lVtjUeApZfE33rkvr+3WVqGk0YjW6oSQ==
+"@mantine/core@7.15.1":
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.15.1.tgz#82d8f765fec6144083a1708d60e87fa5b522f8da"
+  integrity sha512-MKHrByqgpu+vzhauX0X9EH+BOgJqyjHwk4E0sfIIX9CXC9pziLMc4aL8pua0KaXiRuQiskTl/DuGX31saHBH5g==
   dependencies:
     "@floating-ui/react" "^0.26.28"
     clsx "^2.1.1"
@@ -627,10 +627,10 @@
     react-textarea-autosize "8.5.5"
     type-fest "^4.27.0"
 
-"@mantine/hooks@7.15.0":
-  version "7.15.0"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.15.0.tgz#b097b7e60181beb563eb7232a4f5882a3105000b"
-  integrity sha512-AV4ItRbVIWVDzpOPyj3ICrfQq7HEdKhO7IE7xxkdbJ4oj73DAq2jFsMoNdj3dN9u2tOn1bhPBIaP+8gKd0oAcw==
+"@mantine/hooks@7.15.1":
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.15.1.tgz#3df618258c4cff6b1adab25eaa1f7a1816ec1395"
+  integrity sha512-jrpjA5JhVSgUi0expfZpvNplMgvwdvrCIcKiDjQ16p/KiWngvTVfmJMtBOVxQ6hWrn500nLmZIDEcTmV9Dvb7g==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -3596,10 +3596,10 @@ recharts-scale@^0.4.4:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.14.1.tgz#8b91bd1e53915b9bc03a262a3d8969663d3195b5"
-  integrity sha512-xtWulflkA+/xu4/QClBdtZYN30dbvTHjxjkh5XTMrH/CQ3WGDDPHHa/LLKCbgoqz0z3UaSH2/blV1i6VNMeh1g==
+recharts@2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.15.0.tgz#0b77bff57a43885df9769ae649a14cb1a7fe19aa"
+  integrity sha512-cIvMxDfpAmqAmVgc4yb7pgm/O1tmmkl/CjrvXuW+62/+7jj/iF9Ykm+hb/UJt42TREHMyd3gb+pkgoa2MxgDIw==
   dependencies:
     clsx "^2.0.0"
     eventemitter3 "^4.0.1"
