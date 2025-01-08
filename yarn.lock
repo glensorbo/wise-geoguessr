@@ -615,27 +615,27 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mantine/charts@^7.15.2":
-  version "7.15.2"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.15.2.tgz#b22d1729a2a7a1123bf427ab9a4c9e6d1d538fa2"
-  integrity sha512-HBibTMTEhPwOT3gN79IYW1jei+nSa/Dg3khs6hs/8IbMjGMo5/r6N+6VFyl/sRGOT1oP2i58wvhYTinQlGfFEg==
+"@mantine/charts@^7.15.3":
+  version "7.15.3"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.15.3.tgz#2457046e1dfae141eed3314b7a7102107f36d844"
+  integrity sha512-rJkhmwaPD/Ha234XLrxKwdIed+3iQ5B3rm43OYIgzg+VYx7mCljw+I4A9jerim/qoxZtihmwJGw4zBPtX+CGdg==
 
-"@mantine/core@7.15.2":
-  version "7.15.2"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.15.2.tgz#9c21d5afe5e43fe0a58fb4b1166ded0a67fa1eae"
-  integrity sha512-640ns0L/HZAXYjz3+FRffr8UNcH1fU7ENUVxKLzqNA311Dcx0qS3byVKTY/IVJYln6AkjoEfIJMiixT9fCZBiQ==
+"@mantine/core@7.15.3":
+  version "7.15.3"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.15.3.tgz#91fded05219112483d821cec46fcbb8a80964b79"
+  integrity sha512-8IMTq5xDJDjByDUYkDNKImikASStzrnPtVumKsrEnyEY0zhAWkAe/z/+PjTUMcN44ncJ/PrXQkJ6qMaVWzSZwA==
   dependencies:
     "@floating-ui/react" "^0.26.28"
     clsx "^2.1.1"
-    react-number-format "^5.4.2"
-    react-remove-scroll "^2.6.0"
+    react-number-format "^5.4.3"
+    react-remove-scroll "^2.6.2"
     react-textarea-autosize "8.5.6"
     type-fest "^4.27.0"
 
-"@mantine/hooks@7.15.2":
-  version "7.15.2"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.15.2.tgz#f583ecfb7b92cad17c67f7825f20f23b72e6d7ff"
-  integrity sha512-p8dsW0fdJxzYhULbm1noFYRHuBvJHleYviC0BlwbkVySC8AsvFI8AmC3sMssWV3dQ3yQ/SidYo9U+K/czpDpZw==
+"@mantine/hooks@7.15.3":
+  version "7.15.3"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.15.3.tgz#c8f65dcb9391b306c05f2b501980b21944c3263a"
+  integrity sha512-rZYObhrmww3OIb4O30pDox/rc+9k3AExO0FSw13t7cfz5/Di+Ho1cChswVFAshnp81ucGEod1fiDOfuyGW7JhA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -3798,33 +3798,33 @@ react-is@^18.3.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
-react-number-format@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.4.2.tgz#aec282241f36cee31da13dc5e0f364c0fc6902ab"
-  integrity sha512-cg//jVdS49PYDgmcYoBnMMHl4XNTMuV723ZnHD2aXYtWWWqbVF3hjQ8iB+UZEuXapLbeA8P8H+1o6ZB1lcw3vg==
+react-number-format@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.4.3.tgz#e634df907da7742faf597afab3f25f9a59689d60"
+  integrity sha512-VCY5hFg/soBighAoGcdE+GagkJq0230qN6jcS5sp8wQX1qy1fYN/RX7/BXkrs0oyzzwqR8/+eSUrqXbGeywdUQ==
 
 react-refresh@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.2.tgz#3833da01ce32da470f1f936b9d477da5c7028bf9"
   integrity sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==
 
-react-remove-scroll-bar@^2.3.6:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.6.tgz#3e585e9d163be84a010180b18721e851ac81a29c"
-  integrity sha512-DtSYaao4mBmX+HDo5YWYdBWQwYIQQshUV/dVxFxK+KM26Wjwp1gZ6rv6OC3oujI6Bfu6Xyg3TwK533AQutsn/g==
+react-remove-scroll-bar@^2.3.7:
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.8.tgz#99c20f908ee467b385b68a3469b4a3e750012223"
+  integrity sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==
   dependencies:
-    react-style-singleton "^2.2.1"
+    react-style-singleton "^2.2.2"
     tslib "^2.0.0"
 
-react-remove-scroll@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.6.0.tgz#fb03a0845d7768a4f1519a99fdb84983b793dc07"
-  integrity sha512-I2U4JVEsQenxDAKaVa3VZ/JeJZe0/2DxPWL8Tj8yLKctQJQiZM52pn/GWFpSp8dftjM3pSAHVJZscAnC/y+ySQ==
+react-remove-scroll@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.6.2.tgz#2518d2c5112e71ea8928f1082a58459b5c7a2a97"
+  integrity sha512-KmONPx5fnlXYJQqC62Q+lwIeAk64ws/cUw6omIumRzMRPqgnYqhSSti99nbj0Ry13bv7dF+BKn7NB+OqkdZGTw==
   dependencies:
-    react-remove-scroll-bar "^2.3.6"
+    react-remove-scroll-bar "^2.3.7"
     react-style-singleton "^2.2.1"
     tslib "^2.1.0"
-    use-callback-ref "^1.3.0"
+    use-callback-ref "^1.3.3"
     use-sidecar "^1.1.2"
 
 react-router-dom@^7.1.1:
@@ -3860,6 +3860,14 @@ react-style-singleton@^2.2.1:
   dependencies:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
+    tslib "^2.0.0"
+
+react-style-singleton@^2.2.2:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.3.tgz#4265608be69a4d70cfe3047f2c6c88b2c3ace388"
+  integrity sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==
+  dependencies:
+    get-nonce "^1.0.0"
     tslib "^2.0.0"
 
 react-textarea-autosize@8.5.6:
@@ -4788,10 +4796,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-use-callback-ref@^1.3.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.3.2.tgz#6134c7f6ff76e2be0b56c809b17a650c942b1693"
-  integrity sha512-elOQwe6Q8gqZgDA8mrh44qRTQqpIHDcZ3hXTLjBe1i4ph8XpNJnO+aQf3NaG+lriLopI4HMx9VjQLfPQ6vhnoA==
+use-callback-ref@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.3.3.tgz#98d9fab067075841c5b2c6852090d5d0feabe2bf"
+  integrity sha512-jQL3lRnocaFtu3V00JToYz/4QkNWswxijDaCVNZRiRTO3HQDLsdu1ZtmIUvV4yPp+rvWm5j0y0TG/S61cuijTg==
   dependencies:
     tslib "^2.0.0"
 
