@@ -8,6 +8,7 @@ export const HomePage = () => {
   const rows = data.map((el) => (
     <Table.Tr key={el.date}>
       <Table.Th>{el.date}</Table.Th>
+      <Table.Th>{el.Daniel}</Table.Th>
       <Table.Th>{el.Glen}</Table.Th>
       <Table.Th>{el.Margaux}</Table.Th>
       <Table.Th>{el.Marta}</Table.Th>
@@ -24,6 +25,7 @@ export const HomePage = () => {
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Date</Table.Th>
+              <Table.Th>Daniel</Table.Th>
               <Table.Th>Glen</Table.Th>
               <Table.Th>Margaux</Table.Th>
               <Table.Th>Marta</Table.Th>
@@ -47,6 +49,7 @@ export const HomePage = () => {
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         series={[
+          { name: 'Daniel', color: 'blue.6' },
           { name: 'Glen', color: 'pink.6' },
           { name: 'Thorjan', color: 'red.6' },
           { name: 'Thomas', color: 'lime.6' },
@@ -80,6 +83,7 @@ export const HomePage = () => {
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         series={[
+          { name: 'Daniel', color: 'blue.6' },
           { name: 'Glen', color: 'pink.6' },
           { name: 'Thorjan', color: 'red.6' },
           { name: 'Thomas', color: 'lime.6' },

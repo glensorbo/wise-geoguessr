@@ -1,8 +1,20 @@
-type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Marta' | 'Thorjan' | 'Tor Arve';
+type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Marta' | 'Thorjan' | 'Tor Arve' | 'Daniel';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
+    date: '2025-01-10',
+    Daniel: 20358,
+    Glen: 6977,
+    Thomas: 7832,
+    Margaux: 11496,
+    Thorjan: 12130,
+    'Tor Arve': 9762,
+    Marta: 0,
+    Winner: 'Daniel',
+  },
+  {
     date: '2024-12-06',
+    Daniel: 0,
     Glen: 15675,
     Thomas: 12790,
     Margaux: 11038,
@@ -13,6 +25,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   },
   {
     date: '2024-11-29',
+    Daniel: 0,
     Glen: 12320,
     Thomas: 7825,
     Margaux: 9324,
@@ -23,6 +36,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   },
   {
     date: '2024-11-22',
+    Daniel: 0,
     Glen: 0,
     Thomas: 8315,
     Margaux: 13558,
@@ -40,6 +54,7 @@ export const getPlayerDetails = () => {
     won: number;
     points: { name: string; date: string; total: number }[];
   }[] = [
+    { name: 'Daniel', won: 0, played: 0, points: [] },
     { name: 'Glen', won: 0, played: 0, points: [] },
     { name: 'Thomas', won: 0, played: 0, points: [] },
     { name: 'Thorjan', won: 0, played: 0, points: [] },
