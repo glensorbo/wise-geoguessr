@@ -652,15 +652,15 @@
   dependencies:
     buffer "^6.0.3"
 
-"@mantine/charts@^7.15.3":
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.15.3.tgz#2457046e1dfae141eed3314b7a7102107f36d844"
-  integrity sha512-rJkhmwaPD/Ha234XLrxKwdIed+3iQ5B3rm43OYIgzg+VYx7mCljw+I4A9jerim/qoxZtihmwJGw4zBPtX+CGdg==
+"@mantine/charts@^7.16.0":
+  version "7.16.0"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.16.0.tgz#41310ddc9684da0090db652ee38ee4ee531918f2"
+  integrity sha512-wA/HfCc52giNDnCyvFiBSz0nvinLiKeQT02vmnmBoT2VUp5D5lHI8Klqiw1QGoH3dG/4TL2LJk4zAinJLpmjzA==
 
-"@mantine/core@7.15.3":
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.15.3.tgz#91fded05219112483d821cec46fcbb8a80964b79"
-  integrity sha512-8IMTq5xDJDjByDUYkDNKImikASStzrnPtVumKsrEnyEY0zhAWkAe/z/+PjTUMcN44ncJ/PrXQkJ6qMaVWzSZwA==
+"@mantine/core@7.16.0":
+  version "7.16.0"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.16.0.tgz#b21714c0d63443aea837137a81a64b6bb00c592d"
+  integrity sha512-lYYwa4Itz77uC8zQzdiKiKdz9Q01NBOYPZsotIKsP/Zqij0qhpsVxoJ8MK3P8IqFyLfThTMmR4sT1qlGfLTA9Q==
   dependencies:
     "@floating-ui/react" "^0.26.28"
     clsx "^2.1.1"
@@ -669,10 +669,10 @@
     react-textarea-autosize "8.5.6"
     type-fest "^4.27.0"
 
-"@mantine/hooks@7.15.3":
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.15.3.tgz#c8f65dcb9391b306c05f2b501980b21944c3263a"
-  integrity sha512-rZYObhrmww3OIb4O30pDox/rc+9k3AExO0FSw13t7cfz5/Di+Ho1cChswVFAshnp81ucGEod1fiDOfuyGW7JhA==
+"@mantine/hooks@7.16.0":
+  version "7.16.0"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.16.0.tgz#5640abd7a580b02a026ff9610a50e8ce4a595569"
+  integrity sha512-8KxrhckesbrV6tyOndm6fJ+jSKA4KX/67ppDFlfYMMbV6Yh+s0zRO4KLi2uCtl6tgckQd2/zDzX3kQk+VYKqDA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -3789,10 +3789,10 @@ postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.43, postcss@^8.4.49, postcss@^8.5.0:
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.0.tgz#15244b9fd65f809b2819682456f0e7e1e30c145b"
-  integrity sha512-27VKOqrYfPncKA2NrFOVhP5MGAfHKLYn/Q0mz9cNQyRAKYi3VNHwYU2qKKqPCqgBmeeJ0uAFB56NumXZ5ZReXg==
+postcss@^8.4.43, postcss@^8.4.49, postcss@^8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.1.tgz#e2272a1f8a807fafa413218245630b5db10a3214"
+  integrity sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==
   dependencies:
     nanoid "^3.3.8"
     picocolors "^1.1.1"
@@ -4534,10 +4534,10 @@ stylelint-scss@^6.4.0:
     postcss-selector-parser "^7.0.0"
     postcss-value-parser "^4.2.0"
 
-stylelint@^16.13.1:
-  version "16.13.1"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-16.13.1.tgz#bc1bb8a01052c60a1b7c1038aa54773b14fea5b7"
-  integrity sha512-691JjSIIcP6f9QJFz0J0/AMG3lupE9RqYAgYCON3wiqp5nQiKqDYIsz321GeTOYNznoRPNh0Mf6VjzP1eBVz/Q==
+stylelint@^16.13.2:
+  version "16.13.2"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-16.13.2.tgz#a0e8aab7cedde55f185ac8af6f526e53df783294"
+  integrity sha512-wDlgh0mRO9RtSa3TdidqHd0nOG8MmUyVKl+dxA6C1j8aZRzpNeEgdhFmU5y4sZx4Fc6r46p0fI7p1vR5O2DZqA==
   dependencies:
     "@csstools/css-parser-algorithms" "^3.0.4"
     "@csstools/css-tokenizer" "^3.0.3"
