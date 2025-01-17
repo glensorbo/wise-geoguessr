@@ -23,11 +23,11 @@
     "@mantine/charts": "^7.16.0",
     "@mantine/core": "7.16.0",
     "@mantine/hooks": "7.16.0",
-    "@types/node": "^22.10.6",
+    "@types/node": "^22.10.7",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1",
+    "react-router-dom": "^7.1.2",
     "recharts": "2.15.0"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "@storybook/react-vite": "^8.5.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.1.0",
+    "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
