@@ -8,10 +8,9 @@ export const HomePage = () => {
   const rows = data.map((el) => (
     <Table.Tr key={el.date}>
       <Table.Th>{el.date}</Table.Th>
-      <Table.Th>{el.Daniel}</Table.Th>
       <Table.Th>{el.Glen}</Table.Th>
       <Table.Th>{el.Margaux}</Table.Th>
-      <Table.Th>{el.Marta}</Table.Th>
+      <Table.Th>{el.Sigurd}</Table.Th>
       <Table.Th>{el.Thomas}</Table.Th>
       <Table.Th>{el.Thorjan}</Table.Th>
       <Table.Th>{el['Tor Arve']}</Table.Th>
@@ -25,10 +24,9 @@ export const HomePage = () => {
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Date</Table.Th>
-              <Table.Th>Daniel</Table.Th>
               <Table.Th>Glen</Table.Th>
               <Table.Th>Margaux</Table.Th>
-              <Table.Th>Marta</Table.Th>
+              <Table.Th>Sigurd</Table.Th>
               <Table.Th>Thomas</Table.Th>
               <Table.Th>Thorjan</Table.Th>
               <Table.Th>Tor Arve</Table.Th>
@@ -49,13 +47,12 @@ export const HomePage = () => {
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         series={[
-          { name: 'Daniel', color: 'blue.6' },
           { name: 'Glen', color: 'pink.6' },
           { name: 'Thorjan', color: 'red.6' },
           { name: 'Thomas', color: 'lime.6' },
           { name: 'Margaux', color: 'indigo.6' },
           { name: 'Tor Arve', color: 'orange.6' },
-          { name: 'Marta', color: 'violet.6' },
+          { name: 'Sigurd', color: 'violet.6' },
         ].toSorted((a, b) => a.name.localeCompare(b.name))}
       />
       <Title>Won vs played</Title>
@@ -83,13 +80,12 @@ export const HomePage = () => {
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         series={[
-          { name: 'Daniel', color: 'blue.6' },
           { name: 'Glen', color: 'pink.6' },
           { name: 'Thorjan', color: 'red.6' },
           { name: 'Thomas', color: 'lime.6' },
           { name: 'Margaux', color: 'indigo.6' },
           { name: 'Tor Arve', color: 'orange.6' },
-          { name: 'Marta', color: 'violet.6' },
+          { name: 'Sigurd', color: 'violet.6' },
         ].toSorted((a, b) => a.name.localeCompare(b.name))}
       />
     </Flex>

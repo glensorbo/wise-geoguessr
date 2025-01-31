@@ -1,59 +1,64 @@
-type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Marta' | 'Thorjan' | 'Tor Arve' | 'Daniel';
+type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
+    date: '2025-01-31',
+    Glen: 11267,
+    Thomas: 13397,
+    Margaux: 16044,
+    Thorjan: 13521,
+    'Tor Arve': 7100,
+    Sigurd: 7006,
+    Winner: 'Margaux',
+  },
+  {
     date: '2025-01-17',
-    Daniel: 13714,
     Glen: 10902,
     Thomas: 14912,
     Margaux: 17455,
     Thorjan: 18254,
     'Tor Arve': 0,
-    Marta: 10111,
+    Sigurd: 0,
     Winner: 'Thorjan',
   },
   {
     date: '2025-01-10',
-    Daniel: 20358,
     Glen: 6977,
     Thomas: 7832,
     Margaux: 11496,
     Thorjan: 12130,
     'Tor Arve': 9762,
-    Marta: 0,
+    Sigurd: 0,
     Winner: 'Daniel',
   },
   {
     date: '2024-12-06',
-    Daniel: 0,
     Glen: 15675,
     Thomas: 12790,
     Margaux: 11038,
     Thorjan: 20633,
     'Tor Arve': 14877,
-    Marta: 0,
+    Sigurd: 0,
     Winner: 'Thorjan',
   },
   {
     date: '2024-11-29',
-    Daniel: 0,
     Glen: 12320,
     Thomas: 7825,
     Margaux: 9324,
     Thorjan: 11426,
     'Tor Arve': 0,
-    Marta: 0,
+    Sigurd: 0,
     Winner: 'Glen',
   },
   {
     date: '2024-11-22',
-    Daniel: 0,
     Glen: 0,
     Thomas: 8315,
     Margaux: 13558,
     Thorjan: 11363,
     'Tor Arve': 11847,
-    Marta: 4707,
+    Sigurd: 0,
     Winner: 'Margaux',
   },
 ];
@@ -65,13 +70,12 @@ export const getPlayerDetails = () => {
     won: number;
     points: { name: string; date: string; total: number }[];
   }[] = [
-    { name: 'Daniel', won: 0, played: 0, points: [] },
     { name: 'Glen', won: 0, played: 0, points: [] },
     { name: 'Thomas', won: 0, played: 0, points: [] },
     { name: 'Thorjan', won: 0, played: 0, points: [] },
     { name: 'Margaux', won: 0, played: 0, points: [] },
     { name: 'Tor Arve', won: 0, played: 0, points: [] },
-    { name: 'Marta', won: 0, played: 0, points: [] },
+    { name: 'Sigurd', won: 0, played: 0, points: [] },
   ];
   for (const d of data.toSorted(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
