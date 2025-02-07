@@ -30,6 +30,7 @@ export const HomePage = () => {
               <Table.Th>Thomas</Table.Th>
               <Table.Th>Thorjan</Table.Th>
               <Table.Th>Tor Arve</Table.Th>
+              <Table.Th>Trond</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
@@ -52,6 +53,7 @@ export const HomePage = () => {
           { name: 'Thomas', color: 'lime.6' },
           { name: 'Margaux', color: 'indigo.6' },
           { name: 'Tor Arve', color: 'orange.6' },
+          { name: 'Trond', color: 'yellow.6' },
           { name: 'Sigurd', color: 'violet.6' },
         ].toSorted((a, b) => a.name.localeCompare(b.name))}
       />
@@ -85,6 +87,7 @@ export const HomePage = () => {
           { name: 'Thomas', color: 'lime.6' },
           { name: 'Margaux', color: 'indigo.6' },
           { name: 'Tor Arve', color: 'orange.6' },
+          { name: 'Trond', color: 'yellow.6' },
           { name: 'Sigurd', color: 'violet.6' },
         ].toSorted((a, b) => a.name.localeCompare(b.name))}
       />

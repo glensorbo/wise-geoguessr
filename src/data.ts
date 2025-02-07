@@ -1,6 +1,17 @@
-type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve';
+type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve' | 'Trond';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
+  {
+    date: '2025-02-07',
+    Glen: 13010,
+    Thomas: 17557,
+    Margaux: 0,
+    Thorjan: 13868,
+    'Tor Arve': 13993,
+    Sigurd: 14360,
+    Trond: 8134,
+    Winner: 'Thomas',
+  },
   {
     date: '2025-01-31',
     Glen: 11267,
@@ -9,6 +20,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 13521,
     'Tor Arve': 7100,
     Sigurd: 7006,
+    Trond: 0,
     Winner: 'Margaux',
   },
   {
@@ -19,6 +31,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 18254,
     'Tor Arve': 0,
     Sigurd: 0,
+    Trond: 0,
     Winner: 'Thorjan',
   },
   {
@@ -29,6 +42,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 12130,
     'Tor Arve': 9762,
     Sigurd: 0,
+    Trond: 0,
     Winner: 'Daniel',
   },
   {
@@ -39,6 +53,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 20633,
     'Tor Arve': 14877,
     Sigurd: 0,
+    Trond: 0,
     Winner: 'Thorjan',
   },
   {
@@ -49,6 +64,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 11426,
     'Tor Arve': 0,
     Sigurd: 0,
+    Trond: 0,
     Winner: 'Glen',
   },
   {
@@ -59,6 +75,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 11363,
     'Tor Arve': 11847,
     Sigurd: 0,
+    Trond: 0,
     Winner: 'Margaux',
   },
 ];
@@ -75,6 +92,7 @@ export const getPlayerDetails = () => {
     { name: 'Thorjan', won: 0, played: 0, points: [] },
     { name: 'Margaux', won: 0, played: 0, points: [] },
     { name: 'Tor Arve', won: 0, played: 0, points: [] },
+    { name: 'Trond', won: 0, played: 0, points: [] },
     { name: 'Sigurd', won: 0, played: 0, points: [] },
   ];
   for (const d of data.toSorted(
