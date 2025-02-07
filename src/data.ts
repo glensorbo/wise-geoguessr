@@ -1,4 +1,4 @@
-type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve' | 'Trond';
+export type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve' | 'Trond';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
