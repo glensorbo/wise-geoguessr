@@ -14,6 +14,7 @@ export const HomePage = () => {
       <Table.Th>{el.Thomas}</Table.Th>
       <Table.Th>{el.Thorjan}</Table.Th>
       <Table.Th>{el['Tor Arve']}</Table.Th>
+      <Table.Th>{el.Trond}</Table.Th>
     </Table.Tr>
   ));
   return (
