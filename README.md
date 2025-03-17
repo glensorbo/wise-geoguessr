@@ -1,5 +1,7 @@
 # Mantine Vite template
 
+[Live website](https://wise-geoguessr.sorbo.io/)
+
 ## Features
 
 This template comes with the following features:
