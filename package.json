@@ -20,9 +20,9 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
-    "@mantine/charts": "^7.17.5",
-    "@mantine/core": "7.17.5",
-    "@mantine/hooks": "7.17.5",
+    "@mantine/charts": "^7.17.7",
+    "@mantine/core": "7.17.7",
+    "@mantine/hooks": "7.17.7",
     "@types/node": "^22.15.3",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",
@@ -31,7 +31,7 @@
     "recharts": "2.15.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.1",
+    "@eslint/js": "^9.26.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
@@ -42,7 +42,7 @@
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "eslint-config-mantine": "^4.0.3",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
