@@ -1,5 +1,5 @@
 import { BarChart, LineChart } from '@mantine/charts';
-import { Flex, Table, TableScrollContainer, Title } from '@mantine/core';
+import { Flex, Table, Title } from '@mantine/core';
 import { data, getPlayerDetails, Player } from '@/data';
 
 export const HomePage = () => {
@@ -27,10 +27,10 @@ export const HomePage = () => {
   ));
 
   return (
-    <Flex align="center" justify="center" direction="column" gap={50} pt={50}>
+    <Flex align="center" justify="center" direction="column" gap={50} pt={50} pb={50}>
       <Title>Points</Title>
-      <TableScrollContainer minWidth="75vw" mah="40vh">
-        <Table>
+      <Table.ScrollContainer minWidth="75vw" maxHeight="30vh">
+        <Table stickyHeader striped highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Date</Table.Th>
@@ -41,7 +41,7 @@ export const HomePage = () => {
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
         </Table>
-      </TableScrollContainer>
+      </Table.ScrollContainer>
       <Title>Wise GeoGuessr results</Title>
       <LineChart
         h={300}
