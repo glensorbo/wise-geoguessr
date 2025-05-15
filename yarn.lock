@@ -610,15 +610,15 @@
   dependencies:
     buffer "^6.0.3"
 
-"@mantine/charts@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.0.0.tgz#4d57a5c7e3fe318563b073b5cbfad63d24d78f82"
-  integrity sha512-VlkcRmDiPcn09CX5lu/L8RutywSxFH0Tzk3FkkYmfm6LurSI+xoyF86GjMa6JesjFsUCO3+qMaq5IvM4joThjg==
+"@mantine/charts@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.0.1.tgz#e794306b614366e307b63f174820e5c36c0ff65f"
+  integrity sha512-yntk4siXpQGSj83tDwftJw6fHTOBS6c/VWinjvTW29ptEdjBCxbKFfyyDc9UGVVuO7ovbdtpfCZBpuN2I7HPCA==
 
-"@mantine/core@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.0.0.tgz#8a8fa5b8e71f1db2253afe54a15c8b52c2de6240"
-  integrity sha512-TskeJS2/+DbmUe85fXDoUAyErkSvR4YlbUl8MLqhjFBJUqwc72ZrLynmN13wuKtlVPakDYYjq4/IEDMReh3CYA==
+"@mantine/core@8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.0.1.tgz#f3d54b649025c079bb55be953408d4735063ef6b"
+  integrity sha512-4ezaxKjChSPtawamQ3KrJq+x506uTouXlL0Z5fP+t105KnyxMrAJUENhbh2ivD4pq9Zh1BFiD9IWzyu3IXFR8w==
   dependencies:
     "@floating-ui/react" "^0.26.28"
     clsx "^2.1.1"
@@ -627,10 +627,10 @@
     react-textarea-autosize "8.5.9"
     type-fest "^4.27.0"
 
-"@mantine/hooks@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.0.0.tgz#d105e0f1c890bbb2312e5ab452b212ae85959085"
-  integrity sha512-hrcgZMHUPsgu+VBfUVcJOqMG7Qi+AshYjFyc/qo0Cz8TEhqWmD0I1yJW+qj4sDTTDWRQC6kvI5c1h+87/9MvoA==
+"@mantine/hooks@8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.0.1.tgz#b21a84a3b8c9934e72564b2b9d236482cd2098d5"
+  integrity sha512-GvLdM4Ro3QcDyIgqrdXsUZmeeKye2TNL/k3mEr9JhM5KacHQjr83JPp0u9eLobn7kiyBqpLTYmVYAbmjJdCxHw==
 
 "@modelcontextprotocol/sdk@^1.8.0":
   version "1.11.0"
@@ -1026,10 +1026,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@^22.15.17":
-  version "22.15.17"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.17.tgz#355ccec95f705b664e4332bb64a7f07db30b7055"
-  integrity sha512-wIX2aSZL5FE+MR0JlvF87BNVrtFWf6AE6rxSE9X7OwnVvoyCQjpzSRJ+M87se/4QCkCiebQAqrJ0y6fwIyi7nw==
+"@types/node@^22.15.18":
+  version "22.15.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.18.tgz#2f8240f7e932f571c2d45f555ba0b6c3f7a75963"
+  integrity sha512-v1DKRfUdyW+jJhZNEI1PYy29S2YRxMV5AOO/x/SjKmW0acCIOqmbj6Haf9eHAhsPmrhlHSxEhv/1WszcLWV4cg==
   dependencies:
     undici-types "~6.21.0"
 
