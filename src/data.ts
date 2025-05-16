@@ -205,6 +205,7 @@ export const getPlayerDetails = () => {
     { name: 'Tor Arve', won: 0, played: 0, points: [] },
     { name: 'Trond', won: 0, played: 0, points: [] },
     { name: 'Sigurd', won: 0, played: 0, points: [] },
+    { name: 'Lars', won: 0, played: 0, points: [] },
   ];
   for (const d of data.toSorted(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()

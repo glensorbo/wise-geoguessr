@@ -12,6 +12,7 @@ export const HomePage = () => {
     { name: 'Margaux', color: 'indigo.6' },
     { name: 'Tor Arve', color: 'orange.6' },
     { name: 'Trond', color: 'yellow.6' },
+    { name: 'Lars', color: 'orange.6' },
     { name: 'Sigurd', color: 'violet.6' },
   ];
 
