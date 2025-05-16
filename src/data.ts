@@ -1,6 +1,26 @@
-export type Player = 'Glen' | 'Thomas' | 'Margaux' | 'Sigurd' | 'Thorjan' | 'Tor Arve' | 'Trond';
+export type Player =
+  | 'Glen'
+  | 'Thomas'
+  | 'Margaux'
+  | 'Sigurd'
+  | 'Thorjan'
+  | 'Tor Arve'
+  | 'Trond'
+  | 'Lars';
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
+  {
+    date: '2025-05-16',
+    Glen: 15500,
+    Thomas: 19693,
+    Margaux: 0,
+    Thorjan: 0,
+    'Tor Arve': 17038,
+    Sigurd: 16174,
+    Trond: 0,
+    Lars: 12087,
+    Winner: 'Thomas',
+  },
   {
     date: '2025-05-09',
     Glen: 2887,
@@ -10,6 +30,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 19665,
     Sigurd: 14034,
     Trond: 0,
+    Lars: 0,
     Winner: 'Tor Arve',
   },
   {
@@ -21,6 +42,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 15678,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Thomas',
   },
   {
@@ -32,6 +54,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 17601,
     Sigurd: 1865,
     Trond: 0,
+    Lars: 0,
     Winner: 'Tor Arve',
   },
   {
@@ -43,6 +66,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 10289,
     Sigurd: 13924,
     Trond: 0,
+    Lars: 0,
     Winner: 'Thorjan',
   },
   {
@@ -54,6 +78,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 15058,
     Sigurd: 8771,
     Trond: 0,
+    Lars: 0,
     Winner: 'Margaux',
   },
   {
@@ -65,6 +90,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 7460,
     Sigurd: 2673,
     Trond: 0,
+    Lars: 0,
     Winner: 'Glen',
   },
   {
@@ -76,6 +102,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 10890,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Thorjan',
   },
   {
@@ -87,6 +114,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 13993,
     Sigurd: 14360,
     Trond: 8134,
+    Lars: 0,
     Winner: 'Thomas',
   },
   {
@@ -98,6 +126,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 7100,
     Sigurd: 7006,
     Trond: 0,
+    Lars: 0,
     Winner: 'Margaux',
   },
   {
@@ -109,6 +138,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 0,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Thorjan',
   },
   {
@@ -120,6 +150,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 9762,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Daniel',
   },
   {
@@ -131,6 +162,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 14877,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Thorjan',
   },
   {
@@ -142,6 +174,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 0,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Glen',
   },
   {
@@ -153,6 +186,7 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     'Tor Arve': 11847,
     Sigurd: 0,
     Trond: 0,
+    Lars: 0,
     Winner: 'Margaux',
   },
 ];
