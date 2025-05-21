@@ -23,7 +23,7 @@
     "@mantine/charts": "^8.0.1",
     "@mantine/core": "8.0.1",
     "@mantine/hooks": "8.0.1",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.20",
     "dayjs": "^1.11.13",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
