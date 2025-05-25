@@ -1,0 +1,11 @@
+POST {{host}}/auth/register
+accept: application/json
+content-type: application/json
+
+{
+    "username": "testuser",
+    "password": "testpassword"
+}
+
+
+###
