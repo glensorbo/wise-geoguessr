@@ -35,6 +35,10 @@ namespace Api.Controllers
     [ProducesResponseType(400)]
     public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
     {
+      if (!request.IsValid())
+      {
+        return BadRequest("Invalid request. Username and password are required.");
+      }
       if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
       {
         return BadRequest("Username and password cannot be empty.");
