@@ -37,13 +37,17 @@ namespace Api.Controllers
     {
       if (!request.IsValid())
       {
-        return BadRequest("Invalid request. Username and password are required.");
+        ModelState.AddFrom(request.Errors);
+        return BadRequest(ModelState);
       }
-      if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
-      {
-        return BadRequest("Username and password cannot be empty.");
-      }
+
+      // if (!request.IsValid())
+      // {
+      //   return BadRequest("Invalid request. Username and password are required.");
+      // }
+
       var res = AuthenticationService.Authenticate(request.Username, request.Password);
+
       return Ok(new AuthenticationResponse(
         request.Username,
         res,
