@@ -1,8 +1,21 @@
-namespace Contracts.Authentication
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+
+namespace Contracts.Authentication;
+
+/// <summary>
+/// Represents a request for user authentication.
+/// </summary>
+public class AuthenticationRequest
 {
-  public class AuthenticationRequest
-  {
+    /// <summary>
+    /// Username of the user.
+    /// </summary>
     public string Username { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Password of the user.
+    /// </summary>
     public string Password { get; set; } = string.Empty;
 
     /// <summary>
@@ -12,21 +25,21 @@ namespace Contracts.Authentication
     [JsonIgnore]
     public Dictionary<string, string> Errors
     {
-      get
-      {
-        var errors = new Dictionary<string, string>();
-        if (string.isnullOrEmpty(Username))
+        get
         {
-          errors.Add(nameof(Username), $"Must have a value/can't be null.");
-        }
+            var errors = new Dictionary<string, string>();
+            if (string.IsNullOrEmpty(Username))
+            {
+                errors.Add(nameof(Username), "Must have a value/can't be null.");
+            }
 
-        if (string.isnullOrEmpty(Password))
-        {
-          errors.Add(nameof(Password), $"Must have a value/can't be null.");
-        }
+            if (string.IsNullOrEmpty(Password))
+            {
+                errors.Add(nameof(Password), "Must have a value/can't be null.");
+            }
 
-        return errors;
-      }
+            return errors;
+        }
     }
 
     /// <summary>
@@ -36,8 +49,6 @@ namespace Contracts.Authentication
     [MemberNotNullWhen(true, nameof(Username), nameof(Password))]
     public bool IsValid()
     {
-      return Errors.Count == 0;
+        return Errors.Count == 0;
     }
-  }
 }
-

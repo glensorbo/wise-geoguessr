@@ -1,5 +1,6 @@
-namespace Contracts.Registration
-{
-  public record RegistrationCommand(string Username, string Password);
-}
+namespace Contracts.Registration;
 
+/// <summary>
+/// Represents a command for user registration.
+/// </summary>
+public record RegistrationCommand(string Username, string Password);

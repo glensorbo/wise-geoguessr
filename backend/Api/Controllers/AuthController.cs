@@ -1,14 +1,23 @@
 using Application;
+
 using Contracts.Authentication;
 using Contracts.Registration;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+/// <summary>
+/// Controller for handling user authentication and registration.
+/// </summary>
+[Route("api/auth")]
+[ApiController]
+public class AuthController : ControllerBase
 {
-  [Route("api/auth")]
-  [ApiController]
-  public class AuthController() : ControllerBase
-  {
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="request">The registration request containing username and password.</param>
     [HttpPost("register")]
     [EndpointSummary("Endpoint for user registration")]
     [EndpointDescription("This endpoint allows users to register by providing their username and password.")]
@@ -16,18 +25,22 @@ namespace Api.Controllers
     [ProducesResponseType(400)]
     public ActionResult<AuthenticationResponse> Register([FromBody] RegistrationCommand request)
     {
-      if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
-      {
-        return BadRequest("Username and password cannot be empty.");
-      }
-      // In a real application, you would save the user to a database here
-      return Ok(new RegistrationResponse(
-        Guid.NewGuid(),
-        request.Username,
-        "dummy-token from Register"
-      ));
+        if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+        {
+            return BadRequest("Username and password cannot be empty.");
+        }
+        // In a real application, you would save the user to a database here
+        return Ok(new RegistrationResponse(
+          Guid.NewGuid(),
+          request.Username,
+          "dummy-token from Register"
+        ));
     }
 
+    /// <summary>
+    /// Authenticates a user.
+    /// </summary>
+    /// <param name="request">The authentication request containing username and password.</param>
     [HttpPost]
     [EndpointSummary("Endpoint for user login")]
     [EndpointDescription("This endpoint allows users to log in by providing their username and password.")]
@@ -35,25 +48,23 @@ namespace Api.Controllers
     [ProducesResponseType(400)]
     public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
     {
-      if (!request.IsValid())
-      {
-        ModelState.AddFrom(request.Errors);
-        return BadRequest(ModelState);
-      }
+        // if (!request.IsValid())
+        // {
+        //   ModelState.AddFrom(request.Errors);
+        //   return BadRequest(ModelState);
+        // }
 
-      // if (!request.IsValid())
-      // {
-      //   return BadRequest("Invalid request. Username and password are required.");
-      // }
+        if (!request.IsValid())
+        {
+            return BadRequest("Invalid request. Username and password are required.");
+        }
 
-      var res = AuthenticationService.Authenticate(request.Username, request.Password);
+        var res = AuthenticationService.Authenticate(request.Username, request.Password);
 
-      return Ok(new AuthenticationResponse(
-        request.Username,
-        res,
-        DateTime.UtcNow.AddHours(1)
-      ));
+        return Ok(new AuthenticationResponse(
+          request.Username,
+          res,
+          DateTime.UtcNow.AddHours(1)
+        ));
     }
-  }
 }
-
