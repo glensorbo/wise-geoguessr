@@ -5,7 +5,7 @@ using Contracts.Registration;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace WebApi.Controllers;
 
 /// <summary>
 /// Controller for handling user authentication and registration.

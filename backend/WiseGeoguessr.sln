@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D82C56D6-B2CD-F611-9E31-04638F7EC30E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WiseGeoguessr", "WiseGeoguessr", "{D82C56D6-B2CD-F611-9E31-04638F7EC30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiseGeoguessr", "Api\Api.csproj", "{7E04B84E-AB93-4E80-8420-273351C4AE08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\WebApi\WebApi.csproj", "{7E04B84E-AB93-4E80-8420-273351C4AE08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{818DFA93-C2CA-40B3-9DC7-5D3E9ADD7698}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{818DFA93-C2CA-40B3-9DC7-5D3E9ADD7698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{EAF0CB72-C7BE-4A0A-885C-7A029DF1B423}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Contracts\Contracts.csproj", "{EAF0CB72-C7BE-4A0A-885C-7A029DF1B423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{ACA6A116-3882-4D24-9F82-83B711E7410C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{ACA6A116-3882-4D24-9F82-83B711E7410C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastucture", "Infrastucture\Infrastucture.csproj", "{C03FCB2B-0157-4B68-92D5-1B2F58B40D77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastucture", "src\Infrastructure\Infrastructure.csproj", "{C03FCB2B-0157-4B68-92D5-1B2F58B40D77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,16 @@
 using Scalar.AspNetCore;
+using Infrastructure;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+{
+    builder.Services
+        .AddPresentation()
+        .AddInfrastructure(builder.Configuration);
+}
+
+// builder.Services.AddControllers();
 
 builder.Services.AddOpenApi(opt => opt.AddDocumentTransformer((doc, context, cancellationToken) =>
     {

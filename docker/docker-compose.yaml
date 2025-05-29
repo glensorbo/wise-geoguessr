@@ -1,0 +1,14 @@
+name: wise-geoguessr
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: wise-geoguessr_db
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_PID: Developer
+      MSSQL_AGENT_ENABLED: "true"
+    ports:
+      - 1433:1433
