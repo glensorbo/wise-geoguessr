@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile-upstream:master-labs
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /source
+
+# Restore as separate layers
+COPY --parents backend/**/*.csproj ./
+COPY backend/*.props backend
+COPY backend/WiseGeoguessr.sln backend
+RUN dotnet restore backend/WiseGeoguessr.sln
+
+# Build
+WORKDIR /source/backend
+COPY backend/. .
+RUN dotnet build WiseGeoguessr.sln
+
+# Create migrations
+RUN dotnet new tool-manifest && \
+  dotnet tool install dotnet-ef && \
+  dotnet ef migrations script -s ./src/WebApi/WebApi.csproj -p ./src/Infrastructure/Infrastructure.csproj --context UserContext -o userContext.sql
+
+FROM mcr.microsoft.com/mssql/server:2025-latest
+USER root
+
+RUN apt-get update && \
+  ACCEPT_EULA=Y apt-get upgrade -y && \
+  apt-get install curl bzip2 --yes --quiet && \
+  mkdir /opt/sqlcmd && \
+  curl -L https://github.com/microsoft/go-sqlcmd/releases/download/v1.8.2/sqlcmd-linux-amd64.tar.bz2 | tar -jxvC /opt/sqlcmd && \
+  mkdir -p /var/opt/config
+
+WORKDIR /var/opt/config
+COPY --from=build /source/backend/*.sql ./sql/
+COPY ./docker/database-scripts/* /var/opt/config
+# COPY ./docker/database-scripts/seed-files/*.sql ./seed-files/
+RUN chmod +x /var/opt/config/entrypoint.sh && \
+  chmod +x /var/opt/config/configure-db.sh
+
+USER mssql
+ENTRYPOINT [ "./entrypoint.sh" ]

@@ -1,0 +1,12 @@
+# vim: filetype=nginx
+
+location /api {
+  proxy_pass http://${API_HOST}:${API_PORT};
+  error_page 502 503 504 =503 /error_pages/503.html;
+}
+
+location /scalar {
+  add_header Content-Security-Policy "default-src 'self'; connect-src 'self' https://login.microsoftonline.com; img-src 'self' data:; script-src 'self'; script-src-elem 'self' 'sha256-4IiDsMH+GkJlxivIDNfi6qk0O5HPtzyvNwVT3Wt8TIw='; style-src 'self' 'sha256-RL3ie0nH+Lzz2YNqQN83mnU0J1ot4QL7b99vMdIX99w='";
+  proxy_pass http://${API_HOST}:${API_PORT};
+  error_page 502 503 504 =503 /error_pages/503.html;
+}
