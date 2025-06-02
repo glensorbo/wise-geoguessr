@@ -22,8 +22,8 @@ public static class InfrastructureDependencyInjection
     }
     private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<UserDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<UserContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Database")));
 
         return services;
     }

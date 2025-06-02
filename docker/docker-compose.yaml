@@ -3,14 +3,14 @@ name: wise-geoguessr
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2025-latest
-    container_name: _db
+    container_name: db
     restart: always
     build:
       context: ..
       dockerfile: ./docker/Dockerfile.database
     environment:
       ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
       MSSQL_PID: Developer
       MSSQL_AGENT_ENABLED: 'true'
     ports:
@@ -21,3 +21,23 @@ services:
       retries: 10
       start_period: 10s
       timeout: 3s
+  backend:
+    container_name: backend
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile.backend
+    ports:
+      - '44303:8080'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Local
+      # - SQLCONNSTR_DATABASE=Server=db;Database=wise-geoguessr;User Id=sa;Password=${MSSQL_SA_PASSWORD};Integrated Security=False;TrustServerCertificate=Yes;
+  frontend:
+    container_name: frontend
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile.frontend
+    ports:
+      - '5173:8080'
+    environment:
+      - API_HOST=backend
+      - API_PORT=8080

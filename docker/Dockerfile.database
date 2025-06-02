@@ -14,9 +14,9 @@ COPY backend/. .
 RUN dotnet build WiseGeoguessr.sln
 
 # Create migrations
-RUN dotnet new tool-manifest && \
-  dotnet tool install dotnet-ef && \
-  dotnet ef migrations script -s ./src/WebApi/WebApi.csproj -p ./src/Infrastructure/Infrastructure.csproj --context UserContext -o userContext.sql
+# RUN dotnet new tool-manifest
+RUN dotnet tool install dotnet-ef
+RUN dotnet ef migrations script -s ./src/WebApi/WebApi.csproj -p ./src/Infrastructure/Infrastructure.csproj --context UserContext -o userContext.sql
 
 FROM mcr.microsoft.com/mssql/server:2025-latest
 USER root
