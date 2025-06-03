@@ -1,4 +1,7 @@
+using Domain.Repositories;
+
 using Infrastructure.Common.Persistence;
+using Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +27,8 @@ public static class InfrastructureDependencyInjection
     {
         services.AddDbContext<UserContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
