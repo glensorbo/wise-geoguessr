@@ -10,9 +10,9 @@ public static class WebApiDependencyInjection
     /// </summary>
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services
-            .AddScalar()
-            .AddControllers();
+        services.AddScalar();
+        services.AddControllers();
+        services.AddProblemDetails();
 
         return services;
     }

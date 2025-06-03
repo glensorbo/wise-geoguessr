@@ -1,3 +1,5 @@
+using Application.Interfaces;
+
 using Domain.Models;
 using Domain.Repositories;
 
@@ -6,11 +8,9 @@ namespace Application.Services;
 /// <summary>
 /// Service for managing users.
 /// </summary>
-public class UserService(IUserRepository userRepository)
+public class UserService(IUserRepository userRepository) : IUserService
 {
-    /// <summary>
-    /// Gets all users from the repository.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<User>> GetAllUsersAsync()
     {
         return await userRepository.GetAllAsync().ConfigureAwait(false);

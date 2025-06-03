@@ -1,3 +1,5 @@
+using Application.Services;
+
 using Domain.Models;
 
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,7 @@ namespace WebApi.Controllers;
 /// </summary>
 [Route("api/user")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
     /// <summary>
     /// Gets all users.
@@ -19,8 +21,12 @@ public class UserController : ControllerBase
     [EndpointDescription("Endpoint to retrieve a list of all users in the system.")]
     [ProducesResponseType(typeof(IEnumerable<User>), 200)]
     [ProducesResponseType(400)]
-    public ActionResult GetAllUsers()
+    public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
     {
-        return Ok();
+        var res = await userService
+            .GetAllUsersAsync()
+            .ConfigureAwait(false);
+
+        return Ok(res);
     }
 }

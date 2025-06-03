@@ -1,4 +1,5 @@
 using Infrastructure;
+using Application;
 
 using Scalar.AspNetCore;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
         .AddPresentation()
+        .AddApplication()
         .AddInfrastructure(builder.Configuration);
 }
 
