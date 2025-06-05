@@ -1,4 +1,6 @@
-using Application.Services;
+using Application.Interfaces;
+
+using Contracts.Registration;
 
 using Domain.Models;
 
@@ -28,5 +30,22 @@ public class UserController(IUserService userService) : ControllerBase
             .ConfigureAwait(false);
 
         return Ok(res);
+    }
+
+    /// <summary>
+    /// Endpoint for creating a new user.
+    /// </summary>
+    /// <param name="command">The command containing user registration details.</param>
+    /// <returns>A newly created user.</returns>
+    [HttpPost]
+    [EndpointSummary("Endpoint for creating a new user")]
+    [EndpointDescription("Endpoint to create a new user in the system.")]
+    [ProducesResponseType(typeof(User), 201)]
+    public async Task<ActionResult<RegistrationResponse>> CreateUser([FromBody] RegistrationRequest command)
+    {
+        var createdUser = await userService
+            .CreateUserAsync(command)
+            .ConfigureAwait(false);
+        return CreatedAtAction(nameof(GetAllUsers), new { id = createdUser.Id }, createdUser);
     }
 }

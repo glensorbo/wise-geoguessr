@@ -1,3 +1,5 @@
+using Application.Commands;
+
 using Domain.Models;
 
 namespace Application.Interfaces;
@@ -7,6 +9,11 @@ namespace Application.Interfaces;
 /// </summary>
 public interface IUserService
 {
+    /// <summary>
+    /// Creates a new user in the repository.
+    /// </summary>
+    Task<> CreateUserAsync(UserRegistrationCommand command);
+
     /// <summary>
     /// Gets all users from the repository.
     /// </summary>

@@ -1,4 +1,4 @@
-using Application;
+using Application.Interfaces;
 
 using Contracts.Authentication;
 using Contracts.Registration;
@@ -12,7 +12,7 @@ namespace WebApi.Controllers;
 /// </summary>
 [Route("api/auth")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController(IAuthenticationService authenticationService) : ControllerBase
 {
     /// <summary>
     /// Registers a new user.
@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
     [EndpointDescription("This endpoint allows users to register by providing their username and password.")]
     [ProducesResponseType(typeof(AuthenticationResponse), 200)]
     [ProducesResponseType(400)]
-    public ActionResult<AuthenticationResponse> Register([FromBody] RegistrationCommand request)
+    public ActionResult<AuthenticationResponse> Register([FromBody] RegistrationRequest request)
     {
         if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
         {
@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
     [EndpointDescription("This endpoint allows users to log in by providing their username and password.")]
     [ProducesResponseType(typeof(AuthenticationResponse), 200)]
     [ProducesResponseType(400)]
-    public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
+    public async Task<ActionResult<AuthenticationResponse>> Authenticate([FromBody] AuthenticationRequest request)
     {
         // if (!request.IsValid())
         // {
@@ -59,7 +59,7 @@ public class AuthController : ControllerBase
             return BadRequest("Invalid request. Username and password are required.");
         }
 
-        var res = AuthenticationService.Authenticate(request.Username, request.Password);
+        var res = await authenticationService.Authenticate(request.Username, request.Password).ConfigureAwait(false);
 
         return Ok(new AuthenticationResponse(
           request.Username,
