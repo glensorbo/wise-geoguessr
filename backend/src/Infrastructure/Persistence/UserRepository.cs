@@ -14,6 +14,12 @@ namespace Infrastructure.Persistence;
 public class UserRepository(UserContext context) : IUserRepository
 {
     /// <inheritdoc />
+    public Task<User> CreateAsync(User user)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         return await context.Users.ToListAsync().ConfigureAwait(false);

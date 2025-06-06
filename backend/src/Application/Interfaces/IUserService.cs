@@ -1,4 +1,5 @@
 using Application.Commands;
+using Application.Responses;
 
 using Domain.Models;
 
@@ -12,7 +13,7 @@ public interface IUserService
     /// <summary>
     /// Creates a new user in the repository.
     /// </summary>
-    Task<> CreateUserAsync(UserRegistrationCommand command);
+    Task<UserRegistrationResponse> CreateUserAsync(UserRegistrationCommand command);
 
     /// <summary>
     /// Gets all users from the repository.

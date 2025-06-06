@@ -25,14 +25,14 @@ public class AuthController(IAuthenticationService authenticationService) : Cont
     [ProducesResponseType(400)]
     public ActionResult<AuthenticationResponse> Register([FromBody] RegistrationRequest request)
     {
-        if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+        if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
         {
             return BadRequest("Username and password cannot be empty.");
         }
         // In a real application, you would save the user to a database here
         return Ok(new RegistrationResponse(
           Guid.NewGuid(),
-          request.Username,
+          request.Email,
           "dummy-token from Register"
         ));
     }

@@ -1,3 +1,4 @@
+using Application.Commands;
 using Application.Interfaces;
 
 using Contracts.Registration;
@@ -43,9 +44,11 @@ public class UserController(IUserService userService) : ControllerBase
     [ProducesResponseType(typeof(User), 201)]
     public async Task<ActionResult<RegistrationResponse>> CreateUser([FromBody] RegistrationRequest command)
     {
+        var registrationCommand = new UserRegistrationCommand(command.Email, command.Password);
         var createdUser = await userService
-            .CreateUserAsync(command)
+            .CreateUserAsync(registrationCommand)
             .ConfigureAwait(false);
-        return CreatedAtAction(nameof(GetAllUsers), new { id = createdUser.Id }, createdUser);
+
+        return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id }, createdUser);
     }
 }
