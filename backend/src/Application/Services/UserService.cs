@@ -6,6 +6,8 @@ using Application.Responses;
 using Domain.Models;
 using Domain.Repositories;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace Application.Services;
 
 /// <summary>
@@ -16,17 +18,29 @@ public class UserService(IUserRepository userRepository) : IUserService
     /// <inheritdoc />
     public async Task<UserRegistrationResponse> CreateUserAsync(UserRegistrationCommand command)
     {
-        var user = await userRepository.CreateAsync(
-            new User()
-            {
-                Email = command.Email,
-                Password = command.Password
-            }).ConfigureAwait(false);
+        var user = await userRepository
+            .GetByEmailAsync(command.Email)
+            .ConfigureAwait(false);
 
-        return new UserRegistrationResponse(
-                Guid.NewGuid(),
-        user.Email,
-        "sdf");
+        if (user != null)
+        {
+            throw new InvalidOperationException($"User with email {command.Email} already exists.");
+        }
+
+        user = new User()
+        {
+            Id = Guid.NewGuid(),
+            Email = command.Email,
+        };
+
+        user.Password = new PasswordHasher<User>()
+            .HashPassword(user, command.Password);
+
+        await userRepository
+            .CreateAsync(user)
+            .ConfigureAwait(false);
+
+        return new UserRegistrationResponse(user.Id, user.Email, "token");
     }
 
     /// <inheritdoc />

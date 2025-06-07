@@ -14,14 +14,31 @@ namespace Infrastructure.Persistence;
 public class UserRepository(UserContext context) : IUserRepository
 {
     /// <inheritdoc />
-    public Task<User> CreateAsync(User user)
+    public async Task CreateAsync(User user)
     {
-        throw new NotImplementedException();
+        await context.AddAsync(user).ConfigureAwait(false);
+        await context.SaveChangesAsync().ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         return await context.Users.ToListAsync().ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        return await context.Users
+            .FirstOrDefaultAsync(u => u.Email == email)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<User?> GetByIdAsync(Guid id)
+    {
+        return await context.Users
+            .FirstOrDefaultAsync(u => u.Id == id)
+            .ConfigureAwait(false);
     }
 }

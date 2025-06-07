@@ -36,17 +36,18 @@ public class UserController(IUserService userService) : ControllerBase
     /// <summary>
     /// Endpoint for creating a new user.
     /// </summary>
-    /// <param name="command">The command containing user registration details.</param>
+    /// <param name="request">The command containing user registration details.</param>
     /// <returns>A newly created user.</returns>
     [HttpPost]
     [EndpointSummary("Endpoint for creating a new user")]
     [EndpointDescription("Endpoint to create a new user in the system.")]
     [ProducesResponseType(typeof(User), 201)]
-    public async Task<ActionResult<RegistrationResponse>> CreateUser([FromBody] RegistrationRequest command)
+    public async Task<ActionResult<RegistrationResponse>> CreateUser([FromBody] RegistrationRequest request)
     {
-        var registrationCommand = new UserRegistrationCommand(command.Email, command.Password);
+        var command = new UserRegistrationCommand(request.Email, request.Password);
+
         var createdUser = await userService
-            .CreateUserAsync(registrationCommand)
+            .CreateUserAsync(command)
             .ConfigureAwait(false);
 
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id }, createdUser);
