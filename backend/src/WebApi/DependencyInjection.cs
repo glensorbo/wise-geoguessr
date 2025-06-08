@@ -1,3 +1,6 @@
+using Serilog;
+using Serilog.Sinks.OpenTelemetry;
+
 namespace WebApi;
 
 /// <summary>
@@ -8,11 +11,49 @@ public static class WebApiDependencyInjection
     /// <summary>
     /// WebApi DependencyInjection
     /// </summary>
-    public static IServiceCollection AddPresentation(this IServiceCollection services)
+    public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSerilog(configuration);
         services.AddScalar();
         services.AddControllers();
         services.AddProblemDetails();
+
+        return services;
+    }
+
+    private static IServiceCollection AddSerilog(this IServiceCollection services, IConfiguration configuration)
+    {
+        var logger = new LoggerConfiguration();
+
+        logger.Enrich.FromLogContext();
+
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+        {
+            logger.WriteTo.Console();
+        }
+
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+        {
+            logger.WriteTo.OpenTelemetry(x =>
+            {
+                x.Endpoint = configuration["Seq:Endpoint"] ?? string.Empty;
+                x.Protocol = OtlpProtocol.HttpProtobuf;
+                x.Headers = new Dictionary<string, string>
+                {
+                            { "X-Seq-ApiKey", configuration["Seq:ApiKey"] ?? string.Empty }
+                };
+                x.ResourceAttributes = new Dictionary<string, object>
+                {
+                            { "service.name", "WebApi" },
+                            { "service.version", "1.0.0" },
+                            { "service.instance.id", Environment.MachineName }
+                };
+            });
+        }
+
+        Log.Logger = logger.CreateLogger();
+
+        services.AddSerilog();
 
         return services;
     }
