@@ -3,6 +3,7 @@ using Application.Commands;
 using Application.Interfaces;
 using Application.Responses;
 
+using Domain.Exceptions;
 using Domain.Models;
 using Domain.Repositories;
 
@@ -24,7 +25,7 @@ public class UserService(IUserRepository userRepository) : IUserService
 
         if (user != null)
         {
-            throw new InvalidOperationException($"User with email {command.Email} already exists.");
+            throw new BadRequestException("User with this email already exists.");
         }
 
         user = new User()

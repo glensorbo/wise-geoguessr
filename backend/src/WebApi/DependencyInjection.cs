@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.Features;
+
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
 
@@ -16,7 +18,15 @@ public static class WebApiDependencyInjection
         services.AddSerilog(configuration);
         services.AddScalar();
         services.AddControllers();
-        services.AddProblemDetails();
+        services.AddProblemDetails(o => o.CustomizeProblemDetails = context =>
+                    {
+                        context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+                        context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+
+                        var activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+                        context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
+                    });
+        services.AddExceptionHandler<ProblemExceptionHandler>();
 
         return services;
     }
@@ -69,7 +79,8 @@ public static class WebApiDependencyInjection
                     Description = "API for the WiseGeoguessr application, providing endpoints for user authentication and game management.",
                     Contact = new()
                     {
-                        Name = "WiseGeoguessr Team"
+                        Name = "WiseGeoguessr Team",
+                        Email = "glen.sorbo@bouvet.no"
                     }
                 };
 

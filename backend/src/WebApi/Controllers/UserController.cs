@@ -3,6 +3,7 @@ using Application.Interfaces;
 
 using Contracts.Registration;
 
+using Domain.Exceptions;
 using Domain.Models;
 
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,11 @@ public class UserController(IUserService userService) : ControllerBase
     public async Task<ActionResult<RegistrationResponse>> CreateUser([FromBody] RegistrationRequest request)
     {
         var command = new UserRegistrationCommand(request.Email, request.Password);
+
+        if (string.IsNullOrWhiteSpace(command.Email) || string.IsNullOrWhiteSpace(command.Password))
+        {
+            throw new BadRequestException("Email and password cannot be empty.");
+        }
 
         var createdUser = await userService
             .CreateUserAsync(command)
