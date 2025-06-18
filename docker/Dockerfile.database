@@ -24,6 +24,7 @@ USER root
 RUN apt-get update && \
   ACCEPT_EULA=Y apt-get upgrade -y && \
   apt-get install curl bzip2 --yes --quiet && \
+  rm -rf /opt/sqlcmd && \
   mkdir /opt/sqlcmd && \
   curl -L https://github.com/microsoft/go-sqlcmd/releases/download/v1.8.2/sqlcmd-linux-amd64.tar.bz2 | tar -jxvC /opt/sqlcmd && \
   mkdir -p /var/opt/config
