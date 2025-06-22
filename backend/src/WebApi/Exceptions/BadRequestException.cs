@@ -1,4 +1,4 @@
-namespace Domain.Exceptions;
+﻿namespace WebApi.Exceptions;
 
 /// <summary>
 /// Represents an exception that is thrown when a bad request is made.

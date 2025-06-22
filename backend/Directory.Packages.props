@@ -5,18 +5,19 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageVersion>
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageVersion Include="Roslynator.Analyzers" Version="4.13.1" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.4.4" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.5.0" />
     <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Sinks.OpenTelemetry" Version="4.2.0" />
-    <PackageVersion Include="System.Text.Json" Version="9.0.5" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.6" />
   </ItemGroup>
 </Project>

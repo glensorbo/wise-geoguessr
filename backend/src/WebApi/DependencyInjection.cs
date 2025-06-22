@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http.Features;
+﻿using Microsoft.AspNetCore.Http.Features;
 
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
@@ -39,7 +39,9 @@ public static class WebApiDependencyInjection
 
         if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
         {
+#pragma warning disable CA1305 // Specify IFormatProvider
             logger.WriteTo.Console();
+#pragma warning restore CA1305 // Specify IFormatProvider
         }
 
         if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")

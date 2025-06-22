@@ -1,7 +1,6 @@
-using Domain.Exceptions;
-
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Exceptions;
 
 namespace WebApi;
 

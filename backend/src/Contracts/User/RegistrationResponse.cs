@@ -1,4 +1,4 @@
-namespace Contracts.Registration;
+namespace Contracts.User;
 
 /// <summary>
 /// Represents a command for user registration.
