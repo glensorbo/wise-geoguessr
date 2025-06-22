@@ -1,0 +1,12 @@
+POST {{host}}/user
+accept: application/json
+content-type: application/json
+
+{
+    "email": "test@email.com",
+    "password": "testpassword",
+    "confirmPassword": "testpassword",
+}
+
+
+###
