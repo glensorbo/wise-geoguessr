@@ -10,6 +10,18 @@ export type Player =
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
+    date: '2025-08-01',
+    Glen: 7332,
+    Thomas: 9290,
+    Margaux: 0,
+    Thorjan: 7287,
+    'Tor Arve': 8591,
+    Sigurd: 6197,
+    Trond: 0,
+    Lars: 0,
+    Winner: 'Thomas',
+  },
+  {
     date: '2025-06-27',
     Glen: 6795,
     Thomas: 12356,
