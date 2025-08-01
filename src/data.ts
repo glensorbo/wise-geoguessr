@@ -1,12 +1,15 @@
-export type Player =
-  | 'Glen'
-  | 'Thomas'
-  | 'Margaux'
-  | 'Sigurd'
-  | 'Thorjan'
-  | 'Tor Arve'
-  | 'Trond'
-  | 'Lars';
+export const players = [
+  'Glen',
+  'Thomas',
+  'Margaux',
+  'Sigurd',
+  'Thorjan',
+  'Tor Arve',
+  'Trond',
+  'Lars',
+] as const;
+
+export type Player = (typeof players)[number];
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
@@ -263,6 +266,40 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   },
 ];
 
+/**
+ * Get information about player performance on the basis of rounds they
+ * actually played in
+ */
+export const getPerPlayedRoundDetails = () => {
+  const base = { pointsPerPlayed: 0, roundsPlayed: 0, totalPoints: 0 };
+  const details: {
+    name: Player;
+    /** Average number of points per round played */
+    pointsPerPlayed: number;
+    /** Total number of rounds played */
+    roundsPlayed: number;
+    /** Total number of points across all games */
+    totalPoints: number;
+  }[] = players.map((p) => ({ name: p, ...base }));
+  for (const d of data) {
+    for (const detail of details) {
+      const points = d[detail.name];
+      if (typeof points !== 'number') continue;
+      if (points <= 0) continue;
+      detail.totalPoints += points;
+      detail.roundsPlayed += 1;
+    }
+  }
+
+  for (const detail of details) {
+    // Avoid dividing by zero in general
+    if (detail.roundsPlayed === 0) continue;
+    detail.pointsPerPlayed = Math.round(detail.totalPoints / detail.roundsPlayed);
+  }
+
+  return details.toSorted((a, b) => b.pointsPerPlayed - a.pointsPerPlayed);
+};
+
 export const getPlayerDetails = () => {
   const details: {
     name: string;
@@ -320,6 +357,8 @@ export const getPlayerDetails = () => {
       }
     }
   }
+
+  details.sort((a, b) => b.won - a.won);
 
   return { details, points };
 };

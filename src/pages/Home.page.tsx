@@ -1,9 +1,10 @@
 import { BarChart, LineChart } from '@mantine/charts';
 import { Flex, Table, Title } from '@mantine/core';
-import { data, getPlayerDetails, Player } from '@/data';
+import { data, getPerPlayedRoundDetails, getPlayerDetails, Player } from '@/data';
 
 export const HomePage = () => {
   const { details, points } = getPlayerDetails();
+  const perPlayedDetails = getPerPlayedRoundDetails();
 
   const chartSeries: { name: Player; color: string }[] = [
     { name: 'Glen', color: 'pink.6' },
@@ -68,6 +69,16 @@ export const HomePage = () => {
           { name: 'played', color: 'violet.6', label: 'Played' },
           { name: 'won', color: 'green.8', label: 'Won' },
         ]}
+      />
+      <Title>Points per round played</Title>
+      <BarChart
+        h={300}
+        w="40%"
+        data={perPlayedDetails}
+        withLegend
+        legendProps={{ verticalAlign: 'bottom', height: 50 }}
+        dataKey="name"
+        series={[{ name: 'pointsPerPlayed', color: 'violet.6', label: 'Points' }]}
       />
       <Title>Accumulated points over time</Title>
       <LineChart
