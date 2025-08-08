@@ -13,6 +13,18 @@ export type Player = (typeof players)[number];
 
 export const data: Record<'date' | Player | 'Winner', string | number>[] = [
   {
+    date: '2025-08-08',
+    Glen: 0,
+    Thomas: 17472,
+    Margaux: 7909,
+    Thorjan: 12731,
+    'Tor Arve': 14464,
+    Sigurd: 8585,
+    Trond: 0,
+    Lars: 10658,
+    Winner: 'Thomas',
+  },
+  {
     date: '2025-08-01',
     Glen: 7332,
     Thomas: 9290,
