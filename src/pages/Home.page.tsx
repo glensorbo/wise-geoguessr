@@ -15,6 +15,7 @@ export const HomePage = () => {
     { name: 'Trond', color: 'yellow.6' },
     { name: 'Lars', color: 'orange.6' },
     { name: 'Sigurd', color: 'violet.6' },
+    { name: 'Malin', color: 'grape.6' },
   ];
 
   chartSeries.sort((a, b) => a.name.localeCompare(b.name));
