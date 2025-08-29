@@ -12,10 +12,16 @@ export const players = [
 
 export type Player = (typeof players)[number];
 
-/** An object containing a zero score for all players, used as a baseline */
-const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player, number>;
-
-export const data: (Record<'date' | 'Winner', string> & Partial<Record<Player, number>>)[] = [
+export const data: ({ date: string; Winner: string } & Partial<Record<Player, number>>)[] = [
+  {
+    date: '2025-08-29',
+    Thomas: 20613,
+    Thorjan: 17042,
+    Malin: 13386,
+    Sigurd: 12898,
+    'Tor Arve': 10240,
+    Winner: 'Thomas',
+  },
   {
     date: '2025-08-22',
     Thomas: 8863,
@@ -235,7 +241,12 @@ export const data: (Record<'date' | 'Winner', string> & Partial<Record<Player, n
     'Tor Arve': 11847,
     Winner: 'Margaux',
   },
-].map((v) => ({ ...allZeros, ...v }));
+];
+
+/** An object containing a zero score for all players, used as a baseline */
+const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player, number>;
+
+const playerData = data.map((v) => ({ ...allZeros, ...v }));
 
 /**
  * Get information about player performance on the basis of rounds they
@@ -252,7 +263,7 @@ export const getPerPlayedRoundDetails = () => {
     /** Total number of points across all games */
     totalPoints: number;
   }[] = players.map((p) => ({ name: p, ...base }));
-  for (const d of data) {
+  for (const d of playerData) {
     for (const detail of details) {
       const points = d[detail.name];
       if (typeof points !== 'number') continue;
@@ -279,7 +290,7 @@ export const getPlayerDetails = () => {
     points: { name: string; date: string; total: number }[];
   }[] = players.map((p) => ({ name: p, won: 0, played: 0, points: [] }));
 
-  const sortedData = data.toSorted(
+  const sortedData = playerData.toSorted(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
