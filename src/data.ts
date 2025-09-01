@@ -233,7 +233,6 @@ const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player
 
 export const playerData = data.map((v) => {
   const winner = getWinner(v);
-  console.log({ winner, v });
   return { ...allZeros, ...v, winner };
 });
 
