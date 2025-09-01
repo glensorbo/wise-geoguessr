@@ -7,94 +7,84 @@ export const players = [
   'Tor Arve',
   'Trond',
   'Lars',
+  'Malin',
 ] as const;
 
 export type Player = (typeof players)[number];
 
-export const data: Record<'date' | Player | 'Winner', string | number>[] = [
+const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
+  {
+    date: '2025-08-29',
+    Thomas: 20613,
+    Thorjan: 17042,
+    Malin: 13386,
+    Sigurd: 12898,
+    'Tor Arve': 10240,
+  },
+  {
+    date: '2025-08-22',
+    Thomas: 8863,
+    Malin: 7910,
+    Thorjan: 5967,
+    Sigurd: 5331,
+    'Tor Arve': 5034,
+    Lars: 3316,
+  },
   {
     date: '2025-08-14',
-    Glen: 0,
     Thomas: 14095,
     Margaux: 12871,
     Thorjan: 14473,
     'Tor Arve': 16943,
     Sigurd: 17296,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Sigurd',
   },
   {
     date: '2025-08-08',
-    Glen: 0,
     Thomas: 17472,
     Margaux: 7909,
     Thorjan: 12731,
     'Tor Arve': 14464,
     Sigurd: 8585,
-    Trond: 0,
     Lars: 10658,
-    Winner: 'Thomas',
   },
   {
     date: '2025-08-01',
     Glen: 7332,
     Thomas: 9290,
-    Margaux: 0,
     Thorjan: 7287,
     'Tor Arve': 8591,
     Sigurd: 6197,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thomas',
   },
   {
     date: '2025-06-27',
     Glen: 6795,
     Thomas: 12356,
-    Margaux: 0,
-    Thorjan: 0,
     'Tor Arve': 10774,
     Sigurd: 373,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thomas',
   },
   {
     date: '2025-06-20',
     Glen: 11426,
     Thomas: 15835,
-    Margaux: 0,
     Thorjan: 12917,
     'Tor Arve': 17891,
     Sigurd: 9051,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-06-06',
     Glen: 10881,
     Thomas: 15818,
-    Margaux: 0,
     Thorjan: 14737,
     'Tor Arve': 14206,
-    Sigurd: 0,
-    Trond: 0,
     Lars: 9721,
-    Winner: 'Thomas',
   },
   {
     date: '2025-05-30',
     Glen: 10292,
     Thomas: 8660,
-    Margaux: 0,
     Thorjan: 10188,
-    'Tor Arve': 0,
     Sigurd: 5528,
-    Trond: 0,
     Lars: 3978,
-    Winner: 'Glen',
   },
   {
     date: '2025-05-23',
@@ -104,21 +94,15 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 16194,
     'Tor Arve': 8277,
     Sigurd: 3362,
-    Trond: 0,
     Lars: 6596,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-05-16',
     Glen: 15500,
     Thomas: 19693,
-    Margaux: 0,
-    Thorjan: 0,
     'Tor Arve': 17038,
     Sigurd: 16174,
-    Trond: 0,
     Lars: 12087,
-    Winner: 'Thomas',
   },
   {
     date: '2025-05-09',
@@ -128,57 +112,37 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 16319,
     'Tor Arve': 19665,
     Sigurd: 14034,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-05-02',
     Glen: 15924,
     Thomas: 20236,
-    Margaux: 0,
     Thorjan: 17911,
     'Tor Arve': 15678,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thomas',
   },
   {
     date: '2025-04-11',
     Glen: 9220,
     Thomas: 9553,
-    Margaux: 0,
     Thorjan: 16244,
     'Tor Arve': 17601,
     Sigurd: 1865,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-03-28',
     Glen: 11680,
     Thomas: 7594,
-    Margaux: 0,
     Thorjan: 16515,
     'Tor Arve': 10289,
     Sigurd: 13924,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-03-14',
-    Glen: 0,
     Thomas: 14036,
     Margaux: 19170,
     Thorjan: 13663,
     'Tor Arve': 15058,
     Sigurd: 8771,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Margaux',
   },
   {
     date: '2025-03-07',
@@ -188,9 +152,6 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 6473,
     'Tor Arve': 7460,
     Sigurd: 2673,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Glen',
   },
   {
     date: '2025-02-21',
@@ -199,22 +160,15 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Margaux: 6815,
     Thorjan: 11934,
     'Tor Arve': 10890,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-02-07',
     Glen: 13010,
     Thomas: 17557,
-    Margaux: 0,
     Thorjan: 13868,
     'Tor Arve': 13993,
     Sigurd: 14360,
     Trond: 8134,
-    Lars: 0,
-    Winner: 'Thomas',
   },
   {
     date: '2025-01-31',
@@ -224,9 +178,6 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thorjan: 13521,
     'Tor Arve': 7100,
     Sigurd: 7006,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Margaux',
   },
   {
     date: '2025-01-17',
@@ -234,11 +185,6 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thomas: 14912,
     Margaux: 17455,
     Thorjan: 18254,
-    'Tor Arve': 0,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-01-10',
@@ -247,10 +193,6 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Margaux: 11496,
     Thorjan: 12130,
     'Tor Arve': 9762,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Daniel',
   },
   {
     date: '2024-12-06',
@@ -259,10 +201,6 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Margaux: 11038,
     Thorjan: 20633,
     'Tor Arve': 14877,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Thorjan',
   },
   {
     date: '2024-11-29',
@@ -270,25 +208,33 @@ export const data: Record<'date' | Player | 'Winner', string | number>[] = [
     Thomas: 7825,
     Margaux: 9324,
     Thorjan: 11426,
-    'Tor Arve': 0,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Glen',
   },
   {
     date: '2024-11-22',
-    Glen: 0,
     Thomas: 8315,
     Margaux: 13558,
     Thorjan: 11363,
     'Tor Arve': 11847,
-    Sigurd: 0,
-    Trond: 0,
-    Lars: 0,
-    Winner: 'Margaux',
   },
 ];
+
+const getWinner = (d: Record<string, unknown>) => {
+  const entries = Object.entries(d).toSorted(([, a], [, b]) => {
+    if (typeof a !== 'number' && typeof b !== 'number') return 0;
+    if (typeof a !== 'number') return 1;
+    if (typeof b !== 'number') return -1;
+    return b - a;
+  });
+  return entries.at(0)?.[0];
+};
+
+/** An object containing a zero score for all players, used as a baseline */
+const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player, number>;
+
+export const playerData = data.map((v) => {
+  const winner = getWinner(v);
+  return { ...allZeros, ...v, winner };
+});
 
 /**
  * Get information about player performance on the basis of rounds they
@@ -305,7 +251,7 @@ export const getPerPlayedRoundDetails = () => {
     /** Total number of points across all games */
     totalPoints: number;
   }[] = players.map((p) => ({ name: p, ...base }));
-  for (const d of data) {
+  for (const d of playerData) {
     for (const detail of details) {
       const points = d[detail.name];
       if (typeof points !== 'number') continue;
@@ -326,30 +272,24 @@ export const getPerPlayedRoundDetails = () => {
 
 export const getPlayerDetails = () => {
   const details: {
-    name: string;
+    name: Player;
     played: number;
     won: number;
     points: { name: string; date: string; total: number }[];
-  }[] = [
-    { name: 'Glen', won: 0, played: 0, points: [] },
-    { name: 'Thomas', won: 0, played: 0, points: [] },
-    { name: 'Thorjan', won: 0, played: 0, points: [] },
-    { name: 'Margaux', won: 0, played: 0, points: [] },
-    { name: 'Tor Arve', won: 0, played: 0, points: [] },
-    { name: 'Trond', won: 0, played: 0, points: [] },
-    { name: 'Sigurd', won: 0, played: 0, points: [] },
-    { name: 'Lars', won: 0, played: 0, points: [] },
-  ];
-  for (const d of data.toSorted(
+  }[] = players.map((p) => ({ name: p, won: 0, played: 0, points: [] }));
+
+  const sortedData = playerData.toSorted(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-  )) {
+  );
+
+  for (const d of sortedData) {
     for (const [key, value] of Object.entries(d)) {
       const player = details.find((d) => d.name === key);
       if (!player) {
         continue;
       }
 
-      if (player.name === d.Winner) {
+      if (player.name === d.winner) {
         player.won += 1;
       }
 

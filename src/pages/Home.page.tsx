@@ -1,6 +1,6 @@
 import { BarChart, LineChart } from '@mantine/charts';
 import { Flex, Table, Title } from '@mantine/core';
-import { data, getPerPlayedRoundDetails, getPlayerDetails, Player } from '@/data';
+import { getPerPlayedRoundDetails, getPlayerDetails, Player, playerData } from '@/data';
 
 export const HomePage = () => {
   const { details, points } = getPlayerDetails();
@@ -15,11 +15,12 @@ export const HomePage = () => {
     { name: 'Trond', color: 'yellow.6' },
     { name: 'Lars', color: 'orange.6' },
     { name: 'Sigurd', color: 'violet.6' },
+    { name: 'Malin', color: 'grape.6' },
   ];
 
   chartSeries.sort((a, b) => a.name.localeCompare(b.name));
 
-  const rows = data.map((el) => (
+  const rows = playerData.map((el) => (
     <Table.Tr key={el.date}>
       <Table.Th>{el.date}</Table.Th>
       {chartSeries.map((s) => (
@@ -48,7 +49,9 @@ export const HomePage = () => {
       <LineChart
         h={300}
         w="75%"
-        data={data.toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())}
+        data={playerData.toSorted(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )}
         dataKey="date"
         curveType="natural"
         tickLine="x"
