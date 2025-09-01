@@ -12,7 +12,7 @@ export const players = [
 
 export type Player = (typeof players)[number];
 
-export const data: ({ date: string; Winner: string } & Partial<Record<Player, number>>)[] = [
+const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
   {
     date: '2025-08-29',
     Thomas: 20613,
@@ -20,7 +20,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Malin: 13386,
     Sigurd: 12898,
     'Tor Arve': 10240,
-    Winner: 'Thomas',
   },
   {
     date: '2025-08-22',
@@ -30,7 +29,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Sigurd: 5331,
     'Tor Arve': 5034,
     Lars: 3316,
-    Winner: 'Thomas',
   },
   {
     date: '2025-08-14',
@@ -39,7 +37,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 14473,
     'Tor Arve': 16943,
     Sigurd: 17296,
-    Winner: 'Sigurd',
   },
   {
     date: '2025-08-08',
@@ -49,7 +46,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     'Tor Arve': 14464,
     Sigurd: 8585,
     Lars: 10658,
-    Winner: 'Thomas',
   },
   {
     date: '2025-08-01',
@@ -58,7 +54,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 7287,
     'Tor Arve': 8591,
     Sigurd: 6197,
-    Winner: 'Thomas',
   },
   {
     date: '2025-06-27',
@@ -66,7 +61,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thomas: 12356,
     'Tor Arve': 10774,
     Sigurd: 373,
-    Winner: 'Thomas',
   },
   {
     date: '2025-06-20',
@@ -75,7 +69,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 12917,
     'Tor Arve': 17891,
     Sigurd: 9051,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-06-06',
@@ -84,7 +77,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 14737,
     'Tor Arve': 14206,
     Lars: 9721,
-    Winner: 'Thomas',
   },
   {
     date: '2025-05-30',
@@ -93,7 +85,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 10188,
     Sigurd: 5528,
     Lars: 3978,
-    Winner: 'Glen',
   },
   {
     date: '2025-05-23',
@@ -104,7 +95,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     'Tor Arve': 8277,
     Sigurd: 3362,
     Lars: 6596,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-05-16',
@@ -113,7 +103,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     'Tor Arve': 17038,
     Sigurd: 16174,
     Lars: 12087,
-    Winner: 'Thomas',
   },
   {
     date: '2025-05-09',
@@ -123,7 +112,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 16319,
     'Tor Arve': 19665,
     Sigurd: 14034,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-05-02',
@@ -131,7 +119,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thomas: 20236,
     Thorjan: 17911,
     'Tor Arve': 15678,
-    Winner: 'Thomas',
   },
   {
     date: '2025-04-11',
@@ -140,7 +127,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 16244,
     'Tor Arve': 17601,
     Sigurd: 1865,
-    Winner: 'Tor Arve',
   },
   {
     date: '2025-03-28',
@@ -149,7 +135,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 16515,
     'Tor Arve': 10289,
     Sigurd: 13924,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-03-14',
@@ -158,7 +143,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 13663,
     'Tor Arve': 15058,
     Sigurd: 8771,
-    Winner: 'Margaux',
   },
   {
     date: '2025-03-07',
@@ -168,7 +152,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 6473,
     'Tor Arve': 7460,
     Sigurd: 2673,
-    Winner: 'Glen',
   },
   {
     date: '2025-02-21',
@@ -177,7 +160,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Margaux: 6815,
     Thorjan: 11934,
     'Tor Arve': 10890,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-02-07',
@@ -187,7 +169,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     'Tor Arve': 13993,
     Sigurd: 14360,
     Trond: 8134,
-    Winner: 'Thomas',
   },
   {
     date: '2025-01-31',
@@ -197,7 +178,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thorjan: 13521,
     'Tor Arve': 7100,
     Sigurd: 7006,
-    Winner: 'Margaux',
   },
   {
     date: '2025-01-17',
@@ -205,7 +185,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thomas: 14912,
     Margaux: 17455,
     Thorjan: 18254,
-    Winner: 'Thorjan',
   },
   {
     date: '2025-01-10',
@@ -214,7 +193,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Margaux: 11496,
     Thorjan: 12130,
     'Tor Arve': 9762,
-    Winner: 'Daniel',
   },
   {
     date: '2024-12-06',
@@ -223,7 +201,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Margaux: 11038,
     Thorjan: 20633,
     'Tor Arve': 14877,
-    Winner: 'Thorjan',
   },
   {
     date: '2024-11-29',
@@ -231,7 +208,6 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Thomas: 7825,
     Margaux: 9324,
     Thorjan: 11426,
-    Winner: 'Glen',
   },
   {
     date: '2024-11-22',
@@ -239,14 +215,27 @@ export const data: ({ date: string; Winner: string } & Partial<Record<Player, nu
     Margaux: 13558,
     Thorjan: 11363,
     'Tor Arve': 11847,
-    Winner: 'Margaux',
   },
 ];
+
+const getWinner = (d: Record<string, unknown>) => {
+  const entries = Object.entries(d).toSorted(([, a], [, b]) => {
+    if (typeof a !== 'number' && typeof b !== 'number') return 0;
+    if (typeof a !== 'number') return 1;
+    if (typeof b !== 'number') return -1;
+    return b - a;
+  });
+  return entries.at(0)?.[0];
+};
 
 /** An object containing a zero score for all players, used as a baseline */
 const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player, number>;
 
-const playerData = data.map((v) => ({ ...allZeros, ...v }));
+export const playerData = data.map((v) => {
+  const winner = getWinner(v);
+  console.log({ winner, v });
+  return { ...allZeros, ...v, winner };
+});
 
 /**
  * Get information about player performance on the basis of rounds they
@@ -301,7 +290,7 @@ export const getPlayerDetails = () => {
         continue;
       }
 
-      if (player.name === d.Winner) {
+      if (player.name === d.winner) {
         player.won += 1;
       }
 
