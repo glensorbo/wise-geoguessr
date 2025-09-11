@@ -611,15 +611,15 @@
   resolved "https://registry.yarnpkg.com/@keyv/serialize/-/serialize-1.1.0.tgz#08f5d89096110fdcf778e5337362e1cd5afad70a"
   integrity sha512-RlDgexML7Z63Q8BSaqhXdCYNBy/JQnqYIwxofUrNLGCblOMHp+xux2Q8nLMLlPpgHQPoU0Do8Z6btCpRBEqZ8g==
 
-"@mantine/charts@^8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.0.tgz#a867d77bae0312d84a9a70c80a2647efea3656f8"
-  integrity sha512-k34w0/DZKCr5lW/uEea+PX+1UYRIf2MkvhxdwYKoYtMH9BZ8GNM8p5BHljmXXHh3hOFHiiaoSlJW5eJxDfxhiA==
+"@mantine/charts@^8.3.1":
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.1.tgz#a9272702550a6ebaee82f9084630840952869f2c"
+  integrity sha512-Mb6rSbDbcL2lQmSVZA3dZfJf3734qsdN+UeZ8vAoh00e1hJEzu6hT0SUimP7G16q1yMaB+6bgN76lOQsG8vRug==
 
-"@mantine/core@8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.0.tgz#23258f713690d47590a6dd376ce3e7d3a5a705b7"
-  integrity sha512-WDKnEMkYYXrovqwKl3jHNqXWZkKS349/Btbvynldw0zierm0dJqYXNlLdPhjg9CkmTM3FFDg6MjYwlsHL8K8VQ==
+"@mantine/core@8.3.1":
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.1.tgz#11a18ac37dfcac0754b6a1ba97d8278beaf4c319"
+  integrity sha512-OYfxn9cTv+K6RZ8+Ozn/HDQXkB8Fmn+KJJt5lxyFDP9F09EHnC59Ldadv1LyUZVBGtNqz4sn6b3vBShbxwAmYw==
   dependencies:
     "@floating-ui/react" "^0.27.16"
     clsx "^2.1.1"
@@ -628,10 +628,10 @@
     react-textarea-autosize "8.5.9"
     type-fest "^4.41.0"
 
-"@mantine/hooks@8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.0.tgz#51147cccec42e951e71c0acb2b891ded336cc0e2"
-  integrity sha512-y/D8Hi4C1iEjTpjeMWKmz9QHMdPm5qQsBsRz6rpdRlVurtBhNf3DCJEtvwtmmKN1F9vBK8DDGy/OjQPUHLDqcA==
+"@mantine/hooks@8.3.1":
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.1.tgz#d2b1f5900c9107d7cd77ef2f0a4a27f97ff64725"
+  integrity sha512-lQutBS+Q0iz/cNFvdrsYassPWo3RtWcmDGJeOtKfHigLzFOhxUuLOkQgepDbMf3WcVMB/tist6Px1PQOv57JTw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
