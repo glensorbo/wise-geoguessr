@@ -659,15 +659,15 @@
   resolved "https://registry.yarnpkg.com/@keyv/serialize/-/serialize-1.1.0.tgz#08f5d89096110fdcf778e5337362e1cd5afad70a"
   integrity sha512-RlDgexML7Z63Q8BSaqhXdCYNBy/JQnqYIwxofUrNLGCblOMHp+xux2Q8nLMLlPpgHQPoU0Do8Z6btCpRBEqZ8g==
 
-"@mantine/charts@^8.3.2":
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.2.tgz#d60b3b79685bdad1a4d3ece8bd98adc3e5fac86a"
-  integrity sha512-Mcw3uWshHIhy8U2PeGw+DjZA6mAc6dC6gOqj3vzk2ngbGD//j6jxTrREnQx/iKKajHIyfpbT09rjdFGgwG6H+A==
+"@mantine/charts@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.3.tgz#343de7a6a59ac4fdcead47d0e76895904079d0ab"
+  integrity sha512-stVtHu7xSDzo2XmpcSS5jFkXptoa78hir9sv6kruDZzSI3TcpPCDqUc78Jn/kVckvA6E/L0Y+0KSEk2DB+tYgg==
 
-"@mantine/core@8.3.2":
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.2.tgz#855aa5844c2a5d1b0527951dbabdb4b62d9701ea"
-  integrity sha512-uIHC9ooEZ9E+/pw8ag4f8pi0GmwSQ1DYnETjr4a4ZNVKJHfVv5NSkjprBxPrKJq9oox/SdcrAWy5XlKTwBzRag==
+"@mantine/core@8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.3.tgz#0afd6e301a8144c3b30f8a999d7dc62a5f327e48"
+  integrity sha512-OdTAQ0lsXjEqfea0KyXJ1rV9cZb/Rtqv5l3luG2m8Sx5BTGMqXas6mKHtdj4LwIiUKeFkIkZYjNmH6ri1HXjSA==
   dependencies:
     "@floating-ui/react" "^0.27.16"
     clsx "^2.1.1"
@@ -676,10 +676,10 @@
     react-textarea-autosize "8.5.9"
     type-fest "^4.41.0"
 
-"@mantine/hooks@8.3.2":
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.2.tgz#535d93f7818f4f289e227fb46a6ed85b1f251c9e"
-  integrity sha512-urDgQJNAs2t2mAyGaA+7uNsBMRn9U/ccvi+ZUl5ef3/Wzfv5KYHe9LA9DBNhn24BTSewxrI27W0EFpFxv/Jsbg==
+"@mantine/hooks@8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.3.tgz#9a6521425c949307b6f859996da4ac604148dc50"
+  integrity sha512-nmspxbFSjFkimRXYhgAujnyBwGeAWDSP1WKHFR+Yl5x3Q0IkmsiOTE9yJPjMjmjffZfunFXQFwQDl1OF3m42Pw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1070,10 +1070,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@^24.6.1":
-  version "24.6.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.6.1.tgz#29cd365beb4419b3b8271c7464f1a563446d7481"
-  integrity sha512-ljvjjs3DNXummeIaooB4cLBKg2U6SPI6Hjra/9rRIy7CpM0HpLtG9HptkMKAb4HYWy5S7HUvJEuWgr/y0U8SHw==
+"@types/node@^24.6.2":
+  version "24.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.6.2.tgz#59b99878b6fed17e698e7d09e51c729c5877736a"
+  integrity sha512-d2L25Y4j+W3ZlNAeMKcy7yDsK425ibcAOO2t7aPTz6gNMH0z2GThtwENCDc0d/Pw9wgyRqE5Px1wkV7naz8ang==
   dependencies:
     undici-types "~7.13.0"
 
@@ -4684,10 +4684,10 @@ vite-tsconfig-paths@^5.1.4:
     globrex "^0.1.2"
     tsconfck "^3.0.3"
 
-"vite@^5.0.0 || ^6.0.0 || ^7.0.0-0", vite@^7.1.7:
-  version "7.1.7"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-7.1.7.tgz#ed3f9f06e21d6574fe1ad425f6b0912d027ffc13"
-  integrity sha512-VbA8ScMvAISJNJVbRDTJdCwqQoAareR/wutevKanhR2/1EkoXVZVkkORaYm/tNVCjP/UDTKtcw3bAkwOUdedmA==
+"vite@^5.0.0 || ^6.0.0 || ^7.0.0-0", vite@^7.1.8:
+  version "7.1.8"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-7.1.8.tgz#ff208eee01658c5b407b6a1afa9b92b25750832e"
+  integrity sha512-oBXvfSHEOL8jF+R9Am7h59Up07kVVGH1NrFGFoEG6bPDZP3tGpQhvkBpy5x7U6+E6wZCu9OihsWgJqDbQIm8LQ==
   dependencies:
     esbuild "^0.25.0"
     fdir "^6.5.0"
