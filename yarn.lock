@@ -661,15 +661,15 @@
   resolved "https://registry.yarnpkg.com/@keyv/serialize/-/serialize-1.1.0.tgz#08f5d89096110fdcf778e5337362e1cd5afad70a"
   integrity sha512-RlDgexML7Z63Q8BSaqhXdCYNBy/JQnqYIwxofUrNLGCblOMHp+xux2Q8nLMLlPpgHQPoU0Do8Z6btCpRBEqZ8g==
 
-"@mantine/charts@^8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.3.tgz#343de7a6a59ac4fdcead47d0e76895904079d0ab"
-  integrity sha512-stVtHu7xSDzo2XmpcSS5jFkXptoa78hir9sv6kruDZzSI3TcpPCDqUc78Jn/kVckvA6E/L0Y+0KSEk2DB+tYgg==
+"@mantine/charts@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.4.tgz#7bf9f93552793512ef204b5026d3675dda3b2a82"
+  integrity sha512-H+5UMsXhZI3qloOpMV3xWNKuNY5PIvsyLRKTR9GmfJN5sMgwauFF8XaiwkuluBkIcDzbY1WItPkhqAkI+eLDZA==
 
-"@mantine/core@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.3.tgz#0afd6e301a8144c3b30f8a999d7dc62a5f327e48"
-  integrity sha512-OdTAQ0lsXjEqfea0KyXJ1rV9cZb/Rtqv5l3luG2m8Sx5BTGMqXas6mKHtdj4LwIiUKeFkIkZYjNmH6ri1HXjSA==
+"@mantine/core@8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.4.tgz#39cf3810e049d7c0bb597fe1a5efbeb1352bcb69"
+  integrity sha512-RJ5QUe2FLLJ1uF8xWUpNhDqRFbaOn4S5yTjqLuaurqtZvzee85O/T90dRcR8UNDuE8e/Qqie/jsF/G9RiSxC6g==
   dependencies:
     "@floating-ui/react" "^0.27.16"
     clsx "^2.1.1"
@@ -678,10 +678,10 @@
     react-textarea-autosize "8.5.9"
     type-fest "^4.41.0"
 
-"@mantine/hooks@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.3.tgz#9a6521425c949307b6f859996da4ac604148dc50"
-  integrity sha512-nmspxbFSjFkimRXYhgAujnyBwGeAWDSP1WKHFR+Yl5x3Q0IkmsiOTE9yJPjMjmjffZfunFXQFwQDl1OF3m42Pw==
+"@mantine/hooks@8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.4.tgz#713684165e01666186dd9b3bcfd995c6c1770103"
+  integrity sha512-zsgFa9yzJ4tz0BZmI+yAjI3uNEe6SoQHZlXmvDNXuWrWImpl6Zhoxxr/oVaISB4+KZJd3pRPajklQ+CETrMdhg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1072,10 +1072,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@^24.7.0":
-  version "24.7.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.7.0.tgz#a34c9f0d3401db396782e440317dd5d8373c286f"
-  integrity sha512-IbKooQVqUBrlzWTi79E8Fw78l8k1RNtlDDNWsFZs7XonuQSJ8oNYfEeclhprUldXISRMLzBpILuKgPlIxm+/Yw==
+"@types/node@^24.7.1":
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.7.1.tgz#3f0b17eddcd965c9e337af22459b04bafbf96e5e"
+  integrity sha512-CmyhGZanP88uuC5GpWU9q+fI61j2SkhO3UGMUdfYRE6Bcy0ccyzn1Rqj9YAB/ZY4kOXmNf0ocah5GtphmLMP6Q==
   dependencies:
     undici-types "~7.14.0"
 
