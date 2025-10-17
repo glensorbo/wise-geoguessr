@@ -5,14 +5,23 @@ export const players = [
   'Sigurd',
   'Thorjan',
   'Tor Arve',
-  'Trond',
-  'Lars',
   'Malin',
+  'Eirik',
 ] as const;
 
 export type Player = (typeof players)[number];
 
 const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
+  {
+    date: '2025-10-17',
+    Thomas: 13476,
+    Thorjan: 11608,
+    Malin: 12059,
+    Glen: 18361,
+    Sigurd: 14827,
+    'Tor Arve': 20210,
+    Eirik: 15598,
+  },
   {
     date: '2025-10-10',
     Thomas: 14456,
@@ -21,6 +30,7 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Glen: 10182,
     Sigurd: 5653,
     'Tor Arve': 15994,
+    Eirik: 14926,
   },
   {
     date: '2025-09-26',
@@ -73,7 +83,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thorjan: 5967,
     Sigurd: 5331,
     'Tor Arve': 5034,
-    Lars: 3316,
   },
   {
     date: '2025-08-14',
@@ -90,7 +99,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thorjan: 12731,
     'Tor Arve': 14464,
     Sigurd: 8585,
-    Lars: 10658,
   },
   {
     date: '2025-08-01',
@@ -121,7 +129,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thomas: 15818,
     Thorjan: 14737,
     'Tor Arve': 14206,
-    Lars: 9721,
   },
   {
     date: '2025-05-30',
@@ -129,7 +136,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thomas: 8660,
     Thorjan: 10188,
     Sigurd: 5528,
-    Lars: 3978,
   },
   {
     date: '2025-05-23',
@@ -139,7 +145,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thorjan: 16194,
     'Tor Arve': 8277,
     Sigurd: 3362,
-    Lars: 6596,
   },
   {
     date: '2025-05-16',
@@ -147,7 +152,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thomas: 19693,
     'Tor Arve': 17038,
     Sigurd: 16174,
-    Lars: 12087,
   },
   {
     date: '2025-05-09',
@@ -213,7 +217,6 @@ const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
     Thorjan: 13868,
     'Tor Arve': 13993,
     Sigurd: 14360,
-    Trond: 8134,
   },
   {
     date: '2025-01-31',
