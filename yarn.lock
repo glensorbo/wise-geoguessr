@@ -901,6 +901,11 @@
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-9.1.13.tgz#52f9c293639bfd6e6aa80062aecb13e8f1a12b9e"
   integrity sha512-/tMr9TmV3+98GEQO0S03k4gtKHGCpv9+k9Dmnv+TJK3TBz7QsaFEzMwe3gCgoTaebLACyVveDiZkWnCYAWB6NA==
 
+"@storybook/react-dom-shim@9.1.16":
+  version "9.1.16"
+  resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-9.1.16.tgz#c98298b1f08e699f1a06483c42fdfc4864cf4493"
+  integrity sha512-MsI4qTxdT6lMXQmo3IXhw3EaCC+vsZboyEZBx4pOJ+K/5cDJ6ZoQ3f0d4yGpVhumDxaxlnNAg954+f8WWXE1rQ==
+
 "@storybook/react-vite@^9.1.13":
   version "9.1.13"
   resolved "https://registry.yarnpkg.com/@storybook/react-vite/-/react-vite-9.1.13.tgz#1b36c41a69c4b3bc2bcaa00532a754f58b15df8f"
@@ -916,13 +921,21 @@
     resolve "^1.22.8"
     tsconfig-paths "^4.2.0"
 
-"@storybook/react@9.1.13", "@storybook/react@^9.1.13":
+"@storybook/react@9.1.13":
   version "9.1.13"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-9.1.13.tgz#b52f20ccfb294112671dae2a6bafd2305d372a93"
   integrity sha512-B0UpYikKf29t8QGcdmumWojSQQ0phSDy/Ne2HYdrpNIxnUvHHUVOlGpq4lFcIDt52Ip5YG5GuAwJg3+eR4LCRg==
   dependencies:
     "@storybook/global" "^5.0.0"
     "@storybook/react-dom-shim" "9.1.13"
+
+"@storybook/react@^9.1.16":
+  version "9.1.16"
+  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-9.1.16.tgz#38f8b4bdb7060575171183af2737198fe03aa2b6"
+  integrity sha512-M/SkHJJdtiGpodBJq9+DYmSkEOD+VqlPxKI+FvbHESTNs//1IgqFIjEWetd8quhd9oj/gvo4ICBAPu+UmD6M9w==
+  dependencies:
+    "@storybook/global" "^5.0.0"
+    "@storybook/react-dom-shim" "9.1.16"
 
 "@storybook/theming@^8.0.0":
   version "8.6.14"
