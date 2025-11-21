@@ -880,12 +880,12 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@storybook/builder-vite@9.1.13":
-  version "9.1.13"
-  resolved "https://registry.yarnpkg.com/@storybook/builder-vite/-/builder-vite-9.1.13.tgz#49a1c2dce93387b19529f4ac49afa597f50ca22c"
-  integrity sha512-pmtIjU02ASJOZKdL8DoxWXJgZnpTDgD5WmMnjKJh9FaWmc2YiCW2Y6VRxPox96OM655jYHQe5+UIbk3Cwtwb4A==
+"@storybook/builder-vite@10.0.8":
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/@storybook/builder-vite/-/builder-vite-10.0.8.tgz#de8b56a7ba0eb5fb7033566e1fe858814d831e5d"
+  integrity sha512-kaf/pUENzXxYgQMHGGPNiIk1ieb+SOMuSeLKx8wAUOlQOrzhtSH+ItACW/l43t+O6YZ8jYHoNBMF1kdQ1+Y5+w==
   dependencies:
-    "@storybook/csf-plugin" "9.1.13"
+    "@storybook/csf-plugin" "10.0.8"
     ts-dedent "^2.0.0"
 
 "@storybook/components@^8.0.0":
@@ -898,12 +898,12 @@
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-8.6.12.tgz#dda61eece638faf95d4dfc30b40489911faa5fdd"
   integrity sha512-j2MUlSfYOhTsjlruRWTqSVwYreJGFIsWeqHFAhCdtmXe3qpFBM/LuxTKuaM1uWvs6vEAyGEzDw8+DXwuO6uISg==
 
-"@storybook/csf-plugin@9.1.13":
-  version "9.1.13"
-  resolved "https://registry.yarnpkg.com/@storybook/csf-plugin/-/csf-plugin-9.1.13.tgz#a40084bba49740f7d56d0dfb12854751fded3e33"
-  integrity sha512-EMpzYuyt9FDcxxfBChWzfId50y8QMpdenviEQ8m+pa6c+ANx3pC5J6t7y0khD8TQu815sTy+nc6cc8PC45dPUA==
+"@storybook/csf-plugin@10.0.8":
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/@storybook/csf-plugin/-/csf-plugin-10.0.8.tgz#ed5e41c7c963770ff97209728ea5e5495d08a1bc"
+  integrity sha512-OtLUWHIm3SDGtclQn6Mdd/YsWizLBgdEBRAdekGtwI/TvICfT7gpWYIycP53v2t9ufu2MIXjsxtV2maZKs8sZg==
   dependencies:
-    unplugin "^1.3.1"
+    unplugin "^2.3.5"
 
 "@storybook/global@^5.0.0":
   version "5.0.0"
@@ -920,38 +920,38 @@
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-8.6.14.tgz#1e0740193fbfd4a66e9ff5f75c7f976e16028752"
   integrity sha512-ez0Zihuy17udLbfHZQXkGqwtep0mSGgHcNzGN7iZrMP1m+VmNo+7aGCJJdvXi7+iU3yq8weXSQFWg5DqWgLS7g==
 
-"@storybook/react-dom-shim@9.1.13":
-  version "9.1.13"
-  resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-9.1.13.tgz#52f9c293639bfd6e6aa80062aecb13e8f1a12b9e"
-  integrity sha512-/tMr9TmV3+98GEQO0S03k4gtKHGCpv9+k9Dmnv+TJK3TBz7QsaFEzMwe3gCgoTaebLACyVveDiZkWnCYAWB6NA==
+"@storybook/react-dom-shim@10.0.8":
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-10.0.8.tgz#9f5a430f64fa4f9aa29626bfe7bb4461767cf85e"
+  integrity sha512-ojuH22MB9Sz6rWbhTmC5IErZr0ZADbZijtPteUdydezY7scORT00UtbNoBcG0V6iVjdChgDtSKw2KHUUfchKqg==
 
 "@storybook/react-dom-shim@9.1.16":
   version "9.1.16"
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-9.1.16.tgz#c98298b1f08e699f1a06483c42fdfc4864cf4493"
   integrity sha512-MsI4qTxdT6lMXQmo3IXhw3EaCC+vsZboyEZBx4pOJ+K/5cDJ6ZoQ3f0d4yGpVhumDxaxlnNAg954+f8WWXE1rQ==
 
-"@storybook/react-vite@^9.1.13":
-  version "9.1.13"
-  resolved "https://registry.yarnpkg.com/@storybook/react-vite/-/react-vite-9.1.13.tgz#1b36c41a69c4b3bc2bcaa00532a754f58b15df8f"
-  integrity sha512-mV1bZ1bpkNQygnuDo1xMGAS5ZXuoXFF0WGmr/BzNDGmRhZ1K1HQh42kC0w3PklckFBUwCFxmP58ZwTFzf+/dJA==
+"@storybook/react-vite@^10.0.8":
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/@storybook/react-vite/-/react-vite-10.0.8.tgz#01b99e51ba2a161ea5323b11af495171d76d0958"
+  integrity sha512-HS2X4qlitrZr3/sN2+ollxAaNE813IasZRE8lOez1Ey1ISGBtYIb9rmJs82MK35+yDM0pHdiDjkFMD4SkNYh2g==
   dependencies:
     "@joshwooding/vite-plugin-react-docgen-typescript" "0.6.1"
     "@rollup/pluginutils" "^5.0.2"
-    "@storybook/builder-vite" "9.1.13"
-    "@storybook/react" "9.1.13"
-    find-up "^7.0.0"
+    "@storybook/builder-vite" "10.0.8"
+    "@storybook/react" "10.0.8"
+    empathic "^2.0.0"
     magic-string "^0.30.0"
     react-docgen "^8.0.0"
     resolve "^1.22.8"
     tsconfig-paths "^4.2.0"
 
-"@storybook/react@9.1.13":
-  version "9.1.13"
-  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-9.1.13.tgz#b52f20ccfb294112671dae2a6bafd2305d372a93"
-  integrity sha512-B0UpYikKf29t8QGcdmumWojSQQ0phSDy/Ne2HYdrpNIxnUvHHUVOlGpq4lFcIDt52Ip5YG5GuAwJg3+eR4LCRg==
+"@storybook/react@10.0.8":
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-10.0.8.tgz#924689fabc27e07a62153122612d479537541605"
+  integrity sha512-PkuPb8sAqmjjkowSzm3rutiSuETvZI2F8SnjbHE6FRqZWWK4iFoaUrQbrg5kpPAtX//xIrqkdFwlbmQ3skhiPA==
   dependencies:
     "@storybook/global" "^5.0.0"
-    "@storybook/react-dom-shim" "9.1.13"
+    "@storybook/react-dom-shim" "10.0.8"
 
 "@storybook/react@^9.1.16":
   version "9.1.16"
@@ -1364,11 +1364,6 @@ acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
   integrity sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==
-
-acorn@^8.14.0:
-  version "8.14.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.14.1.tgz#721d5dc10f7d5b5609a891773d47731796935dfb"
-  integrity sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==
 
 acorn@^8.15.0:
   version "8.15.0"
@@ -2032,6 +2027,11 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
+empathic@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/empathic/-/empathic-2.0.0.tgz#71d3c2b94fad49532ef98a6c34be0386659f6131"
+  integrity sha512-i6UzDscO/XfAcNYD75CfICkmfLedpyPDdozrLMmQc5ORaQcdMoc21OnlEylMIqI7U8eniKrPMxxtj8k0vhmJhA==
+
 entities@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-6.0.0.tgz#09c9e29cb79b0a6459a9b9db9efb418ac5bb8e51"
@@ -2473,15 +2473,6 @@ find-up@^5.0.0:
   dependencies:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
-
-find-up@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/find-up/-/find-up-7.0.0.tgz#e8dec1455f74f78d888ad65bf7ca13dd2b4e66fb"
-  integrity sha512-YyZM99iHrqLKjmt4LJDj58KI+fYyufRLBSYcqycxf//KpBk9FoewoGX0450m9nB44qrZnovzC2oeP5hUibxc/g==
-  dependencies:
-    locate-path "^7.2.0"
-    path-exists "^5.0.0"
-    unicorn-magic "^0.1.0"
 
 flat-cache@^4.0.0:
   version "4.0.1"
@@ -3208,13 +3199,6 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-locate-path@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-7.2.0.tgz#69cb1779bd90b35ab1e771e1f2f89a202c2a8a8a"
-  integrity sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==
-  dependencies:
-    p-locate "^6.0.0"
-
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -3474,26 +3458,12 @@ p-limit@^3.0.2:
   dependencies:
     yocto-queue "^0.1.0"
 
-p-limit@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-4.0.0.tgz#914af6544ed32bfa54670b061cafcbd04984b644"
-  integrity sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==
-  dependencies:
-    yocto-queue "^1.0.0"
-
 p-locate@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-5.0.0.tgz#83c8315c6785005e3bd021839411c9e110e6d834"
   integrity sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
   dependencies:
     p-limit "^3.0.2"
-
-p-locate@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-6.0.0.tgz#3da9a49d4934b901089dca3302fa65dc5a05c04f"
-  integrity sha512-wPrq66Llhl7/4AGC6I+cqxT07LhXvWL08LNXz1fENOw0Ap4sRZZ/gZpTTJ5jpurzzzfS2W/Ge9BY3LgLjCShcw==
-  dependencies:
-    p-limit "^4.0.0"
 
 package-json-from-dist@^1.0.0:
   version "1.0.1"
@@ -3528,11 +3498,6 @@ path-exists@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-4.0.0.tgz#513bdbe2d3b95d7762e8c1137efa195c6c61b5b3"
   integrity sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==
-
-path-exists@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-5.0.0.tgz#a6aad9489200b21fab31e49cf09277e5116fb9e7"
-  integrity sha512-RjhtfwJOxzcFmNOi6ltcbcu4Iu+FL3zEj83dk4kAS+fVpTxXLO1b38RvJgT/0QwvV/L3aY9TAnyv0EOqW4GoMQ==
 
 path-key@^3.1.0:
   version "3.1.1"
@@ -4651,17 +4616,14 @@ undici-types@~7.16.0:
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.16.0.tgz#ffccdff36aea4884cbfce9a750a0580224f58a46"
   integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
 
-unicorn-magic@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/unicorn-magic/-/unicorn-magic-0.1.0.tgz#1bb9a51c823aaf9d73a8bfcd3d1a23dde94b0ce4"
-  integrity sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==
-
-unplugin@^1.3.1:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-1.16.1.tgz#a844d2e3c3b14a4ac2945c42be80409321b61199"
-  integrity sha512-4/u/j4FrCKdi17jaxuJA0jClGxB1AvU2hw/IuayPc4ay1XGaJs/rbb4v5WKwAjNifjmXK9PIFyuPiaK8azyR9w==
+unplugin@^2.3.5:
+  version "2.3.10"
+  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-2.3.10.tgz#15e75fec9384743335be7e54e5c88b5c187a3e94"
+  integrity sha512-6NCPkv1ClwH+/BGE9QeoTIl09nuiAt0gS28nn1PvYXsGKRwM2TCbFA2QiilmehPDTXIe684k4rZI1yl3A1PCUw==
   dependencies:
-    acorn "^8.14.0"
+    "@jridgewell/remapping" "^2.3.5"
+    acorn "^8.15.0"
+    picomatch "^4.0.3"
     webpack-virtual-modules "^0.6.2"
 
 update-browserslist-db@^1.1.3:
@@ -4957,8 +4919,3 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-yocto-queue@^1.0.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-1.2.1.tgz#36d7c4739f775b3cbc28e6136e21aa057adec418"
-  integrity sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==
