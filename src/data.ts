@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export const players = [
   'Glen',
   'Thomas',
@@ -13,6 +15,15 @@ export const players = [
 export type Player = (typeof players)[number];
 
 const data: ({ date: string } & Partial<Record<Player, number>>)[] = [
+  {
+    date: '2026-01-09',
+    Thomas: 14491,
+    Glen: 16423,
+    Thorjan: 13327,
+    Sigurd: 9950,
+    Lotte: 10383,
+    'Tor Arve': 15589,
+  },
   {
     date: '2025-12-19',
     Thomas: 19075,
@@ -345,10 +356,12 @@ const getWinner = (d: Record<string, unknown>) => {
 /** An object containing a zero score for all players, used as a baseline */
 const allZeros = Object.fromEntries(players.map((p) => [p, 0])) as Record<Player, number>;
 
-export const playerData = data.map((v) => {
-  const winner = getWinner(v);
-  return { ...allZeros, ...v, winner };
-});
+export const playerData = data
+  .filter((d) => dayjs(d.date).year() === dayjs().year())
+  .map((v) => {
+    const winner = getWinner(v);
+    return { ...allZeros, ...v, winner };
+  });
 
 /**
  * Get information about player performance on the basis of rounds they
