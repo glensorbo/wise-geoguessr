@@ -620,15 +620,15 @@
   resolved "https://registry.yarnpkg.com/@keyv/serialize/-/serialize-1.1.1.tgz#0c01dd3a3483882af7cf3878d4e71d505c81fc4a"
   integrity sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==
 
-"@mantine/charts@^8.3.11":
-  version "8.3.11"
-  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.11.tgz#b792edd21c691e8a3664a4971878c714cffcc206"
-  integrity sha512-ycwiUEesmS8BCiR3gA2RtHX2VhSnv9h2zrN0VJKFWA9BA2dWBRKaFEtL8XHMP8oThkTL7KLZXD3keN6uwrHtRA==
+"@mantine/charts@^8.3.12":
+  version "8.3.12"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-8.3.12.tgz#1f039a488faf0116983891ceaf269d01eb2e2950"
+  integrity sha512-IOPlbw6MTR0xFhqYtcky4hYoN77q4O2fxepcR5UgVW2kE0Ucae+Ln+TgOcpwFYZgvretSbyYDIBhmZoJ8z0ceQ==
 
-"@mantine/core@8.3.11":
-  version "8.3.11"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.11.tgz#92611834fd675d333f229454c552d79dcd445efe"
-  integrity sha512-FWXp94tiTFdh8BKc7UTNdIuumD96JFxLF/VvUWGRzf5i563Ye0Ma/aZtOBwpdEtdIQkojOhoMMV76k5toOQgEQ==
+"@mantine/core@8.3.12":
+  version "8.3.12"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-8.3.12.tgz#84e6c3394f4495ab57019ba2d1f42bb940d6e916"
+  integrity sha512-bDEoUl4SneltfI1GeEaBk6BVDbLuB/w15YwseAmUvc8ldAbNcsVhxKxY/BdhwqUo6O3L2vhdlb3WwxR1y8741g==
   dependencies:
     "@floating-ui/react" "^0.27.16"
     clsx "^2.1.1"
@@ -637,10 +637,10 @@
     react-textarea-autosize "8.5.9"
     type-fest "^4.41.0"
 
-"@mantine/hooks@8.3.11":
-  version "8.3.11"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.11.tgz#c7856f05b09720a5791da4b3c19dfb2584266ee2"
-  integrity sha512-WJFKDnJJM2fAOCkrO8qRsi3wDdicSFqElruPj5TEYWDL93vl0pITOyN0oRF93bUtx190waqela3edfGH3r5/1g==
+"@mantine/hooks@8.3.12":
+  version "8.3.12"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-8.3.12.tgz#8cedb8e5a51dc1274f73c7147cfcd3763bec03c2"
+  integrity sha512-lMMDzDewd3lUNtJCAHDj3g8On9X5aBl4q6EBwgOixKQSby9RG9ASEpK8oYHundHTm9tzo3MDeXWV/z32oSQWuw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -4690,16 +4690,17 @@ victory-vendor@^37.0.2:
     d3-time "^3.0.0"
     d3-timer "^3.0.1"
 
-vite-tsconfig-paths@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/vite-tsconfig-paths/-/vite-tsconfig-paths-6.0.3.tgz#df8c11b56a6247707e76b472af084fc6e5e68c35"
-  integrity sha512-7bL7FPX/DSviaZGYUKowWF1AiDVWjMjxNbE8lyaVGDezkedWqfGhlnQ4BZXre0ZN5P4kAgIJfAlgFDVyjrCIyg==
+vite-tsconfig-paths@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/vite-tsconfig-paths/-/vite-tsconfig-paths-6.0.4.tgz#637e7608065acce67962cdd4bc3bbd47817b0cc0"
+  integrity sha512-iIsEJ+ek5KqRTK17pmxtgIxXtqr3qDdE6OxrP9mVeGhVDNXRJTKN/l9oMbujTQNzMLe6XZ8qmpztfbkPu2TiFQ==
   dependencies:
     debug "^4.1.1"
     globrex "^0.1.2"
     tsconfck "^3.0.3"
+    vite "*"
 
-"vite@^6.0.0 || ^7.0.0", vite@^7.3.1:
+vite@*, "vite@^6.0.0 || ^7.0.0", vite@^7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/vite/-/vite-7.3.1.tgz#7f6cfe8fb9074138605e822a75d9d30b814d6507"
   integrity sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==
