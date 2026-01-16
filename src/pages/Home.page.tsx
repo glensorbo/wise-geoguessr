@@ -10,11 +10,9 @@ export const HomePage = () => {
     { name: 'Glen', color: 'pink.6' },
     { name: 'Thorjan', color: 'red.6' },
     { name: 'Thomas', color: 'lime.6' },
-    { name: 'Margaux', color: 'indigo.6' },
     { name: 'Tor Arve', color: 'orange.6' },
     { name: 'Sigurd', color: 'violet.6' },
     { name: 'Malin', color: 'grape.6' },
-    { name: 'Eirik', color: 'yellow.6' },
   ];
 
   chartSeries.sort((a, b) => a.name.localeCompare(b.name));
