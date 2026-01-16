@@ -61,7 +61,7 @@ export const HomePage = () => {
       <BarChart
         h={300}
         w="75%"
-        data={details}
+        data={details.filter((d) => !!d.played)}
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         dataKey="name"
@@ -74,7 +74,7 @@ export const HomePage = () => {
       <BarChart
         h={300}
         w="40%"
-        data={perPlayedDetails}
+        data={perPlayedDetails.filter((d) => !!d.pointsPerPlayed)}
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         dataKey="name"
