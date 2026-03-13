@@ -54,7 +54,7 @@
     "prettier": "^3.8.1",
     "prop-types": "^15.8.1",
     "storybook": "^10.2.16",
-    "storybook-dark-mode": "^4.0.2",
+    "storybook-dark-mode": "^5.0.0",
     "stylelint": "^16.26.1",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
