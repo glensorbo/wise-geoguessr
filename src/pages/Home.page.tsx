@@ -1,6 +1,12 @@
 import { BarChart, LineChart } from '@mantine/charts';
 import { Flex, Table, Title } from '@mantine/core';
-import { getPerPlayedRoundDetails, getPlayerDetails, Player, playerData } from '@/data';
+
+import {
+  getPerPlayedRoundDetails,
+  getPlayerDetails,
+  type Player,
+  playerData,
+} from '../data';
 
 export const HomePage = () => {
   const { details, points } = getPlayerDetails();
@@ -28,7 +34,14 @@ export const HomePage = () => {
   ));
 
   return (
-    <Flex align="center" justify="center" direction="column" gap={50} pt={50} pb={50}>
+    <Flex
+      align="center"
+      justify="center"
+      direction="column"
+      gap={50}
+      pt={50}
+      pb={50}
+    >
       <Title>Points</Title>
       <Table.ScrollContainer minWidth="75vw" maxHeight="30vh">
         <Table stickyHeader striped highlightOnHover>
@@ -48,7 +61,7 @@ export const HomePage = () => {
         h={300}
         w="75%"
         data={playerData.toSorted(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         )}
         dataKey="date"
         curveType="natural"
@@ -79,7 +92,9 @@ export const HomePage = () => {
         withLegend
         legendProps={{ verticalAlign: 'bottom', height: 50 }}
         dataKey="name"
-        series={[{ name: 'pointsPerPlayed', color: 'violet.6', label: 'Points' }]}
+        series={[
+          { name: 'pointsPerPlayed', color: 'violet.6', label: 'Points' },
+        ]}
       />
       <Title>Accumulated points over time</Title>
       <LineChart

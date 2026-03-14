@@ -5,23 +5,25 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  # Bun dependencies in root directory
+  - package-ecosystem: 'bun'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     groups:
-      minorpatch:
+      minorPatch:
         update-types:
-          - "minor"
-          - "patch"
-    open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
-    directory: "/"
+          - 'minor'
+          - 'patch'
+
+  # GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
-  - package-ecosystem: "docker"
-    directory: "/"
+      interval: 'daily'
+
+  # Docker
+  - package-ecosystem: 'docker'
+    directory: '/docker'
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
+      interval: 'daily'
