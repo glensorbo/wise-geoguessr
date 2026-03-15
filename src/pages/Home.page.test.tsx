@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { expect, test } from 'bun:test';
 
 import { createAppTheme } from '../theme';
@@ -11,6 +11,7 @@ test('renders the dashboard shell and section loading states while results load'
   };
 
   const originalFetch = globalThis.fetch;
+  window.localStorage.clear();
   globalThis.fetch = mockedFetch as unknown as typeof fetch;
 
   try {
@@ -28,6 +29,33 @@ test('renders the dashboard shell and section loading states while results load'
   }
 });
 
+test('opens the login modal from the header', () => {
+  const mockedFetch = () => {
+    return new Promise<Response>(() => {});
+  };
+
+  const originalFetch = globalThis.fetch;
+  window.localStorage.clear();
+  globalThis.fetch = mockedFetch as unknown as typeof fetch;
+
+  try {
+    render(
+      <ThemeProvider theme={createAppTheme('light')}>
+        <CssBaseline />
+        <HomePage />
+      </ThemeProvider>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+
+    expect(screen.getByRole('dialog', { name: 'Log in' })).toBeDefined();
+    expect(screen.getByLabelText('Email')).toBeDefined();
+    expect(screen.getByLabelText('Password')).toBeDefined();
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('limits the points table to 10 rows per page', async () => {
   const selectedYear = new Date().getFullYear();
   const years = [selectedYear];
@@ -40,6 +68,7 @@ test('limits the points table to 10 rows per page', async () => {
   }));
 
   const originalFetch = globalThis.fetch;
+  window.localStorage.clear();
   const mockedFetch = Object.assign(
     (async (input: string | URL | Request) => {
       const url =

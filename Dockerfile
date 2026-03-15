@@ -24,6 +24,7 @@ RUN bun install --frozen-lockfile --production --ignore-scripts
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/server ./server
+COPY --from=build /app/drizzle.config.ts ./drizzle.config.ts
 
 EXPOSE 3000
 

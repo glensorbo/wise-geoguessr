@@ -1,6 +1,7 @@
 import { serve } from 'bun';
 import { join } from 'path';
 
+import { authRoutes } from './auth/routes';
 import {
   filterResultsByYear,
   getAvailableYears,
@@ -50,6 +51,8 @@ const server = serve({
         return new Response('OK');
       },
     },
+
+    ...authRoutes,
 
     '/api/results/years': {
       async GET() {

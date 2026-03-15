@@ -1,0 +1,55 @@
+services:
+  db:
+    build:
+      dockerfile: docker/Dockerfile.db
+    container_name: wise-geoguessr-db
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      dockerfile: docker/Dockerfile.web
+    container_name: wise-geoguessr-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      BUN_PORT: 3000
+      DATABASE_URL: ${DATABASE_URL:-postgres://wise_geoguessr:wise_geoguessr@postgres:5432/wise_geoguessr}
+      JWT_SECRET: ${JWT_SECRET:-replace-this-with-a-long-random-secret}
+      JWT_ISSUER: ${JWT_ISSUER:-wise-geoguessr}
+      SEED_USER_EMAIL: ${SEED_USER_EMAIL:-admin@example.com}
+      SEED_USER_PASSWORD: ${SEED_USER_PASSWORD:-change-me-please}
+    ports:
+      - '${APP_PORT:-3000}:3000'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://127.0.0.1:3000/healthcheck',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:

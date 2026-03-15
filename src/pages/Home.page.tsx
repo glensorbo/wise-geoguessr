@@ -2,8 +2,13 @@ import {
   Alert,
   AlertTitle,
   Box,
+  Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -11,6 +16,7 @@ import {
   Select,
   Skeleton,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -18,6 +24,12 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 
+import {
+  clearStoredSession,
+  getStoredSession,
+  saveStoredSession,
+  type AuthSession,
+} from '../auth/session';
 import {
   getActivePlayers,
   getCurrentYear,
@@ -120,10 +132,20 @@ type PointsGridRow = {
 export const HomePage = () => {
   const [availableYears, setAvailableYears] = useState<number[]>([]);
   const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [authSession, setAuthSession] = useState<AuthSession | null>(null);
   const [results, setResults] = useState<GameResult[]>([]);
   const [isResultsLoading, setIsResultsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [yearsWarning, setYearsWarning] = useState<string | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
+
+  useEffect(() => {
+    setAuthSession(getStoredSession());
+  }, []);
 
   useEffect(() => {
     let isDisposed = false;
@@ -269,6 +291,96 @@ export const HomePage = () => {
   }, [players]);
   const showNoResults =
     !isResultsLoading && error === null && playerData.length === 0;
+  const hasStoredLogin = authSession !== null;
+
+  const openLoginDialog = () => {
+    setLoginEmail(authSession?.user.email ?? '');
+    setLoginPassword('');
+    setLoginError(null);
+    setIsLoginOpen(true);
+  };
+
+  const closeLoginDialog = () => {
+    if (isLoginLoading) {
+      return;
+    }
+
+    setIsLoginOpen(false);
+    setLoginPassword('');
+    setLoginError(null);
+  };
+
+  const submitLogin = async () => {
+    setIsLoginLoading(true);
+    setLoginError(null);
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: loginEmail,
+          password: loginPassword,
+        }),
+      });
+      const payload = (await response.json()) as
+        | {
+            token?: string;
+            user?: {
+              id?: string;
+              email?: string;
+            };
+            error?: string;
+          }
+        | undefined;
+
+      if (!response.ok) {
+        throw new Error(
+          payload?.error ?? `Failed to log in (${response.status})`,
+        );
+      }
+
+      if (
+        typeof payload?.token !== 'string' ||
+        typeof payload.user?.id !== 'string' ||
+        typeof payload.user.email !== 'string'
+      ) {
+        throw new Error('Login response was missing session data.');
+      }
+
+      const nextSession: AuthSession = {
+        token: payload.token,
+        user: {
+          id: payload.user.id,
+          email: payload.user.email,
+        },
+      };
+
+      saveStoredSession(nextSession);
+      setAuthSession(nextSession);
+      setIsLoginOpen(false);
+      setLoginPassword('');
+      setLoginError(null);
+    } catch (caughtError) {
+      setLoginError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : 'Failed to log in.',
+      );
+    } finally {
+      setIsLoginLoading(false);
+    }
+  };
+
+  const logout = () => {
+    clearStoredSession();
+    setAuthSession(null);
+    setLoginPassword('');
+    setLoginError(null);
+    setIsLoginOpen(false);
+  };
 
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 3, md: 6 } }}>
@@ -289,29 +401,47 @@ export const HomePage = () => {
             </Typography>
           </Stack>
 
-          <Stack spacing={1} sx={{ minWidth: 180 }}>
-            {availableYears.length === 0 && yearsWarning === null ? (
-              <Skeleton variant="rounded" height={40} />
-            ) : (
-              <FormControl size="small">
-                <InputLabel id="year-select-label">Year</InputLabel>
-                <Select
-                  labelId="year-select-label"
-                  value={String(selectedYear)}
-                  label="Year"
-                  disabled={isResultsLoading}
-                  onChange={(event) => {
-                    setSelectedYear(Number(event.target.value));
-                  }}
-                >
-                  {yearOptions.map((year) => (
-                    <MenuItem key={year} value={String(year)}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={1.5}
+            alignItems={{ xs: 'stretch', sm: 'center' }}
+          >
+            <Stack spacing={0.5} sx={{ minWidth: 180 }}>
+              {availableYears.length === 0 && yearsWarning === null ? (
+                <Skeleton variant="rounded" height={40} />
+              ) : (
+                <FormControl size="small">
+                  <InputLabel id="year-select-label">Year</InputLabel>
+                  <Select
+                    labelId="year-select-label"
+                    value={String(selectedYear)}
+                    label="Year"
+                    disabled={isResultsLoading}
+                    onChange={(event) => {
+                      setSelectedYear(Number(event.target.value));
+                    }}
+                  >
+                    {yearOptions.map((year) => (
+                      <MenuItem key={year} value={String(year)}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+              {hasStoredLogin ? (
+                <Typography variant="body2" color="text.secondary">
+                  Signed in as {authSession.user.email}
+                </Typography>
+              ) : null}
+            </Stack>
+
+            <Button
+              variant={hasStoredLogin ? 'outlined' : 'contained'}
+              onClick={openLoginDialog}
+            >
+              {hasStoredLogin ? 'Switch account' : 'Log in'}
+            </Button>
           </Stack>
         </Stack>
 
@@ -544,6 +674,59 @@ export const HomePage = () => {
           )}
         </DashboardSection>
       </Stack>
+
+      <Dialog
+        open={isLoginOpen}
+        onClose={closeLoginDialog}
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle>Log in</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ pt: 1 }}>
+            <TextField
+              label="Email"
+              type="email"
+              value={loginEmail}
+              autoComplete="email"
+              disabled={isLoginLoading}
+              onChange={(event) => {
+                setLoginEmail(event.target.value);
+              }}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              value={loginPassword}
+              autoComplete="current-password"
+              disabled={isLoginLoading}
+              onChange={(event) => {
+                setLoginPassword(event.target.value);
+              }}
+            />
+            {loginError ? <Alert severity="error">{loginError}</Alert> : null}
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          {hasStoredLogin ? (
+            <Button color="inherit" onClick={logout} disabled={isLoginLoading}>
+              Log out
+            </Button>
+          ) : null}
+          <Button onClick={closeLoginDialog} disabled={isLoginLoading}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              void submitLogin();
+            }}
+            disabled={isLoginLoading}
+          >
+            {isLoginLoading ? 'Logging in…' : 'Log in'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
