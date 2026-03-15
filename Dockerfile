@@ -12,7 +12,7 @@ WORKDIR /app
 COPY . .
 RUN bun run build
 
-FROM oven/bun:1-slim AS runtime
+FROM oven/bun:1.3.10-alpine AS runtime
 
 WORKDIR /app
 

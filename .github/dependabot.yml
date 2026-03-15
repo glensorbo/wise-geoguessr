@@ -24,6 +24,6 @@ updates:
 
   # Docker
   - package-ecosystem: 'docker'
-    directory: '/docker'
+    directory: '/'
     schedule:
       interval: 'daily'
