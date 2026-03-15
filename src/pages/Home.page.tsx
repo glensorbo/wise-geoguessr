@@ -267,14 +267,6 @@ export const HomePage = () => {
       })),
     ];
   }, [players]);
-  const lineChartMinWidth = useMemo(
-    () => Math.max(760, sortedPlayerData.length * 96),
-    [sortedPlayerData.length],
-  );
-  const barChartMinWidth = useMemo(
-    () => Math.max(560, players.length * 120),
-    [players.length],
-  );
   const showNoResults =
     !isResultsLoading && error === null && playerData.length === 0;
 
@@ -383,45 +375,43 @@ export const HomePage = () => {
           {isResultsLoading ? (
             <SectionLoadingState height={340} />
           ) : showNoResults || error ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: lineChartMinWidth }}>
-                <LineChart
-                  dataset={sortedPlayerData}
-                  series={chartSeries.map((series) => ({
-                    dataKey: series.name,
-                    label: series.name,
-                    color: series.color,
-                    curve: 'monotoneX',
-                    connectNulls: true,
-                    showMark: false,
-                  }))}
-                  xAxis={[
-                    {
-                      scaleType: 'point',
-                      dataKey: 'date',
-                      height: 88,
-                      valueFormatter: (value) => String(value),
-                      tickLabelStyle: {
-                        angle: -45,
-                        textAnchor: 'end',
-                        dominantBaseline: 'central',
-                        fontSize: 11,
-                      },
+            <Box sx={{ width: '100%' }}>
+              <LineChart
+                dataset={sortedPlayerData}
+                series={chartSeries.map((series) => ({
+                  dataKey: series.name,
+                  label: series.name,
+                  color: series.color,
+                  curve: 'monotoneX',
+                  connectNulls: true,
+                  showMark: false,
+                }))}
+                xAxis={[
+                  {
+                    scaleType: 'point',
+                    dataKey: 'date',
+                    height: 88,
+                    valueFormatter: (value) => String(value),
+                    tickLabelStyle: {
+                      angle: -45,
+                      textAnchor: 'end',
+                      dominantBaseline: 'central',
+                      fontSize: 11,
                     },
-                  ]}
-                  yAxis={[
-                    {
-                      label: 'Points',
-                      width: 72,
-                      valueFormatter: (value: unknown) =>
-                        formatAxisNumber(value),
-                    },
-                  ]}
-                  grid={{ horizontal: true, vertical: true }}
-                  margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
-                  height={340}
-                />
-              </Box>
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: 'Points',
+                    width: 72,
+                    valueFormatter: (value: unknown) => formatAxisNumber(value),
+                  },
+                ]}
+                grid={{ horizontal: true, vertical: true }}
+                margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
+                height={340}
+                sx={{ width: '100%' }}
+              />
             </Box>
           )}
         </DashboardSection>
@@ -430,40 +420,38 @@ export const HomePage = () => {
           {isResultsLoading ? (
             <SectionLoadingState height={340} />
           ) : showNoResults || error ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: barChartMinWidth }}>
-                <BarChart
-                  dataset={playedDetails}
-                  series={[
-                    { dataKey: 'played', label: 'Played', color: '#7c3aed' },
-                    { dataKey: 'won', label: 'Won', color: '#16a34a' },
-                  ]}
-                  xAxis={[
-                    {
-                      scaleType: 'band',
-                      dataKey: 'name',
-                      height: 72,
-                      tickLabelStyle: {
-                        angle: -35,
-                        textAnchor: 'end',
-                        dominantBaseline: 'central',
-                        fontSize: 11,
-                      },
+            <Box sx={{ width: '100%' }}>
+              <BarChart
+                dataset={playedDetails}
+                series={[
+                  { dataKey: 'played', label: 'Played', color: '#7c3aed' },
+                  { dataKey: 'won', label: 'Won', color: '#16a34a' },
+                ]}
+                xAxis={[
+                  {
+                    scaleType: 'band',
+                    dataKey: 'name',
+                    height: 72,
+                    tickLabelStyle: {
+                      angle: -35,
+                      textAnchor: 'end',
+                      dominantBaseline: 'central',
+                      fontSize: 11,
                     },
-                  ]}
-                  yAxis={[
-                    {
-                      label: 'Rounds',
-                      width: 72,
-                      valueFormatter: (value: unknown) =>
-                        formatAxisNumber(value),
-                    },
-                  ]}
-                  grid={{ horizontal: true }}
-                  margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
-                  height={340}
-                />
-              </Box>
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: 'Rounds',
+                    width: 72,
+                    valueFormatter: (value: unknown) => formatAxisNumber(value),
+                  },
+                ]}
+                grid={{ horizontal: true }}
+                margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
+                height={340}
+                sx={{ width: '100%' }}
+              />
             </Box>
           )}
         </DashboardSection>
@@ -472,43 +460,41 @@ export const HomePage = () => {
           {isResultsLoading ? (
             <SectionLoadingState height={340} />
           ) : showNoResults || error ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: barChartMinWidth }}>
-                <BarChart
-                  dataset={pointsPerPlayedData}
-                  series={[
-                    {
-                      dataKey: 'pointsPerPlayed',
-                      label: 'Points',
-                      color: '#2563eb',
+            <Box sx={{ width: '100%' }}>
+              <BarChart
+                dataset={pointsPerPlayedData}
+                series={[
+                  {
+                    dataKey: 'pointsPerPlayed',
+                    label: 'Points',
+                    color: '#2563eb',
+                  },
+                ]}
+                xAxis={[
+                  {
+                    scaleType: 'band',
+                    dataKey: 'name',
+                    height: 72,
+                    tickLabelStyle: {
+                      angle: -35,
+                      textAnchor: 'end',
+                      dominantBaseline: 'central',
+                      fontSize: 11,
                     },
-                  ]}
-                  xAxis={[
-                    {
-                      scaleType: 'band',
-                      dataKey: 'name',
-                      height: 72,
-                      tickLabelStyle: {
-                        angle: -35,
-                        textAnchor: 'end',
-                        dominantBaseline: 'central',
-                        fontSize: 11,
-                      },
-                    },
-                  ]}
-                  yAxis={[
-                    {
-                      label: 'Average points',
-                      width: 84,
-                      valueFormatter: (value: unknown) =>
-                        formatAxisNumber(value),
-                    },
-                  ]}
-                  grid={{ horizontal: true }}
-                  margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
-                  height={340}
-                />
-              </Box>
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: 'Average points',
+                    width: 84,
+                    valueFormatter: (value: unknown) => formatAxisNumber(value),
+                  },
+                ]}
+                grid={{ horizontal: true }}
+                margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
+                height={340}
+                sx={{ width: '100%' }}
+              />
             </Box>
           )}
         </DashboardSection>
@@ -517,45 +503,43 @@ export const HomePage = () => {
           {isResultsLoading ? (
             <SectionLoadingState height={340} />
           ) : showNoResults || error ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: lineChartMinWidth }}>
-                <LineChart
-                  dataset={points}
-                  series={chartSeries.map((series) => ({
-                    dataKey: series.name,
-                    label: series.name,
-                    color: series.color,
-                    curve: 'monotoneX',
-                    connectNulls: true,
-                    showMark: false,
-                  }))}
-                  xAxis={[
-                    {
-                      scaleType: 'point',
-                      dataKey: 'date',
-                      height: 88,
-                      valueFormatter: (value) => String(value),
-                      tickLabelStyle: {
-                        angle: -45,
-                        textAnchor: 'end',
-                        dominantBaseline: 'central',
-                        fontSize: 11,
-                      },
+            <Box sx={{ width: '100%' }}>
+              <LineChart
+                dataset={points}
+                series={chartSeries.map((series) => ({
+                  dataKey: series.name,
+                  label: series.name,
+                  color: series.color,
+                  curve: 'monotoneX',
+                  connectNulls: true,
+                  showMark: false,
+                }))}
+                xAxis={[
+                  {
+                    scaleType: 'point',
+                    dataKey: 'date',
+                    height: 88,
+                    valueFormatter: (value) => String(value),
+                    tickLabelStyle: {
+                      angle: -45,
+                      textAnchor: 'end',
+                      dominantBaseline: 'central',
+                      fontSize: 11,
                     },
-                  ]}
-                  yAxis={[
-                    {
-                      label: 'Total points',
-                      width: 84,
-                      valueFormatter: (value: unknown) =>
-                        formatAxisNumber(value),
-                    },
-                  ]}
-                  grid={{ horizontal: true, vertical: true }}
-                  margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
-                  height={340}
-                />
-              </Box>
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: 'Total points',
+                    width: 84,
+                    valueFormatter: (value: unknown) => formatAxisNumber(value),
+                  },
+                ]}
+                grid={{ horizontal: true, vertical: true }}
+                margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
+                height={340}
+                sx={{ width: '100%' }}
+              />
             </Box>
           )}
         </DashboardSection>
