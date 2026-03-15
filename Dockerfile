@@ -1,17 +1,30 @@
-FROM node:25 AS build
+FROM oven/bun:1 AS deps
 
-WORKDIR /src
+WORKDIR /app
 
-COPY ./package.json ./
-COPY ./yarn.lock ./
-COPY ./vite.config.mjs ./ 
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
-RUN yarn install --immutable --immutable-cache
+FROM deps AS build
 
-COPY ./ ./
+WORKDIR /app
 
-RUN yarn build
+COPY . .
+RUN bun run build
 
-FROM nginxinc/nginx-unprivileged
-COPY ./nginx.default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /src/dist /usr/share/nginx/html
+FROM oven/bun:1-slim AS runtime
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV BUN_PORT=3000
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production --ignore-scripts
+
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/server ./server
+
+EXPOSE 3000
+
+CMD ["bun", "run", "start"]

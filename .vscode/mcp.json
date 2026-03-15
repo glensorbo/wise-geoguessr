@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "postgres-database-uri",
+      "description": "Postgres database URI for wise-geoguessr",
+      "password": true
+    }
+  ],
+  "servers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "DATABASE_URI",
+        "crystaldba/postgres-mcp",
+        "--access-mode=restricted"
+      ],
+      "env": {
+        "DATABASE_URI": "${input:postgres-database-uri}"
+      }
+    }
+  }
+}

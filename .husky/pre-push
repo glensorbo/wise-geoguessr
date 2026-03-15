@@ -1,0 +1,26 @@
+#!/bin/sh
+
+echo "Running pre-push checks..."
+
+# Run linting (fail on warnings too)
+echo "→ Running oxlint..."
+if ! bun run lint | tee /dev/stderr | grep -q "Found 0 warnings and 0 errors"; then
+  echo "❌ Linting failed. Fix all errors and warnings before pushing."
+  exit 1
+fi
+
+# Run format check (fail on warnings too)
+echo "→ Checking formatting..."
+if ! bun run format:check | tee /dev/stderr | grep -q "All matched files use the correct format."; then
+  echo "❌ Formatting check failed. Run 'bun run format' to fix."
+  exit 1
+fi
+
+# Run tests
+# echo "→ Running tests..."
+# bun run test || {
+#   echo "❌ Tests failed. Fix failing tests before pushing."
+#   exit 1
+# }
+
+echo "✅ All checks passed! Pushing..."
