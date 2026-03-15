@@ -353,15 +353,22 @@ export const HomePage = () => {
               rows={gridRows}
               columns={gridColumns}
               autoHeight
+              pagination
               disableRowSelectionOnClick
-              hideFooter
               showToolbar
               density="compact"
               initialState={{
+                pagination: {
+                  paginationModel: {
+                    page: 0,
+                    pageSize: 10,
+                  },
+                },
                 sorting: {
                   sortModel: [{ field: 'date', sort: 'desc' }],
                 },
               }}
+              pageSizeOptions={[10]}
               sx={{
                 border: 0,
                 '& .MuiDataGrid-columnHeaders': {
