@@ -10,8 +10,6 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
 
-import '@mantine/charts/styles.css';
-
 const elem = document.getElementById('root')!;
 const app = (
   <StrictMode>

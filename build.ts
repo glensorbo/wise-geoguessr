@@ -5,7 +5,6 @@ import path from 'path';
 
 import type { BunPlugin } from 'bun';
 
-// React Compiler plugin for Bun
 const reactCompilerPlugin = {
   name: 'react-compiler',
   async setup(build) {
@@ -85,8 +84,7 @@ function parseArgs(): Partial<Bun.BuildConfig> {
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
-    if (arg === undefined) continue;
-    if (!arg.startsWith('--')) continue;
+    if (arg === undefined || !arg.startsWith('--')) continue;
 
     if (arg.startsWith('--no-')) {
       const key = toCamelCase(arg.slice(5));
@@ -144,29 +142,26 @@ console.log('\n🚀 Starting build process...\n');
 
 const cliConfig = parseArgs();
 const outdir = cliConfig.outdir || path.join(process.cwd(), 'dist');
+const entrypoint = path.resolve('public', 'index.html');
 
 if (existsSync(outdir)) {
   console.log(`🗑️ Cleaning previous build at ${outdir}`);
   await rm(outdir, { recursive: true, force: true });
 }
 
-const start = performance.now();
+if (!(await Bun.file(entrypoint).exists())) {
+  throw new Error(`Expected HTML entrypoint at ${entrypoint}`);
+}
 
-const entrypoints = [...new Bun.Glob('**.html').scanSync('src')]
-  .map((a) => path.resolve('src', a))
-  .filter((dir) => !dir.includes('node_modules'));
-console.log(
-  `📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? 'file' : 'files'} to process\n`,
-);
+const start = performance.now();
+console.log('📄 Using public/index.html as the HTML entrypoint\n');
 
 const result = await Bun.build({
-  entrypoints,
+  entrypoints: [entrypoint],
   outdir,
   plugins: [reactCompilerPlugin],
   minify: true,
   target: 'browser',
-  // Sourcemaps disabled by default for production (no source files in dev tools)
-  // To enable for debugging, use: bun run build --sourcemap=linked
   sourcemap: 'none',
   define: {
     'process.env.NODE_ENV': JSON.stringify('production'),
@@ -175,7 +170,6 @@ const result = await Bun.build({
 });
 
 const end = performance.now();
-
 const outputTable = result.outputs.map((output) => ({
   File: path.relative(process.cwd(), output.path),
   Type: output.kind,
@@ -183,6 +177,4 @@ const outputTable = result.outputs.map((output) => ({
 }));
 
 console.table(outputTable);
-const buildTime = (end - start).toFixed(2);
-
-console.log(`\n✅ Build completed in ${buildTime}ms\n`);
+console.log(`\n✅ Build completed in ${(end - start).toFixed(2)}ms\n`);

@@ -1,14 +1,23 @@
-import { MantineProvider } from '@mantine/core';
+import { CssBaseline, useMediaQuery } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { useMemo } from 'react';
 
 import { Router } from './Router';
-import { theme } from './theme';
-
-import '@mantine/core/styles.css';
+import { createAppTheme } from './theme';
 
 export const App = () => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', {
+    noSsr: true,
+  });
+  const theme = useMemo(
+    () => createAppTheme(prefersDarkMode ? 'dark' : 'light'),
+    [prefersDarkMode],
+  );
+
   return (
-    <MantineProvider theme={theme} defaultColorScheme="auto">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Router />
-    </MantineProvider>
+    </ThemeProvider>
   );
 };

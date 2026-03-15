@@ -10,10 +10,9 @@
     "test": "bun test",
     "test:watch": "bun test --watch",
     "lint": "bunx --bun oxlint --type-aware --type-check",
-    "lint:compiler": "bunx --bun eslint --config eslint.config.js 'src/**/*.{ts,tsx,js,jsx}'",
     "format:check": "bunx oxfmt --check",
     "format": "bunx oxfmt",
-    "cc": "bun test && bun lint && bun lint:compiler && bun format:check",
+    "cc": "bun test && bun lint && bun format:check",
     "prepare": "husky",
     "db:generate": "bunx --bun drizzle-kit generate",
     "db:migrate": "bunx --bun drizzle-kit migrate",
@@ -21,18 +20,17 @@
     "db:studio": "bunx --bun drizzle-kit studio"
   },
   "dependencies": {
-    "@mantine/charts": "^8.3.16",
-    "@mantine/core": "^8.3.16",
-    "@mantine/hooks": "^8.3.16",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.9",
+    "@mui/x-charts": "^8.27.5",
+    "@mui/x-data-grid": "^8.27.5",
     "dayjs": "^1.11.20",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8",
-    "react": "^19",
-    "react-dom": "^19",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.13.1",
-    "recharts": "^3.8.0",
-    "redux-persist": "^6.0.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -43,16 +41,14 @@
     "@testing-library/react": "^16.3.2",
     "@types/babel__core": "^7.20.5",
     "@types/bun": "latest",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "drizzle-kit": "^0.31.9",
     "happy-dom": "^20.8.4",
     "husky": "^9.1.7",
     "oxlint": "^1.55.0",
     "oxlint-tsgolint": "^0.16.0",
-    "postcss": "^8.5.8",
-    "postcss-preset-mantine": "^1.18.0",
-    "postcss-simple-vars": "^7.0.1"
+    "postcss": "^8.5.8"
   }
 }

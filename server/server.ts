@@ -1,28 +1,40 @@
 import { serve } from 'bun';
 import { join } from 'path';
 
-import index from '../public/index.html';
+import {
+  filterResultsByYear,
+  getAvailableYears,
+  loadResults,
+  parseYearParam,
+} from './data';
 
 const isProduction = process.env.NODE_ENV === 'production';
+const index = isProduction
+  ? null
+  : (await import('../public/index.html')).default;
 
-// Static file serving for production
-const serveStaticFile = async (pathname: string): Promise<Response> => {
-  // Remove leading slash and handle root
+const createJsonHeaders = () => ({
+  'Cache-Control': isProduction ? 'public, max-age=300' : 'no-store',
+});
+
+const serveStaticFile = async (
+  pathname: string,
+  rootDirectory = 'dist',
+): Promise<Response> => {
   let filePath = pathname === '/' ? 'index.html' : pathname.slice(1);
 
-  // For client-side routing, serve index.html for non-file requests
   if (!filePath.includes('.')) {
     filePath = 'index.html';
   }
 
-  const fullPath = join(process.cwd(), 'dist', filePath);
+  const fullPath = join(process.cwd(), rootDirectory, filePath);
   const file = Bun.file(fullPath);
-
-  // Check if file exists
   const exists = await file.exists();
+
   if (!exists) {
-    // Serve index.html for 404s (client-side routing)
-    const indexFile = Bun.file(join(process.cwd(), 'dist', 'index.html'));
+    const indexFile = Bun.file(
+      join(process.cwd(), rootDirectory, 'index.html'),
+    );
     return new Response(indexFile, {
       headers: { 'Content-Type': 'text/html' },
     });
@@ -39,17 +51,45 @@ const server = serve({
       },
     },
 
-    // In production, serve built static files; in dev, serve HTML imports
+    '/api/results/years': {
+      async GET() {
+        const results = await loadResults();
+        return Response.json(getAvailableYears(results), {
+          headers: createJsonHeaders(),
+        });
+      },
+    },
+
+    '/api/results': {
+      async GET(req) {
+        const url = new URL(req.url);
+        const yearParam = url.searchParams.get('year');
+        const year = parseYearParam(yearParam);
+
+        if (yearParam !== null && year === null) {
+          return Response.json(
+            { error: 'Invalid year parameter. Expected YYYY.' },
+            { status: 400, headers: createJsonHeaders() },
+          );
+        }
+
+        const results = await loadResults();
+        const payload =
+          year === null ? results : filterResultsByYear(results, year);
+
+        return Response.json(payload, {
+          headers: createJsonHeaders(),
+        });
+      },
+    },
+
     '/*': isProduction
       ? async (req) => serveStaticFile(new URL(req.url).pathname)
-      : index,
+      : index!,
   },
 
   development: !isProduction && {
-    // Enable browser hot reloading in development
     hmr: true,
-
-    // Echo console logs from the browser to the server
     console: true,
   },
 });
