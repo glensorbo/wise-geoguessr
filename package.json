@@ -23,8 +23,8 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.9",
-    "@mui/x-charts": "^8.27.5",
-    "@mui/x-data-grid": "^8.27.5",
+    "@mui/x-charts": "^8.28.0",
+    "@mui/x-data-grid": "^8.28.0",
     "dayjs": "^1.11.20",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8",
@@ -48,7 +48,7 @@
     "happy-dom": "^20.8.4",
     "husky": "^9.1.7",
     "oxlint": "^1.56.0",
-    "oxlint-tsgolint": "^0.17.0",
+    "oxlint-tsgolint": "^0.17.1",
     "postcss": "^8.5.8"
   }
 }
