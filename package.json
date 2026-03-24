@@ -47,8 +47,8 @@
     "drizzle-kit": "^0.31.10",
     "happy-dom": "^20.8.7",
     "husky": "^9.1.7",
-    "oxlint": "^1.56.0",
-    "oxlint-tsgolint": "^0.17.2",
+    "oxlint": "^1.57.0",
+    "oxlint-tsgolint": "^0.17.3",
     "postcss": "^8.5.8"
   }
 }
