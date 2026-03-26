@@ -24,7 +24,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.9",
     "@mui/x-charts": "^8.28.0",
-    "@mui/x-data-grid": "^8.28.0",
+    "@mui/x-data-grid": "^8.28.1",
     "dayjs": "^1.11.20",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8",
