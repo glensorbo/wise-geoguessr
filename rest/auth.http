@@ -1,0 +1,74 @@
+### Login
+# Authenticates a user and returns a short-lived access token (15 min).
+# Also sets an HttpOnly refresh token cookie (7 days) for silent re-auth.
+# Public endpoint — no Authorization header required.
+# Use the returned token as JWT_TOKEN in your env for authenticated requests.
+POST {{BASE_URL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "change-me-on-first-login"
+}
+
+###
+
+### Create User
+# Creates a new user and returns a signup link containing a short-lived JWT.
+# The signup link should be sent to the new user so they can set their password.
+# Requires a valid Bearer JWT (auth token) in Authorization header.
+POST {{BASE_URL}}/api/auth/create-user
+Authorization: Bearer {{JWT_TOKEN}}
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "name": "New User"
+}
+
+###
+
+### Set Password
+# Sets the new user's password using the signup token from the signup link.
+# Returns a short-lived access token and sets a refresh token cookie.
+# Requires the signup token (from the signup link) in Authorization header.
+POST {{BASE_URL}}/api/auth/set-password
+Authorization: Bearer {{SIGNUP_TOKEN}}
+Content-Type: application/json
+
+{
+  "password": "mysecurepassword",
+  "confirmPassword": "mysecurepassword"
+}
+
+###
+
+### Change Password
+# Changes the current user's password. Requires the correct current password.
+# Returns a fresh access token and rotates the refresh token cookie.
+# Requires a valid Bearer auth token in Authorization header.
+POST {{BASE_URL}}/api/auth/change-password
+Authorization: Bearer {{JWT_TOKEN}}
+Content-Type: application/json
+
+{
+  "currentPassword": "mysecurepassword",
+  "newPassword": "mynewsecurepassword",
+  "confirmPassword": "mynewsecurepassword"
+}
+
+###
+
+### Refresh
+# Exchanges the HttpOnly refresh token cookie for a new short-lived access token.
+# The refresh token is rotated — a new cookie is set on each successful call.
+# No Authorization header needed — the browser sends the cookie automatically.
+POST {{BASE_URL}}/api/auth/refresh
+
+###
+
+### Logout
+# Revokes the current refresh token and clears the cookie.
+# Call this when the user explicitly logs out.
+POST {{BASE_URL}}/api/auth/logout
+

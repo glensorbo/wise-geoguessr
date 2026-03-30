@@ -9,6 +9,13 @@ if ! bun run lint | tee /dev/stderr | grep -q "Found 0 warnings and 0 errors"; t
   exit 1
 fi
 
+# Run ESLint react compiler (fail on warnings too)
+echo "→ Running ESLint react compiler..."
+if ! bun run lint:compiler; then
+  echo "❌ ESLint react compiler failed. Fix all errors and warnings before pushing."
+  exit 1
+fi
+
 # Run format check (fail on warnings too)
 echo "→ Checking formatting..."
 if ! bun run format:check | tee /dev/stderr | grep -q "All matched files use the correct format."; then
@@ -17,10 +24,17 @@ if ! bun run format:check | tee /dev/stderr | grep -q "All matched files use the
 fi
 
 # Run tests
-# echo "→ Running tests..."
-# bun run test || {
-#   echo "❌ Tests failed. Fix failing tests before pushing."
-#   exit 1
-# }
+echo "→ Running tests..."
+bun run test || {
+  echo "❌ Tests failed. Fix failing tests before pushing."
+  exit 1
+}
+
+# Run knip unused exports check
+echo "→ Checking for unused exports..."
+if ! bun run knip; then
+  echo "❌ Unused exports found. Clean them up before pushing."
+  exit 1
+fi
 
 echo "✅ All checks passed! Pushing..."

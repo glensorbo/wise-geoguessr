@@ -1,8 +1,27 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": null,
-  "categories": {},
-  "rules": {},
+  "plugins": ["react", "react-perf", "jsdoc", "node", "promise"],
+  "jsPlugins": [
+    {
+      "name": "compiler-plugin",
+      "specifier": "eslint-plugin-react-compiler"
+    }
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "typescript/no-floating-promises": "error",
+    "typescript/no-unsafe-assignment": "warn",
+    "eslint/no-unused-vars": "error",
+    "eslint/curly": ["error", "all"],
+    "react/react-in-jsx-scope": "off"
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  },
   "settings": {
     "jsx-a11y": {
       "polymorphicPropName": null,
@@ -36,5 +55,5 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": ["build.ts"]
+  "ignorePatterns": ["/dist", "build.ts"]
 }

@@ -1,0 +1,3 @@
+### Health Check
+# Verify the server is running and responsive.
+GET {{BASE_URL}}/healthcheck

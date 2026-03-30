@@ -2,4 +2,4 @@
 env = "BUN_PUBLIC_*"
 
 [test]
-preload = ["./src/test-setup.ts"]
+preload = ["./frontend/test-setup.ts"]

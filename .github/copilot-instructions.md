@@ -1,46 +1,87 @@
-# Copilot instructions for `wise-geoguessr`
+# Copilot Instructions
 
-## Build, test, and lint commands
+This is a full-stack Bun app: React 19 frontend + layered backend (Controller → Service → Repository) → Drizzle ORM → PostgreSQL.
 
-- Install dependencies: `bun install`
-- Start the development server with HMR: `bun run dev`
-- Start the production Bun server: `bun run start`
-- Build production assets: `bun run build`
-- Run all tests: `bun test`
-- Run a single test file: `bun test src/logic/tests/player-details.test.ts`
-- Run tests in watch mode: `bun run test:watch`
-- Run the main linter: `bun run lint`
-- Check formatting: `bun run format:check`
-- Apply formatting: `bun run format`
-- Run the local verification bundle: `bun run cc`
+## ⚡ Runtime — Bun Only
 
-Notes:
+- Use `bun` everywhere — never `node`, `npm`, `npx`, `ts-node`, or `yarn`
+- Bun auto-loads `.env` — never use `dotenv`
+- Use `Bun.file` instead of `fs.readFile`/`fs.writeFile`
+- Use `Bun.$\`cmd\``instead of`execa`
 
-- Tests preload `src/test-setup.ts` through `bunfig.toml`, so Happy DOM is registered globally for Bun tests.
-- `bun run cc` is the repository's current all-in-one validation command.
+## 🎨 Style
 
-## High-level architecture
+- Use emojis where appropriate in terminal output, commit messages, and docs
+- Only comment code that genuinely needs clarification — no redundant comments
 
-- This is a Bun-first app. `server/server.ts` runs `Bun.serve()` for both development and production HTTP serving.
-- `bun run dev` uses Bun's HTML-import dev server with HMR.
-- In production, `build.ts` builds `public/index.html` into `dist/`, and the Bun server serves those static files with SPA fallback.
-- `src/frontend.tsx` mounts `App`, and `App` wraps the UI in a MUI `ThemeProvider` before rendering the router.
-- Routing is currently minimal: `src/Router.tsx` maps `/` to `src/pages/Home.page.tsx`.
-- `Home.page.tsx` does not import raw score data. It fetches `GET /api/results?year=YYYY` and `GET /api/results/years` from the Bun server and renders the selected-year dashboard from those responses.
-- Raw score history lives in `server/data/data.json`.
-- `server/data.ts` is the server-side loader for that JSON file.
-- `src/logic/` is the shared data-shaping layer for the frontend. It is split into focused modules for players, winners, yearly rows, per-player stats, and cumulative point series.
+## 📚 READMEs
 
-## Key conventions
+Every major directory has a README. **Read it before working in that layer.**
 
-- Keep raw round data in `server/data/data.json`. Do not reintroduce duplicated inline score data in frontend files.
-- The frontend API contract is the JSON array returned by `/api/results`, with each item shaped like `{ date, scores }`. `/api/results` also accepts a `year=YYYY` query parameter, and `/api/results/years` returns the available year list for the dropdown.
-- Players are derived from the `scores` object keys. If you add a new player, update the color mapping in `src/pages/Home.page.tsx` only if you want a specific chart color.
-- The dashboard defaults to the current calendar year, but the selected year is applied end-to-end through the server API and the `src/logic/` helpers.
-- The UI stack is MUI plus `@mui/x-charts`. Do not reintroduce the previous Mantine/Recharts compatibility workarounds.
-- There is a dedicated render test in `src/pages/Home.page.test.tsx`; keep or update that coverage when touching the dashboard shell.
-- The repository ships with a Bun-based Docker image that builds `dist/` and runs the production Bun server. Keep deployment instructions aligned with that flow.
-- Formatting is enforced with `oxfmt` using semicolons, single quotes, trailing commas, 2-space indentation, and grouped import sorting from `.oxfmtrc.json`.
-- `oxlint` is the active linter. `build.ts` is intentionally excluded from oxlint in `.oxlintrc.json`.
-- Shared MCP workspace config lives in `.vscode/mcp.json`. It configures Playwright for browser verification and a restricted Postgres MCP server for future database-backed work.
-- For Copilot CLI or GitHub-hosted coding agent setup, use `.github/copilot-mcp-config.example.json` as the starting point. The Postgres entry expects a `COPILOT_MCP_DATABASE_URI` secret or variable.
+## ✅ After Every Change
+
+Always run as the final step:
+
+```sh
+bun run cc   # test + lint + compiler check + format check + knip
+```
+
+If formatting fails: `bun run format`. Fix all other errors at source.
+
+## 🔑 Key Commands
+
+```sh
+bun dev              # Dev server with HMR
+bun run build        # Bundle frontend to dist/
+bun test             # Run all unit tests
+bun run cc           # Full check suite
+bun run db:generate  # Generate Drizzle migrations
+bun run db:migrate   # Apply migrations
+bun run db:studio    # Open Drizzle Studio
+```
+
+## 🔗 Path Aliases
+
+Use these when crossing layer boundaries — never use `../../` relative imports:
+
+- `@backend/*` → `./backend/*`
+- `@frontend/*` → `./frontend/*`
+- `@type/*` → `./types/*`
+
+## 🔐 Env Vars
+
+Whenever an env var is added, removed, or renamed — update **both** `.env.example` and `bun-env.d.ts`.
+
+## 🌐 Routes
+
+Whenever a route or controller is added, changed, or removed — update the corresponding file in `rest/` and `rest/README.md` if the file table changes.
+
+## 🤖 Agent Workflow
+
+After making code changes, always invoke the appropriate agents **in this order** before committing:
+
+### 1. Always — `docs` agent
+
+Run the `docs` agent to review and update any READMEs affected by your changes.
+
+- Root `README.md` → advertisement style (why, not how)
+- Sub-level READMEs → reference style (what, rules, tables)
+
+### 2. Conditionally — specialised agents
+
+| Changed files   | Run agent                                                                |
+| --------------- | ------------------------------------------------------------------------ |
+| `frontend/**`   | `rybbit` — verify analytics integration is documented and correct        |
+| `backend/**`    | `otel` — verify telemetry instrumentation and docs are up to date        |
+| `backend/db/**` | `backend-feature` — verify schema, migration, and repository conventions |
+| `e2e/**`        | `e2e-playwright` — verify tests follow project Playwright conventions    |
+
+### 3. Always last — quality gate
+
+```sh
+bun run cc   # test + lint + compiler check + format check + knip
+```
+
+If `bun run cc` fails, fix the errors at source before committing. Run `bun run format` first if it's a formatting failure.
+
+**Never commit with a failing `bun run cc`.**

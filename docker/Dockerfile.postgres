@@ -1,0 +1,15 @@
+FROM postgres:18-alpine
+
+# Set environment variables from .env file
+# These will be overridden by docker-compose
+ENV POSTGRES_DB=${POSTGRES_DB}
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+# Copy initialization scripts if needed
+# COPY ./init-scripts /docker-entrypoint-initdb.d/
+
+# Expose PostgreSQL port
+EXPOSE 5432
+
+# vim: set filetype=dockerfile :

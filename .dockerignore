@@ -1,3 +1,16 @@
+node_modules
+dist
 .git
 .github
-node_modules
+.dockerignore
+.gitignore
+.husky
+*.md
+.oxfmtrc.json
+.oxlintrc.json
+.env.example
+docker-compose.yml
+eslint.config.js
+coverage
+rest
+e2e
