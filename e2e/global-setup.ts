@@ -25,6 +25,7 @@ export default async function globalSetup(config: FullConfig) {
   const baseURL = project?.use.baseURL ?? 'http://localhost:3000';
 
   seedTestUser();
+  seedGameData();
   await loginAndSaveToken(baseURL);
 }
 
@@ -35,6 +36,15 @@ export default async function globalSetup(config: FullConfig) {
  */
 function seedTestUser() {
   execSync('bun e2e/seed-test-user.ts', { stdio: 'inherit' });
+}
+
+/**
+ * Wipes all game data and re-seeds the 48 canonical historical records.
+ * This ensures every test run starts from a known, consistent state.
+ */
+function seedGameData() {
+  console.log('🌱 Setup: seeding game data to canonical 48 records…');
+  execSync('bun e2e/seed-game-data.ts', { stdio: 'inherit' });
 }
 
 async function loginAndSaveToken(baseURL: string) {

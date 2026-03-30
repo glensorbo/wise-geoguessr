@@ -97,6 +97,7 @@ bun run db:migrate     # Apply migrations
 bun run db:studio      # Drizzle Studio GUI
 bun e2e                # Playwright API tests
 bun e2e:browser        # Playwright browser tests
+bun run e2e:docker     # Full E2E stack in Docker — no dev env needed
 ```
 
 ---

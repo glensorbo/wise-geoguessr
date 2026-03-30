@@ -23,7 +23,9 @@ ENV NODE_ENV=production
 ENV BUN_PORT=3000
 
 COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile --production --ignore-scripts
+# Full install (not --production) so drizzle-kit is available for migrations
+# at startup. The size cost is small compared to the reliability benefit.
+RUN bun install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
@@ -32,6 +34,6 @@ COPY --from=build /app/public ./public
 
 EXPOSE 3000
 
-CMD ["bun", "run", "start"]
+CMD ["sh", "docker/entrypoint.sh"]
 
 # vim: set filetype=dockerfile :

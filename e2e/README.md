@@ -24,6 +24,37 @@ bun e2e:debug
 E2E_BASE_URL=http://localhost:3000 bun e2e
 ```
 
+## Docker / CI Mode
+
+Self-contained stack — no dev environment, no host browser deps. Spins up ephemeral Postgres, migrates, seeds, runs all tests, then tears down.
+
+```bash
+bun run e2e:docker        # via package.json script
+./scripts/e2e-ci.sh       # call the orchestration script directly
+```
+
+| Component          | What it does                                              |
+| ------------------ | --------------------------------------------------------- |
+| Ephemeral Postgres | Fresh DB every run — no leftover state                    |
+| App container      | Runs `db:migrate` + `db:seed`, then starts the server     |
+| Test runner        | Playwright + Chromium pre-installed — no host deps needed |
+
+Exit code mirrors Playwright's — suitable for CI gates and scheduled jobs.
+
+Env vars have safe defaults baked into `docker-compose.e2e.yml`. Override at the shell if needed:
+
+```bash
+POSTGRES_PASSWORD=mypass ./scripts/e2e-ci.sh
+```
+
+**Cron example** (nightly at 02:00):
+
+```cron
+0 2 * * * cd /path/to/project && ./scripts/e2e-ci.sh >> /var/log/e2e.log 2>&1
+```
+
+---
+
 ## Projects
 
 | Project   | Command           | Tests                               | Needs browser? |
@@ -93,26 +124,9 @@ Then run:
 bun e2e:browser
 ```
 
-### Docker / GitHub CI
+### Docker / CI
 
-Use Playwright's official image which ships with all browser dependencies pre-installed:
-
-```dockerfile
-FROM mcr.microsoft.com/playwright:v1.58.2-jammy
-
-WORKDIR /app
-COPY . .
-RUN npm install -g bun
-RUN bun install
-
-CMD ["bun", "e2e:all"]
-```
-
-Or install deps into your own image:
-
-```dockerfile
-RUN bunx playwright install --with-deps chromium
-```
+Use `bun run e2e:docker` — see [Docker / CI Mode](#docker--ci-mode) above. The Dockerfiles in `docker/` handle all browser deps.
 
 ## Configuration
 
