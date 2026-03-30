@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
 import type { PaletteMode, Theme } from '@mui/material';
 
@@ -9,54 +9,61 @@ import type { PaletteMode, Theme } from '@mui/material';
  * system preference resolution happens in ThemeProvider before this is called.
  */
 export const buildTheme = (mode: PaletteMode) =>
-  createTheme({
-    palette: {
-      mode,
-      ...(mode === 'light'
-        ? {
-            primary: { main: '#1976d2' },
-            background: { default: '#f5f5f5', paper: '#ffffff' },
-          }
-        : {
-            primary: { main: '#90caf9' },
-            background: { default: '#121212', paper: '#1e1e1e' },
-          }),
-    },
-    shape: { borderRadius: 8 },
-    typography: {
-      fontFamily: [
-        'Inter',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        'sans-serif',
-      ].join(','),
-    },
-    components: {
-      MuiInputBase: {
-        styleOverrides: {
-          input: ({ theme }: { theme: Theme }) => ({
-            '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus':
-              {
-                WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
-                WebkitTextFillColor: theme.palette.text.primary,
-                caretColor: theme.palette.text.primary,
+  responsiveFontSizes(
+    createTheme({
+      palette: {
+        mode,
+        primary: { main: '#6d28d9' },
+        secondary: { main: '#2563eb' },
+        background:
+          mode === 'dark'
+            ? { default: '#0f172a', paper: '#111827' }
+            : { default: '#f8fafc', paper: '#ffffff' },
+      },
+      shape: { borderRadius: 16 },
+      typography: {
+        fontFamily: [
+          'Inter',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif',
+        ].join(','),
+      },
+      components: {
+        MuiPaper: {
+          styleOverrides: {
+            root: { backgroundImage: 'none' },
+          },
+        },
+        MuiTableCell: {
+          styleOverrides: {
+            head: { fontWeight: 700 },
+          },
+        },
+        MuiInputBase: {
+          styleOverrides: {
+            input: ({ theme }: { theme: Theme }) => ({
+              '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus':
+                {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                  caretColor: theme.palette.text.primary,
+                },
+            }),
+          },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+            shrink: ({ theme }: { theme: Theme }) => ({
+              color: theme.palette.text.secondary,
+              '&.Mui-focused': {
+                color: theme.palette.primary.main,
               },
-          }),
+            }),
+          },
         },
       },
-      MuiInputLabel: {
-        styleOverrides: {
-          // When the label is shrunk (field has a value) but NOT focused,
-          // use a neutral colour instead of primary (blue).
-          shrink: ({ theme }: { theme: Theme }) => ({
-            color: theme.palette.text.secondary,
-            '&.Mui-focused': {
-              color: theme.palette.primary.main,
-            },
-          }),
-        },
-      },
-    },
-  });
+    }),
+  );
