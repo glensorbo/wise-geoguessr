@@ -1,68 +1,60 @@
-# 🚀 bun-boiler
+# 🌍 Wise GeoGuessr
 
-**The full-stack Bun template that's actually production-ready on day one.**
+**The Friday scoreboard for the team that takes GeoGuessr very, very seriously.**
 
-Most boilerplates give you a skeleton. This gives you working authentication, a tested layered backend, typed frontend state, and an enforced quality pipeline — already wired together, already proven.
-
-[Quick Start](#️-quick-start) · [Why bun-boiler?](#-why-bun-boiler) · [Stack](#️-stack) · [Architecture](#️-architecture) · [Optional Integrations](#️-optional-integrations)
+Every Friday the Wise team drops into GeoGuessr for a round of competitive geography. This app tracks every score, ranks every player, and makes sure nobody forgets who won (or lost) three weeks ago.
 
 ---
 
-## 💡 Why bun-boiler?
+## 🗺️ What it does
 
-|                   | bun-boiler                                                            | typical boilerplate              |
-| ----------------- | --------------------------------------------------------------------- | -------------------------------- |
-| **Runtime**       | Bun everywhere — runtime, bundler, test runner, package manager       | Node + webpack/Vite + Jest + npm |
-| **Auth**          | JWT login, invite flow, refresh rotation, RBAC — fully working        | Placeholder or "bring your own"  |
-| **Testing**       | Unit tests with DI mocks ship with every layer                        | Empty `__tests__` folder         |
-| **Architecture**  | Controller → Service → Repository, factory DI, enforced by convention | `index.ts` does everything       |
-| **Type safety**   | Types derived from Drizzle schema — no manual interfaces              | `any` or hand-rolled types       |
-| **Quality gate**  | oxlint + oxfmt + React Compiler + knip + Husky — blocks bad pushes    | ESLint config you'll never touch |
-| **Observability** | OTel tracing + Rybbit analytics, both opt-in, zero overhead when off  | `console.log`                    |
+- 📊 **Live leaderboard** — DataGrid of all results, sortable and filterable
+- 📈 **Accumulated points chart** — who's pulling ahead over the season
+- 📅 **Weekly bar chart** — how each round stacked up
+- 🎯 **Points-per-round chart** — consistency vs. clutch performance
+- 🏆 **Won/played stats** — bragging rights, quantified
+- ➕ **Log results** — log in after each Friday session and add the scores
 
 ---
 
 ## 🛠️ Stack
 
-| Layer             | Choice                                                                                              | Why                                                      |
-| ----------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Runtime & bundler | [Bun](https://bun.sh)                                                                               | 3× faster installs, native TypeScript, unified toolchain |
-| Frontend          | React 19 + Redux Toolkit + MUI v7                                                                   | Mature, typed, component-rich                            |
-| Backend           | `Bun.serve()` + layered architecture                                                                | No framework overhead, full control                      |
-| Database          | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team)                                                | Type-safe queries, migration-first                       |
-| Auth              | JWT + HttpOnly refresh cookies                                                                      | Stateless, secure, rotation built-in                     |
-| Linting           | [oxlint](https://oxc.rs/docs/guide/usage/linter) + [oxfmt](https://github.com/nicolo-ribaudo/oxfmt) | 50–100× faster than ESLint                               |
-| Testing           | `bun:test` + happy-dom                                                                              | No config, no Jest, same runtime                         |
+| Layer    | Choice                                               | Why                                               |
+| -------- | ---------------------------------------------------- | ------------------------------------------------- |
+| Runtime  | [Bun](https://bun.sh)                                | Fast installs, native TypeScript, unified tooling |
+| Frontend | React 19 + Redux Toolkit + MUI v7                    | Typed, component-rich, great charts               |
+| Backend  | `Bun.serve()` + Controller → Service → Repository    | No framework overhead, fully tested layers        |
+| Database | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team) | Type-safe queries, migration-first                |
+| Auth     | JWT + HttpOnly refresh cookies                       | Stateless, secure, rotation built-in              |
+| Quality  | oxlint + oxfmt + React Compiler + knip + Husky       | Enforced at commit time, not just "recommended"   |
 
 ---
 
-## ⚡️ Quick Start
+## ⚡️ Getting Started
 
 ```bash
+cp .env.example .env          # fill in POSTGRES_* and JWT_SECRET
+docker compose up -d          # spin up Postgres
 bun install
-cp .env.example .env        # fill in POSTGRES_* and JWT_SECRET
 bun run db:migrate
-bun run db:seed             # creates the initial admin user
-bun dev                     # http://localhost:3000
+bun run db:seed               # creates the admin user + historical rounds
+bun dev                       # http://localhost:3000
 ```
 
 ---
 
 ## ✨ Features
 
-- 🔐 **JWT authentication** — login, invite-based signup, refresh token rotation, change password
-- 🛡️ **RBAC** — `admin` | `user` roles enforced in middleware, embedded in the JWT
-- 🏗️ **Layered backend** — Controller → Service → Repository with factory-based DI
-- 🧪 **Tests included** — every service and controller ships with unit tests; no DB required
-- ⚛️ **React 19 + HMR** — hot module reloading in dev, optimised production build via Bun bundler
-- 🔴 **RTK Query** — typed server state with auto token refresh on 401
-- 💀 **Skeleton loaders** — `TableSkeleton`, `ListSkeleton`, `CardSkeleton` ready to use
-- 🛡️ **Error boundary** — app-level reset support out of the box
-- 📧 **SMTP email** — opt-in Nodemailer integration; invite email sent on user creation; no-op when `SMTP_HOST` is unset
-- 🚦 **Rate limiting** — in-memory per-IP limiter on auth endpoints
-- 🌐 **CORS** — configured via `CORS_ORIGIN` env var
-- 🗄️ **DB resilience** — startup ping with 5-attempt exponential backoff
-- 🐶 **Quality enforced** — Husky blocks pushes that fail lint, format, tests, or knip
+- 🔐 **Auth** — JWT login, refresh token rotation, invite-based signup
+- 🛡️ **RBAC** — `admin` | `user` roles, enforced in middleware
+- 🏗️ **Layered backend** — Controller → Service → Repository with factory DI
+- 🧪 **Unit tests** — every service and controller ships with tests; no DB required
+- ⚛️ **React 19 + HMR** — fast dev loop, optimised production build via Bun bundler
+- 🔄 **RTK Query** — typed server state with auto token refresh on 401
+- 📧 **SMTP email** — opt-in invite emails; no-op when `SMTP_HOST` is unset
+- 🔭 **OTel tracing** — opt-in observability via SigNoz; zero overhead when off
+- 📊 **Analytics** — opt-in Rybbit pageview tracking; zero overhead when off
+- 🐶 **Quality gate** — Husky blocks pushes that fail lint, format, tests, or knip
 
 ---
 
@@ -73,78 +65,23 @@ Request → Bun.serve() → withMiddleware() → Controller → Service → Repo
 ```
 
 ```
-bun-boiler/
+wise-geoguessr/
 ├── backend/            # Bun.serve() server — routes, controllers, services, repositories
 │   ├── db/             # Drizzle client, schemas (source of truth for types), migrations, seed
-│   ├── middleware/      # Auth guards, CORS
+│   ├── middleware/     # Auth guards, rate limiting, CORS
 │   ├── telemetry/      # Optional OTel tracing + structured logger
 │   └── utils/          # Response helpers, auth utilities, Zod validation
 ├── frontend/
-│   ├── features/       # Self-contained feature modules (components, hooks, state, tests)
-│   ├── shared/         # Generic components (skeletons, error boundary, protected route)
-│   ├── redux/          # Store, RTK Query API, slices, localStorage middleware
-│   └── providers/      # React providers (theme, auth, toast)
-├── e2e/                # Playwright tests — api/ (no browser) and frontend/ (Chromium)
+│   ├── features/       # Self-contained feature modules (components, hooks, state)
+│   ├── pages/          # Thin route components — homePage.tsx is the GeoGuessr dashboard
+│   ├── shared/         # Generic components (skeletons, error boundary)
+│   └── redux/          # Store, RTK Query API slices
+├── e2e/                # Playwright tests — API and browser
 ├── rest/               # .http request files for every endpoint (kulala.nvim)
 └── docker/             # Dockerfiles and service configs
 ```
 
-See the READMEs inside each directory for layer-specific conventions and rules.
-
----
-
-## ⚙️ Optional Integrations
-
-Both are opt-in — zero code changes, zero overhead when the env vars are not set.
-
-### 🔭 OpenTelemetry — Tracing & Logs
-
-```bash
-docker compose -f docker-compose.signoz.yml up -d
-```
-
-Add to `.env`:
-
-```env
-OTEL_ENDPOINT=http://localhost:4318
-OTEL_SERVICE_NAME=bun-boiler
-```
-
-SigNoz UI → **http://localhost:8080**
-
-### 📧 SMTP Email — Transactional Email
-
-For local dev, use [Mailpit](https://github.com/axllent/mailpit) — a lightweight SMTP server with a web UI:
-
-```bash
-docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
-```
-
-Add to `.env`:
-
-```env
-SMTP_HOST=localhost
-SMTP_PORT=1025
-SMTP_FROM=My App <no-reply@localhost>
-```
-
-Mailpit UI → **http://localhost:8025**. For production, point at any provider (Resend, Postmark, Mailgun). See `backend/mail/README.md`.
-
-### 📊 Rybbit Analytics — Privacy-First Frontend Analytics
-
-```bash
-# First: gh auth token | docker login ghcr.io -u <your-github-username> --password-stdin
-docker compose -f docker-compose.rybbit.yml up -d
-```
-
-Open **http://localhost:8090**, create an account, add a site, copy the Site ID. Then set `RYBBIT_DISABLE_SIGNUP=true` in `.env` and restart to lock registration. Add to `.env`:
-
-```env
-BUN_PUBLIC_RYBBIT_HOST=http://localhost:8090
-BUN_PUBLIC_RYBBIT_SITE_ID=<your-site-id>
-```
-
-Pageviews tracked automatically. Custom events via `useAnalytics` hook. See `frontend/features/analytics/README.md`.
+See the READMEs inside each directory for layer-specific conventions.
 
 ---
 
@@ -161,3 +98,33 @@ bun run db:studio      # Drizzle Studio GUI
 bun e2e                # Playwright API tests
 bun e2e:browser        # Playwright browser tests
 ```
+
+---
+
+## ⚙️ Optional Integrations
+
+Both are opt-in — zero overhead when the env vars are not set.
+
+### 🔭 OpenTelemetry
+
+```bash
+docker compose -f docker-compose.signoz.yml up -d
+```
+
+Set in `.env`: `OTEL_ENDPOINT=http://localhost:4318` · SigNoz UI → **http://localhost:8080**
+
+### 📊 Rybbit Analytics
+
+```bash
+docker compose -f docker-compose.rybbit.yml up -d
+```
+
+Set in `.env`: `BUN_PUBLIC_RYBBIT_HOST` + `BUN_PUBLIC_RYBBIT_SITE_ID` · See `frontend/features/analytics/README.md`
+
+### 📧 SMTP Email
+
+Set in `.env`: `SMTP_HOST` + `SMTP_PORT` + `SMTP_FROM` · For local dev, use [Mailpit](https://github.com/axllent/mailpit) · See `backend/mail/README.md`
+
+---
+
+_May your pings always land in Europe and your scores always beat your teammates. 🗺️_

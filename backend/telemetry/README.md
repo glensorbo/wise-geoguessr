@@ -26,19 +26,19 @@ A full SigNoz stack is included in the repo — ClickHouse, Zookeeper, the SigNo
 
    ```
    OTEL_ENDPOINT=http://localhost:4318
-   OTEL_SERVICE_NAME=bun-boiler
+   OTEL_SERVICE_NAME=wise-geoguessr
    ```
 
    For frontend browser tracing, also set:
 
    ```
-   BUN_PUBLIC_OTEL_SERVICE_NAME=bun-boiler-frontend
+   BUN_PUBLIC_OTEL_SERVICE_NAME=wise-geoguessr-frontend
    ```
 
 4. Start the dev server — you should see:
 
    ```
-   🔭 OpenTelemetry enabled → http://localhost:4318 (service: bun-boiler)
+   🔭 OpenTelemetry enabled → http://localhost:4318 (service: wise-geoguessr)
    ```
 
 5. To stop SigNoz (data is preserved in volumes):
@@ -59,7 +59,7 @@ Set `OTEL_ENDPOINT` in your `.env` pointing at any OTLP HTTP collector:
 
 ```
 OTEL_ENDPOINT=http://<your-collector>:4318
-OTEL_SERVICE_NAME=bun-boiler   # optional, defaults to "bun-boiler"
+OTEL_SERVICE_NAME=wise-geoguessr   # optional, defaults to "wise-geoguessr"
 ```
 
 Port **4318** (OTLP HTTP) — not 4317 (gRPC).
@@ -68,11 +68,11 @@ Port **4318** (OTLP HTTP) — not 4317 (gRPC).
 
 ## Environment Variables
 
-| Variable                       | Required | Default      | Description                                                                      |
-| ------------------------------ | -------- | ------------ | -------------------------------------------------------------------------------- |
-| `OTEL_ENDPOINT`                | No       | —            | OTLP HTTP base URL (e.g. `http://localhost:4318`). OTel is disabled when absent. |
-| `OTEL_SERVICE_NAME`            | No       | `bun-boiler` | Service name reported in all backend signals.                                    |
-| `BUN_PUBLIC_OTEL_SERVICE_NAME` | No       | —            | Service name for browser spans. Frontend tracing is disabled when absent.        |
+| Variable                       | Required | Default          | Description                                                                      |
+| ------------------------------ | -------- | ---------------- | -------------------------------------------------------------------------------- |
+| `OTEL_ENDPOINT`                | No       | —                | OTLP HTTP base URL (e.g. `http://localhost:4318`). OTel is disabled when absent. |
+| `OTEL_SERVICE_NAME`            | No       | `wise-geoguessr` | Service name reported in all backend signals.                                    |
+| `BUN_PUBLIC_OTEL_SERVICE_NAME` | No       | —                | Service name for browser spans. Frontend tracing is disabled when absent.        |
 
 ---
 
@@ -119,7 +119,7 @@ Spans are **not** sent directly to the OTel collector from the browser. Instead,
 
 **Setup:**
 
-1. Set `BUN_PUBLIC_OTEL_SERVICE_NAME=bun-boiler-frontend` in your `.env`
+1. Set `BUN_PUBLIC_OTEL_SERVICE_NAME=wise-geoguessr-frontend` in your `.env`
 
 **CORS:** No collector CORS configuration is needed. The browser talks only to the backend proxy.
 
@@ -168,7 +168,7 @@ Inside `backend/telemetry/index.ts` only, the tracer is obtained via:
 ```ts
 import { trace, SpanStatusCode } from '@opentelemetry/api';
 
-const tracer = trace.getTracer('bun-boiler');
+const tracer = trace.getTracer('wise-geoguessr');
 ```
 
 ---
