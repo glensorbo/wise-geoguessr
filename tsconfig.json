@@ -22,7 +22,9 @@
     "noImplicitOverride": true,
 
     "paths": {
-      "~/*": ["./src/*"]
+      "@frontend/*": ["./frontend/*"],
+      "@backend/*": ["./backend/*"],
+      "@type/*": ["./types/*"]
     },
 
     // Some stricter flags (disabled by default)

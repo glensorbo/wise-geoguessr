@@ -1,0 +1,15 @@
+# Local Rybbit reverse proxy — HTTP only, no TLS
+# Serves everything on :8090 so NEXT_PUBLIC_BACKEND_URL relative paths work correctly.
+:8090 {
+    encode zstd gzip
+
+    request_body max_size 10MB
+
+    handle /api/* {
+        reverse_proxy rybbit-backend:3001
+    }
+
+    handle {
+        reverse_proxy rybbit-client:3002
+    }
+}

@@ -1,0 +1,30 @@
+### Get available years
+GET {{BASE_URL}}/api/results/years
+
+###
+
+### Get all results
+GET {{BASE_URL}}/api/results
+
+###
+
+### Get results for a specific year
+GET {{BASE_URL}}/api/results?year=2025
+
+###
+
+### Add a new game result (authenticated)
+POST {{BASE_URL}}/api/results
+Content-Type: application/json
+Authorization: Bearer {{JWT_TOKEN}}
+
+{
+  "date": "2026-04-04",
+  "scores": {
+    "Glen": 15000,
+    "Thomas": 12000,
+    "Thorjan": 18000,
+    "Tor Arve": 14500,
+    "Sigurd": 9800
+  }
+}

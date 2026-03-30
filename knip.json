@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "frontend/main.tsx",
+    "backend/**/*.test.ts",
+    "backend/middleware/*.ts",
+    "frontend/shared/components/skeleton.tsx"
+  ],
+  "project": ["backend/**/*.ts", "frontend/**/*.{ts,tsx}"],
+  "ignoreDependencies": ["@babel/preset-react", "@babel/preset-typescript"]
+}

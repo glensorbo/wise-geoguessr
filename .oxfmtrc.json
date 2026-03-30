@@ -6,7 +6,7 @@
   "printWidth": 80,
   "sortImports": {
     "newlinesBetween": false,
-    "internalPattern": ["~/", ".", "./", "../"],
+    "internalPattern": ["@frontend/", "@backend/", "./", "../"],
     "groups": [
       ["value-external", "value-builtin"],
       { "newlinesBetween": true },
@@ -19,6 +19,6 @@
       "side_effect"
     ]
   },
-  "sortPackageJson": false,
-  "ignorePatterns": ["src/types/api", "!src/types/api/README.md"]
+  "ignorePatterns": ["dist/", "coverage/", "backend/db/migrations"],
+  "sortPackageJson": true
 }

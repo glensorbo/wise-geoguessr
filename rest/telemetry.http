@@ -1,0 +1,9 @@
+### Proxy browser traces to the OTel collector
+# Forwards an OTLP JSON trace payload to {OTEL_ENDPOINT}/v1/traces on the server side.
+# Returns 204 when OTEL_ENDPOINT is not configured.
+POST {{BASE_URL}}/api/telemetry/traces
+Content-Type: application/json
+
+{
+  "resourceSpans": []
+}

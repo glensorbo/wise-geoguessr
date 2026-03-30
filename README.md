@@ -1,116 +1,130 @@
-# Wise GeoGuessr
+# 🌍 Wise GeoGuessr
 
-A Bun-powered dashboard for tracking weekly Wise GeoGuessr scores.
+**The Friday scoreboard for the team that takes GeoGuessr very, very seriously.**
 
-The app serves a React 19 single-page frontend from a Bun server, loads raw score history from a JSON file on the server, and renders a filterable MUI X data grid plus charts with MUI and MUI X Charts.
+Every Friday the Wise team drops into GeoGuessr for a round of competitive geography. This app tracks every score, ranks every player, and makes sure nobody forgets who won (or lost) three weeks ago.
 
-## Tech stack
+---
 
-- Bun for development, serving, testing, and production builds
-- React 19 with `react-router-dom`
-- MUI for theming and UI components
-- MUI X Charts for visualizations
-- Bun build with a custom React Compiler plugin in `build.ts`
+## 🗺️ What it does
 
-## Getting started
+- 📊 **Live leaderboard** — DataGrid of all results, sortable and filterable
+- 📈 **Accumulated points chart** — who's pulling ahead over the season
+- 📅 **Weekly bar chart** — how each round stacked up
+- 🎯 **Points-per-round chart** — consistency vs. clutch performance
+- 🏆 **Won/played stats** — bragging rights, quantified
+- ➕ **Log results** — log in after each Friday session and add the scores
 
-Install dependencies:
+---
 
-```sh
+## 🛠️ Stack
+
+| Layer    | Choice                                               | Why                                               |
+| -------- | ---------------------------------------------------- | ------------------------------------------------- |
+| Runtime  | [Bun](https://bun.sh)                                | Fast installs, native TypeScript, unified tooling |
+| Frontend | React 19 + Redux Toolkit + MUI v7                    | Typed, component-rich, great charts               |
+| Backend  | `Bun.serve()` + Controller → Service → Repository    | No framework overhead, fully tested layers        |
+| Database | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team) | Type-safe queries, migration-first                |
+| Auth     | JWT + HttpOnly refresh cookies                       | Stateless, secure, rotation built-in              |
+| Quality  | oxlint + oxfmt + React Compiler + knip + Husky       | Enforced at commit time, not just "recommended"   |
+
+---
+
+## ⚡️ Getting Started
+
+```bash
+cp .env.example .env          # fill in POSTGRES_* and JWT_SECRET
+docker compose up -d          # spin up Postgres
 bun install
+bun run db:migrate
+bun run db:seed               # creates the admin user + historical rounds
+bun dev                       # http://localhost:3000
 ```
 
-Start the development server with hot reload:
+---
 
-```sh
-bun run dev
+## ✨ Features
+
+- 🔐 **Auth** — JWT login, refresh token rotation, invite-based signup
+- 🛡️ **RBAC** — `admin` | `user` roles, enforced in middleware
+- 🏗️ **Layered backend** — Controller → Service → Repository with factory DI
+- 🧪 **Unit tests** — every service and controller ships with tests; no DB required
+- ⚛️ **React 19 + HMR** — fast dev loop, optimised production build via Bun bundler
+- 🔄 **RTK Query** — typed server state with auto token refresh on 401
+- 📧 **SMTP email** — opt-in invite emails; no-op when `SMTP_HOST` is unset
+- 🔭 **OTel tracing** — opt-in observability via SigNoz; zero overhead when off
+- 📊 **Analytics** — opt-in Rybbit pageview tracking; zero overhead when off
+- 🐶 **Quality gate** — Husky blocks pushes that fail lint, format, tests, or knip
+
+---
+
+## 🏗️ Architecture
+
+```
+Request → Bun.serve() → withMiddleware() → Controller → Service → Repository → Drizzle → PostgreSQL
 ```
 
-The app will be available at `http://localhost:3000`.
-
-## Scripts
-
-- `bun run dev` - start the Bun dev server with HMR
-- `bun run start` - start the production Bun server
-- `bun run build` - build the production bundle into `dist/`
-- `bun test` - run the Bun test suite
-- `bun test src/logic/tests/player-details.test.ts` - run a single test file
-- `bun run test:watch` - run tests in watch mode
-- `bun run lint` - run `oxlint`
-- `bun run format:check` - verify formatting with `oxfmt`
-- `bun run format` - format the repository with `oxfmt`
-- `bun run cc` - run tests, lint, and formatting checks together
-
-## Architecture
-
-### Runtime flow
-
-- `server/server.ts` runs the Bun HTTP server in both development and production.
-- `bun run dev` serves `public/index.html` through Bun's HTML-import dev server with HMR.
-- `bun run start` serves the built files from `dist/` in production and falls back to `index.html` for client-side routing.
-- `src/frontend.tsx` mounts `App`, which provides the MUI theme and the router.
-- `src/pages/Home.page.tsx` fetches score data from `/api/results?year=YYYY`, loads available years from `/api/results/years`, and renders the dashboard for the selected year.
-
-### Data flow
-
-- Raw score history lives in `server/data/data.json`.
-- `server/data.ts` loads that JSON and `server/server.ts` exposes it through `/api/results`.
-- `src/logic/` contains the frontend data-shaping logic, split into focused modules for players, winners, yearly rows, per-played averages, and cumulative totals.
-
-## Working with score data
-
-Update `server/data/data.json` when adding new rounds. Each entry looks like this:
-
-```json
-{
-  "date": "2026-03-13",
-  "scores": {
-    "Thomas": 15046,
-    "Glen": 16409,
-    "Sigurd": 15254
-  }
-}
+```
+wise-geoguessr/
+├── backend/            # Bun.serve() server — routes, controllers, services, repositories
+│   ├── db/             # Drizzle client, schemas (source of truth for types), migrations, seed
+│   ├── middleware/     # Auth guards, rate limiting, CORS
+│   ├── telemetry/      # Optional OTel tracing + structured logger
+│   └── utils/          # Response helpers, auth utilities, Zod validation
+├── frontend/
+│   ├── features/       # Self-contained feature modules (components, hooks, state)
+│   ├── pages/          # Thin route components — homePage.tsx is the GeoGuessr dashboard
+│   ├── shared/         # Generic components (skeletons, error boundary)
+│   └── redux/          # Store, RTK Query API slices
+├── e2e/                # Playwright tests — API and browser
+├── rest/               # .http request files for every endpoint (kulala.nvim)
+└── docker/             # Dockerfiles and service configs
 ```
 
-Players are derived from the `scores` keys, so you do not need to maintain a second player list.
+See the READMEs inside each directory for layer-specific conventions.
 
-The dashboard defaults to the current calendar year, but the global year selector can switch the entire page to any available year. The backend applies the year filter so the frontend only receives the requested slice of data.
+---
 
-## UI and charting
+## 🔑 Key Commands
 
-The frontend now uses MUI and MUI X Charts instead of Mantine/Recharts. This removes the Bun-specific chart compatibility workarounds that were previously needed in development.
-
-If you update charting dependencies, validate with:
-
-```sh
-bun run cc
-bun run build
+```bash
+bun dev                # Dev server with HMR → http://localhost:3000
+bun run build          # Production bundle
+bun test               # Unit tests
+bun run cc             # Full quality check — test + lint + format + knip
+bun run db:generate    # Generate Drizzle migration from schema changes
+bun run db:migrate     # Apply migrations
+bun run db:studio      # Drizzle Studio GUI
+bun e2e                # Playwright API tests
+bun e2e:browser        # Playwright browser tests
 ```
 
-## MCP setup
+---
 
-This repository includes MCP starter config for browser and database tooling:
+## ⚙️ Optional Integrations
 
-- `.vscode/mcp.json` for workspace MCP servers
-- `.github/copilot-mcp-config.example.json` for Copilot CLI or GitHub-hosted agents
+Both are opt-in — zero overhead when the env vars are not set.
 
-Playwright MCP may still require local browser dependencies on your machine. If browser automation fails to launch, install the browser binaries and any missing system libraries required by Playwright.
+### 🔭 OpenTelemetry
 
-## Docker
-
-The repository includes a Bun-based multi-stage `Dockerfile`. It builds the frontend with `bun run build`, copies the production `dist/` assets plus `server/`, and runs the app with Bun in production mode.
-
-Build and run it with:
-
-```sh
-docker build -t wise-geoguessr .
-docker run --rm -p 3000:3000 wise-geoguessr
+```bash
+docker compose -f docker-compose.signoz.yml up -d
 ```
 
-## Testing
+Set in `.env`: `OTEL_ENDPOINT=http://localhost:4318` · SigNoz UI → **http://localhost:8080**
 
-The test suite covers both the dashboard loading state and the extracted logic modules under `src/logic/tests/`, including winners, active-player filtering, yearly rows, per-played averages, and cumulative totals.
+### 📊 Rybbit Analytics
 
-## Future direction
+```bash
+docker compose -f docker-compose.rybbit.yml up -d
+```
 
-The current JSON data source is an intermediate step. The server route is designed so the backing store can move to Postgres later without changing the frontend data contract.
+Set in `.env`: `BUN_PUBLIC_RYBBIT_HOST` + `BUN_PUBLIC_RYBBIT_SITE_ID` · See `frontend/features/analytics/README.md`
+
+### 📧 SMTP Email
+
+Set in `.env`: `SMTP_HOST` + `SMTP_PORT` + `SMTP_FROM` · For local dev, use [Mailpit](https://github.com/axllent/mailpit) · See `backend/mail/README.md`
+
+---
+
+_May your pings always land in Europe and your scores always beat your teammates. 🗺️_
