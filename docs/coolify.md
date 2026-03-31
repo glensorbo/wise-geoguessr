@@ -78,9 +78,11 @@ Click **Deploy**. Watch the build logs — on a cold start the container will pr
 ```
 
 > **First deploy:** Run migrations before the server handles traffic. In Coolify → **Post-deploy command**, set:
+>
 > ```
 > bunx --bun drizzle-kit migrate
 > ```
+>
 > Or run it manually via **Containers → Exec** after the first deploy.
 
 The healthcheck (`GET /healthcheck`) must return `200` before Coolify marks the deploy as successful.
