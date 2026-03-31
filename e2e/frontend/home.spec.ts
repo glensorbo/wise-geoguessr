@@ -84,39 +84,56 @@ test.describe('Home page — year selector', () => {
 });
 
 // ---------------------------------------------------------------------------
-// DataGrid
+// LeftNav sidebar
 // ---------------------------------------------------------------------------
 
-test.describe('Home page — data grid', () => {
+test.describe('Home page — LeftNav sidebar', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('DataGrid table is visible', async ({ page }) => {
-    // MUI X DataGrid renders with role="grid"
-    await expect(page.locator('[role="grid"]')).toBeVisible({
-      timeout: 10_000,
-    });
+  test('sidebar navigation is visible', async ({ page }) => {
+    await expect(page.getByRole('navigation')).toBeVisible();
+  });
+
+  test('sidebar has a "Dashboard" nav link', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Dashboard' })).toBeVisible();
+  });
+
+  test('sidebar has a "Results" nav link', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Results' })).toBeVisible();
+  });
+
+  test('sidebar has a "Statistics" nav link', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Statistics' })).toBeVisible();
   });
 });
 
 // ---------------------------------------------------------------------------
-// Charts
+// Dashboard content
 // ---------------------------------------------------------------------------
 
-test.describe('Home page — charts', () => {
+test.describe('Home page — dashboard content', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('at least one MUI X chart is rendered', async ({ page }) => {
-    await expect(page.locator('svg').first()).toBeVisible({ timeout: 15_000 });
+  test('shows the "Dashboard" heading', async ({ page }) => {
+    await expect(
+      page.getByRole('heading', { name: 'Dashboard' }),
+    ).toBeVisible();
   });
 
-  test('multiple chart containers are present', async ({ page }) => {
-    await expect(page.locator('svg').first()).toBeVisible({ timeout: 15_000 });
-    const chartCount = await page.locator('svg').count();
-    expect(chartCount).toBeGreaterThanOrEqual(1);
+  test('shows the Season Podium section', async ({ page }) => {
+    await expect(page.getByText(/Season Podium/)).toBeVisible({
+      timeout: 10_000,
+    });
+  });
+
+  test('shows the Last Round section', async ({ page }) => {
+    await expect(page.getByText(/Last Round/)).toBeVisible({
+      timeout: 10_000,
+    });
   });
 });
 

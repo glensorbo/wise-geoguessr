@@ -114,9 +114,9 @@ test.describe('Home page — year selector content (seeded data)', () => {
 // Year selector — filtering changes the displayed data
 // ---------------------------------------------------------------------------
 
-test.describe('Home page — year filtering changes grid content', () => {
+test.describe('Results page — year filtering changes grid content', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/results');
     await expect(page.locator('[role="grid"]')).toBeVisible({
       timeout: 10_000,
     });
@@ -177,21 +177,27 @@ test.describe('Home page — year filtering changes grid content', () => {
 // URL year parameter
 // ---------------------------------------------------------------------------
 
-test.describe('Home page — ?year= URL parameter', () => {
-  test('navigating to /?year=2024 pre-selects 2024', async ({ page }) => {
-    await page.goto('/?year=2024');
+test.describe('Results page — ?year= URL parameter', () => {
+  test('navigating to /results?year=2024 pre-selects 2024', async ({
+    page,
+  }) => {
+    await page.goto('/results?year=2024');
     await expect(page.getByLabel('Year')).toContainText('2024');
     await expect(dateCell(page, '2024-11-22')).toBeVisible({ timeout: 10_000 });
   });
 
-  test('navigating to /?year=2025 pre-selects 2025', async ({ page }) => {
-    await page.goto('/?year=2025');
+  test('navigating to /results?year=2025 pre-selects 2025', async ({
+    page,
+  }) => {
+    await page.goto('/results?year=2025');
     await expect(page.getByLabel('Year')).toContainText('2025');
     await expect(dateCell(page, '2025-12-19')).toBeVisible({ timeout: 10_000 });
   });
 
-  test('navigating to /?year=2026 pre-selects 2026', async ({ page }) => {
-    await page.goto('/?year=2026');
+  test('navigating to /results?year=2026 pre-selects 2026', async ({
+    page,
+  }) => {
+    await page.goto('/results?year=2026');
     await expect(page.getByLabel('Year')).toContainText('2026');
     await expect(dateCell(page, '2026-03-27')).toBeVisible({ timeout: 10_000 });
   });
@@ -201,9 +207,9 @@ test.describe('Home page — ?year= URL parameter', () => {
 // Grid column headers
 // ---------------------------------------------------------------------------
 
-test.describe('Home page — DataGrid column headers', () => {
+test.describe('Results page — DataGrid column headers', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/?year=2026');
+    await page.goto('/results?year=2026');
     await expect(page.locator('[role="grid"]')).toBeVisible({
       timeout: 10_000,
     });
@@ -238,6 +244,7 @@ test.describe('Full workflow — login → add score → verify in grid', () => 
     page,
   }) => {
     await login(page);
+    await page.goto('/results');
 
     // Use a year guaranteed to have no seeded data
     const testYear = 2097;
@@ -273,6 +280,7 @@ test.describe('Full workflow — login → add score → verify in grid', () => 
     page,
   }) => {
     await login(page);
+    await page.goto('/results');
 
     const testDate = `2097-06-${String(16 + test.info().retry).padStart(2, '0')}`;
 
@@ -320,6 +328,7 @@ test.describe('Full workflow — login → add score → verify in grid', () => 
     page,
   }) => {
     await login(page);
+    await page.goto('/results');
 
     const testDate = '2097-06-17';
     const customPlayer = 'NewCustomPlayer';
@@ -503,7 +512,7 @@ test.describe('Home page grid — auto-refresh after adding a score', () => {
     await login(page);
 
     // Navigate to year 2097 view (empty before submission)
-    await page.goto('/?year=2097');
+    await page.goto('/results?year=2097');
 
     // Add a score for 2097
     await page.getByRole('button', { name: /add results/i }).click();
@@ -540,7 +549,7 @@ authedTest.describe(
       async ({ page, testUser }) => {
         // Inject auth token directly to skip UI login
         await injectAuthToken(page, testUser.token);
-        await page.goto('/?year=2026');
+        await page.goto('/results?year=2026');
 
         await expect(page.locator('[role="grid"]')).toBeVisible({
           timeout: 10_000,
@@ -559,7 +568,7 @@ authedTest.describe(
       '2024 grid shows exactly 3 data rows',
       async ({ page, testUser }) => {
         await injectAuthToken(page, testUser.token);
-        await page.goto('/?year=2024');
+        await page.goto('/results?year=2024');
 
         await expect(page.locator('[role="grid"]')).toBeVisible({
           timeout: 10_000,
