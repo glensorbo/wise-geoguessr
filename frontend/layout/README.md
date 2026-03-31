@@ -2,11 +2,11 @@
 
 Shell components that define the page structure. Not business-logic-aware.
 
-| File               | Role                                                                       |
-| ------------------ | -------------------------------------------------------------------------- |
-| `pageLayout.tsx`   | Authenticated layout — composes `TopNav`, `LeftNav`, and `<Outlet />`      |
-| `publicLayout.tsx` | Public layout — `TopNav` only (no sidebar), used for unauthenticated pages |
-| `constants.ts`     | Shared layout constants (e.g. `DRAWER_WIDTH`)                              |
+| File               | Role                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `pageLayout.tsx`   | Full layout — composes `TopNav`, `LeftNav`, and `<Outlet />`; used for all public and authenticated routes |
+| `publicLayout.tsx` | Minimal layout — `TopNav` only (no sidebar); currently unused                                              |
+| `constants.ts`     | Shared layout constants (e.g. `DRAWER_WIDTH`)                                                              |
 
 ## Notes
 

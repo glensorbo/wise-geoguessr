@@ -19,7 +19,9 @@ export const YearSelector = ({
   disabled = false,
   onChange,
 }: YearSelectorProps) => {
-  if (yearsLoading) return <Skeleton variant="rounded" height={40} sx={{ minWidth: 140 }} />;
+  if (yearsLoading) {
+    return <Skeleton variant="rounded" height={40} sx={{ minWidth: 140 }} />;
+  }
 
   return (
     <FormControl size="small" sx={{ minWidth: 140 }}>

@@ -1,4 +1,4 @@
-export const PLAYER_COLORS: Record<string, string> = {
+const PLAYER_COLORS: Record<string, string> = {
   Glen: '#ec4899',
   Thorjan: '#ef4444',
   Thomas: '#65a30d',
@@ -20,8 +20,10 @@ const FALLBACK_COLORS = [
   '#db2777',
 ];
 
-export const getPlayerColor = (name: string, index: number): string =>
-  PLAYER_COLORS[name] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+const getPlayerColor = (name: string, index: number): string =>
+  PLAYER_COLORS[name] ??
+  FALLBACK_COLORS[index % FALLBACK_COLORS.length] ??
+  '#666666';
 
 export const getChartSeries = (players: string[]) =>
   players.map((name, index) => ({

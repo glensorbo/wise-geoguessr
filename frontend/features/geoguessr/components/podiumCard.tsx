@@ -31,9 +31,7 @@ const PodiumSlot = ({ entry }: { entry: PodiumEntry }) => (
         width: '100%',
         textAlign: 'center',
         border:
-          entry.rank === 1
-            ? '2px solid #f59e0b'
-            : '1px solid rgba(0,0,0,0.08)',
+          entry.rank === 1 ? '2px solid #f59e0b' : '1px solid rgba(0,0,0,0.08)',
       }}
     >
       <Stack spacing={0.5} alignItems="center">

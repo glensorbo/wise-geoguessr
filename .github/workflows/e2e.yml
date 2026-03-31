@@ -1,0 +1,26 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - test
+      - prod
+  e2e:
+    name: Run self-contained E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v6
+
+      - name: 🏗️ Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: 🐳 Verify Docker Compose
+        run: docker compose version
+
+      - name: 🎭 Run Docker E2E stack
+        run: bun run e2e:docker

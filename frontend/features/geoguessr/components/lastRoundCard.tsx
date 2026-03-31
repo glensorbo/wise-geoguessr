@@ -8,9 +8,15 @@ import { formatAxisNumber } from '../constants';
 import type { LastRound } from '../logic/lastRound';
 
 const rankLabel = (rank: number): string => {
-  if (rank === 1) return '👑';
-  if (rank === 2) return '🥈';
-  if (rank === 3) return '🥉';
+  if (rank === 1) {
+    return '👑';
+  }
+  if (rank === 2) {
+    return '🥈';
+  }
+  if (rank === 3) {
+    return '🥉';
+  }
   return `${rank}.`;
 };
 
@@ -59,7 +65,12 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
             {formatAxisNumber(entry.score)}
           </Typography>
           {entry.isWinner && (
-            <Chip label="Winner" size="small" color="warning" variant="outlined" />
+            <Chip
+              label="Winner"
+              size="small"
+              color="warning"
+              variant="outlined"
+            />
           )}
         </Box>
       ))}

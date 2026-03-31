@@ -15,11 +15,17 @@ export type LastRound = {
 };
 
 export const getLastRound = (results: GameResult[]): LastRound | null => {
-  if (results.length === 0) return null;
+  if (results.length === 0) {
+    return null;
+  }
 
   const latest = [...results].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
+
+  if (!latest) {
+    return null;
+  }
 
   const winners = getWinners(latest.scores);
 

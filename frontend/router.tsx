@@ -2,11 +2,11 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { AnalyticsProvider } from './features/analytics/analyticsProvider';
 import { PageLayout } from './layout/pageLayout';
-import { LoginPage } from './pages/loginPage';
 import { HomePage } from './pages/homePage';
+import { LoginPage } from './pages/loginPage';
+import { NotFoundPage } from './pages/notFoundPage';
 import { ResultsPage } from './pages/resultsPage';
 import { StatsPage } from './pages/statsPage';
-import { NotFoundPage } from './pages/notFoundPage';
 import { ProtectedRoute } from './shared/components/protectedRoute';
 
 /**

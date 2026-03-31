@@ -9,9 +9,12 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 
-import { getChartSeries, formatAxisNumber } from '@frontend/features/geoguessr/constants';
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
+import {
+  getChartSeries,
+  formatAxisNumber,
+} from '@frontend/features/geoguessr/constants';
 import { useResults } from '@frontend/features/geoguessr/hooks/useResults';
 import {
   getActivePlayers,
@@ -20,8 +23,15 @@ import {
 } from '@frontend/features/geoguessr/logic';
 
 export const StatsPage = () => {
-  const { year, setYear, yearOptions, yearsLoading, results, isLoading, error } =
-    useResults();
+  const {
+    year,
+    setYear,
+    yearOptions,
+    yearsLoading,
+    results,
+    isLoading,
+    error,
+  } = useResults();
 
   const players = useMemo(
     () => getActivePlayers(results, year),
@@ -219,7 +229,6 @@ export const StatsPage = () => {
             </Box>
           )}
         </DashboardSection>
-
       </Stack>
     </Container>
   );

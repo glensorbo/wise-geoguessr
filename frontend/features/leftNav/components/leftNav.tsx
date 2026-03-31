@@ -9,15 +9,17 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import type { ComponentType, SVGProps } from 'react';
 import { Link, useMatch, useResolvedPath } from 'react-router';
 
 import { DRAWER_WIDTH } from '@frontend/layout/constants';
 
+import type { SvgIconProps } from '@mui/material/SvgIcon';
+import type { ComponentType } from 'react';
+
 type NavItemProps = {
   to: string;
   label: string;
-  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  Icon: ComponentType<SvgIconProps>;
   end?: boolean;
 };
 
@@ -29,7 +31,7 @@ const NavItem = ({ to, label, Icon, end = false }: NavItemProps) => {
     <ListItem disablePadding>
       <ListItemButton component={Link} to={to} selected={!!match}>
         <ListItemIcon sx={{ minWidth: 36 }}>
-          <Icon width={20} height={20} />
+          <Icon fontSize="small" />
         </ListItemIcon>
         <ListItemText primary={label} />
       </ListItemButton>

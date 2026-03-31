@@ -5,15 +5,21 @@ import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 
-import { getChartSeries, formatAxisNumber } from '@frontend/features/geoguessr/constants';
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
+import {
+  getChartSeries,
+  formatAxisNumber,
+} from '@frontend/features/geoguessr/constants';
 import { useResults } from '@frontend/features/geoguessr/hooks/useResults';
-import { getActivePlayers, getPlayerData } from '@frontend/features/geoguessr/logic';
+import {
+  getActivePlayers,
+  getPlayerData,
+} from '@frontend/features/geoguessr/logic';
 import { TableSkeleton } from '@frontend/shared/components/skeleton';
 
 type PointsGridRow = { id: string; date: string } & Record<
@@ -22,8 +28,15 @@ type PointsGridRow = { id: string; date: string } & Record<
 >;
 
 export const ResultsPage = () => {
-  const { year, setYear, yearOptions, yearsLoading, results, isLoading, error } =
-    useResults();
+  const {
+    year,
+    setYear,
+    yearOptions,
+    yearsLoading,
+    results,
+    isLoading,
+    error,
+  } = useResults();
 
   const players = useMemo(
     () => getActivePlayers(results, year),
