@@ -5,6 +5,7 @@ on:
     branches:
       - test
       - prod
+jobs:
   e2e:
     name: Run self-contained E2E
     runs-on: ubuntu-latest
