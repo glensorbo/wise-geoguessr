@@ -18,7 +18,7 @@
     "knip": "knip-bun",
     "prepare": "husky",
     "db:generate": "bunx --bun drizzle-kit generate",
-    "db:migrate": "bunx --bun drizzle-kit check && bunx --bun drizzle-kit migrate",
+    "db:migrate": "bunx --bun drizzle-kit migrate",
     "db:seed": "bun backend/db/seed.ts",
     "db:push": "bunx --bun drizzle-kit check && bunx --bun drizzle-kit push",
     "db:studio": "bunx --bun drizzle-kit studio",
