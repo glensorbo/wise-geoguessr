@@ -1,18 +1,21 @@
 # ── E2E test runner ───────────────────────────────────────────────────────────
-# oven/bun:1 is Debian-based, so apt-get (used by playwright --with-deps) works.
-FROM oven/bun:1
+# Official Playwright image — Node.js + Chromium pre-installed.
+# Bun is installed as well because this repo's global setup seeds via Bun scripts.
+FROM mcr.microsoft.com/playwright:v1.58.2-noble
 
 WORKDIR /app
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl unzip \
+  && rm -rf /var/lib/apt/lists/* \
+  && curl -fsSL https://bun.sh/install | bash \
+  && ln -s /root/.bun/bin/bun /usr/local/bin/bun
 
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
 COPY . .
 
-# Download Chromium and install all OS-level browser dependencies.
-# Docker layer cache keeps this fast on subsequent builds unless bun.lock changes.
-RUN bunx playwright install --with-deps chromium
-
 ENV CI=true
 
-CMD ["bun", "run", "e2e:all"]
+CMD ["./node_modules/.bin/playwright", "test"]

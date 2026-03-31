@@ -24,7 +24,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-e2e_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-e2e_pass}
     tmpfs:
-      - /var/lib/postgresql/data # RAM-backed — no disk writes, instant teardown
+      - /var/lib/postgresql # RAM-backed — keeps Postgres 18's PGDATA subdir happy
     healthcheck:
       test:
         [
@@ -60,11 +60,9 @@ services:
       test:
         [
           'CMD',
-          'wget',
-          '--quiet',
-          '--tries=1',
-          '--spider',
-          'http://127.0.0.1:3000/healthcheck',
+          'bun',
+          '-e',
+          "const res = await fetch('http://127.0.0.1:3000/healthcheck'); if (!res.ok) process.exit(1);",
         ]
       interval: 5s
       timeout: 5s

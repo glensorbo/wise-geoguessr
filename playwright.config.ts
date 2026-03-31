@@ -32,7 +32,12 @@ export default defineConfig({
     {
       name: 'browser',
       testMatch: ['**/frontend.spec.ts', '**/frontend/**/*.spec.ts'],
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        extraHTTPHeaders: {
+          'x-e2e-test': 'true',
+        },
+      },
     },
   ],
 

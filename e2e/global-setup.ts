@@ -50,7 +50,10 @@ function seedGameData() {
 async function loginAndSaveToken(baseURL: string) {
   const res = await fetch(`${baseURL}/api/auth/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-e2e-test': 'true',
+    },
     body: JSON.stringify({ email: E2E_EMAIL, password: E2E_PASSWORD }),
   });
 
@@ -74,7 +77,26 @@ async function loginAndSaveToken(baseURL: string) {
   await mkdir(path.dirname(AUTH_FILE), { recursive: true });
   await writeFile(
     AUTH_FILE,
-    JSON.stringify({ token, userId, email: E2E_EMAIL }, null, 2),
+    JSON.stringify(
+      {
+        token,
+        userId,
+        email: E2E_EMAIL,
+        cookies: [
+          {
+            name: 'e2e_test',
+            value: 'true',
+            domain: 'localhost',
+            path: '/',
+            httpOnly: false,
+            secure: false,
+            sameSite: 'Lax',
+          },
+        ],
+      },
+      null,
+      2,
+    ),
   );
   console.log('🔐 E2E auth token saved');
 }

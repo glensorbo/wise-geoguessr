@@ -9,6 +9,15 @@ type AuthState = {
   token: string;
   userId: string | null;
   email: string;
+  cookies?: Array<{
+    name: string;
+    value: string;
+    domain: string;
+    path: string;
+    httpOnly: boolean;
+    secure: boolean;
+    sameSite: 'Lax' | 'None' | 'Strict';
+  }>;
 };
 
 type AuthFixtures = {
@@ -30,6 +39,7 @@ export const test = base.extend<AuthFixtures>({
       baseURL,
       extraHTTPHeaders: {
         Authorization: `Bearer ${testUser.token}`,
+        'x-e2e-test': 'true',
       },
     });
     await use(ctx);

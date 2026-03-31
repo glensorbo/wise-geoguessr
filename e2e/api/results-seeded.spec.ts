@@ -10,6 +10,8 @@ import { test, expect } from '@playwright/test';
 
 import { test as authedTest } from '../fixtures';
 
+test.describe.configure({ mode: 'serial' });
+
 // ---------------------------------------------------------------------------
 // Seeded dataset constants (mirrors seed-game-data.ts)
 // ---------------------------------------------------------------------------
