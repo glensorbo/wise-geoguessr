@@ -1,6 +1,7 @@
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TableChartRoundedIcon from '@mui/icons-material/TableChartRounded';
+import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -50,10 +51,12 @@ export const LeftNav = () => (
   >
     <Toolbar />
     <Divider />
-    <List>
-      <NavItem to="/" label="Dashboard" Icon={HomeRoundedIcon} end />
-      <NavItem to="/results" label="Results" Icon={TableChartRoundedIcon} />
-      <NavItem to="/stats" label="Statistics" Icon={BarChartRoundedIcon} />
-    </List>
+    <Box component="nav" aria-label="Main navigation">
+      <List>
+        <NavItem to="/" label="Dashboard" Icon={HomeRoundedIcon} end />
+        <NavItem to="/results" label="Results" Icon={TableChartRoundedIcon} />
+        <NavItem to="/stats" label="Statistics" Icon={BarChartRoundedIcon} />
+      </List>
+    </Box>
   </Drawer>
 );

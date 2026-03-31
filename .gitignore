@@ -38,3 +38,4 @@ http-client.env.json
 .auth/
 # Test results
 test-results/
+playwright-report

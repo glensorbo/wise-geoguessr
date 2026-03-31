@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router';
 
 import { getCurrentYear } from '../logic';
 import {
@@ -13,7 +14,14 @@ const currentYear = getCurrentYear();
 export const useResults = () => {
   const { data: availableYears = [], isLoading: yearsLoading } =
     useGetYearsQuery();
-  const [year, setYear] = useState(currentYear);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const yearParam = Number(searchParams.get('year'));
+  const year = yearParam > 2000 ? yearParam : currentYear;
+
+  const setYear = (newYear: number) => {
+    setSearchParams({ year: String(newYear) }, { replace: true });
+  };
 
   const {
     data: freshResults,
