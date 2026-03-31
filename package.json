@@ -27,7 +27,8 @@
     "e2e:all": "playwright test --project=api && playwright test --project=browser",
     "e2e:ui": "playwright test --ui --project=api --project=browser",
     "e2e:debug": "playwright test --debug",
-    "e2e:docker": "./scripts/e2e-ci.sh"
+    "e2e:docker": "./scripts/e2e-ci.sh",
+    "e2e:report": "npx playwright show-report"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
