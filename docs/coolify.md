@@ -2,7 +2,7 @@
 
 Coolify is a self-hosted platform that runs your app from a Git repository using
 Docker Compose. This project ships a production-ready `docker-compose.yml` and
-Dockerfile that work with Coolify out of the box.
+`docker/Dockerfile.prod` that work with Coolify out of the box.
 
 ---
 
@@ -10,10 +10,15 @@ Dockerfile that work with Coolify out of the box.
 
 Every time Coolify deploys (push, manual trigger, or scheduled):
 
-1. **Build** — `docker/Dockerfile` compiles the frontend and installs dependencies
-2. **Migrate** — `docker/entrypoint.sh` runs `bunx --bun drizzle-kit migrate` before the server starts (idempotent — already-applied migrations are skipped)
-3. **Seed** — admin user is created if it doesn't exist yet
-4. **Start** — `bun run start` serves the app on port 3000
+1. **Build** — `docker/Dockerfile.prod` compiles the frontend and installs dependencies
+2. **Seed** — admin user is created if it doesn't exist yet
+3. **Start** — `bun run start` serves the app on port 3000
+
+> ⚠️ **Migrations do not run automatically.** `docker/Dockerfile.prod` skips the migration step at startup. You must run migrations manually — either via SSH/Exec or by setting a Coolify post-deploy command:
+>
+> ```
+> bunx --bun drizzle-kit migrate
+> ```
 
 The database (`postgres_data` volume) persists across deploys.
 
@@ -69,9 +74,14 @@ Optional variables (uncomment in app as needed):
 Click **Deploy**. Watch the build logs — on a cold start the container will print:
 
 ```
-🔄 Running database migrations…
 🚀 Starting server…
 ```
+
+> **First deploy:** Run migrations before the server handles traffic. In Coolify → **Post-deploy command**, set:
+> ```
+> bunx --bun drizzle-kit migrate
+> ```
+> Or run it manually via **Containers → Exec** after the first deploy.
 
 The healthcheck (`GET /healthcheck`) must return `200` before Coolify marks the deploy as successful.
 
@@ -136,7 +146,7 @@ webhook notifications on task failure.
 ## Updating the app
 
 Push to your connected branch. Coolify auto-deploys (or trigger manually).
-Migrations run automatically before the new version starts — zero manual steps.
+Migrations do **not** run automatically — trigger them via the post-deploy command or **Containers → Exec** after each deploy that includes schema changes.
 
 ## Rolling back
 
