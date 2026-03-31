@@ -10,6 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { Link, useMatch, useResolvedPath } from 'react-router';
 
 import { DRAWER_WIDTH } from '@frontend/layout/constants';
@@ -49,7 +50,23 @@ export const LeftNav = () => (
       '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box' },
     }}
   >
-    <Toolbar />
+    <Toolbar disableGutters sx={{ px: 2 }}>
+      <Typography
+        component={Link}
+        to="/"
+        variant="h6"
+        sx={{
+          textDecoration: 'none',
+          color: 'inherit',
+          fontWeight: 'bold',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
+        🌍 Wise GeoGuessr
+      </Typography>
+    </Toolbar>
     <Divider />
     <Box component="nav" aria-label="Main navigation">
       <List>

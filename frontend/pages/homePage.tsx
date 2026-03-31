@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
@@ -64,7 +65,9 @@ export const HomePage = () => {
                   sx={{ borderRadius: 2 }}
                 />
               ) : podium.length > 0 ? (
-                <PodiumCard podium={podium} />
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <PodiumCard podium={podium} />
+                </Box>
               ) : null}
             </DashboardSection>
 
