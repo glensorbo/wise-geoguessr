@@ -147,7 +147,7 @@ test.describe('Home page — TopNav (not logged in)', () => {
   });
 
   test('shows a "Login" button when not authenticated', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
   });
 
   test('does NOT show "Add results" button when not authenticated', async ({
@@ -175,6 +175,6 @@ test.describe('Home page — TopNav (logged in)', () => {
   });
 
   test('does NOT show "Login" button after login', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Login' })).not.toBeVisible();
+    await expect(page.getByRole('button', { name: 'Login' })).not.toBeVisible();
   });
 });
