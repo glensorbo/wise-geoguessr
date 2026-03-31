@@ -5,16 +5,17 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router';
 
 import { UserMenu } from './userMenu';
 import { AddScoreModal } from '@frontend/features/geoguessr/components/addScoreModal';
+import { LoginModal } from '@frontend/features/login/components/loginModal';
 
 import type { RootState } from '@frontend/redux/store';
 
 export const TopNav = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   const [addScoreOpen, setAddScoreOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   return (
     <>
@@ -39,11 +40,10 @@ export const TopNav = () => {
               </>
             ) : (
               <Button
-                component={Link}
-                to="/login"
                 color="inherit"
                 variant="outlined"
                 size="small"
+                onClick={() => setLoginOpen(true)}
                 sx={{ borderColor: 'rgba(255,255,255,0.5)' }}
               >
                 Login
@@ -57,6 +57,7 @@ export const TopNav = () => {
         open={addScoreOpen}
         onClose={() => setAddScoreOpen(false)}
       />
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </>
   );
 };

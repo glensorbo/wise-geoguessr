@@ -21,7 +21,7 @@ import type { LoginFormFields } from '../state/loginFormSlice';
 import type { AppDispatch, RootState } from '@frontend/redux/store';
 import type { ChangeEvent } from 'react';
 
-export const LoginForm = () => {
+export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const rememberedEmail = useSelector(
     (state: RootState) => state.auth.rememberedEmail,
@@ -29,7 +29,7 @@ export const LoginForm = () => {
   const { email, password, rememberMe, errors } = useSelector(
     (state: RootState) => state.loginForm,
   );
-  const { submit, isLoading } = useLogin();
+  const { submit, isLoading } = useLogin(onSuccess);
   const [showPassword, setShowPassword] = useState(false);
 
   const initialized = useRef(false);

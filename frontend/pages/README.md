@@ -2,10 +2,13 @@
 
 One file per route. Pages are intentionally thin — they import and compose feature components, they do not own logic themselves.
 
-```
-pages/
-└── homePage.tsx   →  route "/" — public GeoGuessr dashboard (year selector, results DataGrid, 4 charts)
-```
+| File               | Route      | Content                                                                    |
+| ------------------ | ---------- | -------------------------------------------------------------------------- |
+| `homePage.tsx`     | `/`        | Season Podium (top 3 by wins) + Last Round card                            |
+| `resultsPage.tsx`  | `/results` | Points DataGrid + Weekly LineChart + year selector                         |
+| `statsPage.tsx`    | `/stats`   | Won vs Played, Points Per Round, Accumulated Points charts + year selector |
+| `loginPage.tsx`    | `/login`   | Login form (direct URL access; TopNav uses `LoginModal` instead)           |
+| `notFoundPage.tsx` | `*`        | 404 fallback (protected route)                                             |
 
 ## Conventions
 

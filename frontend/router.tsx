@@ -2,16 +2,17 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { AnalyticsProvider } from './features/analytics/analyticsProvider';
 import { PageLayout } from './layout/pageLayout';
-import { PublicLayout } from './layout/publicLayout';
 import { HomePage } from './pages/homePage';
 import { LoginPage } from './pages/loginPage';
 import { NotFoundPage } from './pages/notFoundPage';
+import { ResultsPage } from './pages/resultsPage';
+import { StatsPage } from './pages/statsPage';
 import { ProtectedRoute } from './shared/components/protectedRoute';
 
 /**
  * Application router.
  *
- * Public routes use PublicLayout (TopNav only, no sidebar).
+ * Public routes use PageLayout (TopNav + LeftNav, no auth required).
  * Protected routes sit inside ProtectedRoute → PageLayout.
  */
 export const AppRouter = () => (
@@ -20,9 +21,11 @@ export const AppRouter = () => (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
 
-      {/* Public — home dashboard accessible without auth */}
-      <Route element={<PublicLayout />}>
+      {/* Public — accessible without auth, full layout with sidebar */}
+      <Route element={<PageLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="results" element={<ResultsPage />} />
+        <Route path="stats" element={<StatsPage />} />
       </Route>
 
       {/* Protected — authenticated users only */}

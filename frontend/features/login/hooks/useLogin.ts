@@ -10,7 +10,7 @@ import { useLoginMutation } from '@frontend/redux/api/authApi';
 import type { LoginFormValues } from '../logic/loginSchema';
 import type { AppDispatch } from '@frontend/redux/store';
 
-export const useLogin = () => {
+export const useLogin = (onSuccess?: () => void) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [loginMutation, { isLoading }] = useLoginMutation();
@@ -36,7 +36,11 @@ export const useLogin = () => {
     dispatch(setRememberedEmail(values.rememberMe ? values.email : null));
     dispatch(clearLoginForm());
     toast.success('Welcome back! 👋');
-    void navigate('/');
+    if (onSuccess) {
+      onSuccess();
+    } else {
+      void navigate('/');
+    }
   };
 
   return { submit, isLoading };

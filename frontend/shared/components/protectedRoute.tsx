@@ -9,5 +9,5 @@ export const ProtectedRoute = () => {
   const isAuthenticated = useSelector((state: RootState) =>
     selectIsAuthenticated(state),
   );
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };

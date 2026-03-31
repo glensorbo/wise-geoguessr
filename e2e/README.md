@@ -14,15 +14,24 @@ Playwright coverage for API and browser flows lives here.
 
 ## Files
 
-| Path                  | Purpose                                                                            |
-| --------------------- | ---------------------------------------------------------------------------------- |
-| `api/auth.spec.ts`    | Auth endpoint coverage, including logout returning `200` without an active session |
-| `api/user.spec.ts`    | User endpoint coverage                                                             |
-| `fixtures/index.ts`   | Shared Playwright fixtures such as `authedRequest` and `testUser`                  |
-| `global-setup.ts`     | Seeds the E2E user, logs in, and writes `.auth/user.json`                          |
-| `healthcheck.spec.ts` | Verifies `GET /healthcheck`                                                        |
-| `frontend.spec.ts`    | Verifies the SPA boots and routing falls back correctly                            |
-| `seed-test-user.ts`   | Inserts the test user directly into PostgreSQL                                     |
+| Path                               | Purpose                                                                                                          |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `api/auth.spec.ts`                 | Auth endpoint coverage, including logout returning `200` without an active session                               |
+| `api/user.spec.ts`                 | User endpoint coverage                                                                                           |
+| `fixtures/index.ts`                | Shared Playwright fixtures such as `authedRequest` and `testUser`                                                |
+| `global-setup.ts`                  | Seeds the E2E user, logs in, and writes `.auth/user.json`                                                        |
+| `global-teardown.ts`               | Cleans up after the full test run                                                                                |
+| `healthcheck.spec.ts`              | Verifies `GET /healthcheck`                                                                                      |
+| `frontend.spec.ts`                 | Verifies the SPA boots and routing falls back correctly                                                          |
+| `frontend/home.spec.ts`            | Dashboard page — public access, sidebar nav links, Season Podium, Last Round                                     |
+| `frontend/login.spec.ts`           | Login modal (primary) — form validation, credential flows, modal open/close; plus backward-compat `/login` route |
+| `frontend/results.spec.ts`         | Results page — public access, heading, year selector, DataGrid, LineChart                                        |
+| `frontend/stats.spec.ts`           | Statistics page — public access, heading, year selector, BarCharts and LineChart                                 |
+| `frontend/navigation.spec.ts`      | Sidebar navigation — link clicks between Dashboard, Results, and Statistics                                      |
+| `frontend/addScore.spec.ts`        | Add results modal — form flows, validation, and toast feedback                                                   |
+| `frontend/scores-workflow.spec.ts` | Comprehensive scores lifecycle — year filtering, DataGrid content, full workflow                                 |
+| `seed-game-data.ts`                | Wipes and re-seeds the 48 canonical historical game records before each run                                      |
+| `seed-test-user.ts`                | Inserts the test user directly into PostgreSQL                                                                   |
 
 ## Rules
 
