@@ -1,127 +1,77 @@
 # 🎭 E2E Tests
 
-End-to-end tests using [Playwright](https://playwright.dev/). Tests run against the live dev server (auto-started) or a URL you provide.
+Playwright coverage for API and browser flows lives here.
 
-## Running Tests
+## Commands
+
+| Command               | Use it for                            | Host deps             |
+| --------------------- | ------------------------------------- | --------------------- |
+| `bun e2e`             | API project only                      | PostgreSQL only       |
+| `bun e2e:browser`     | Browser project only                  | PostgreSQL + Chromium |
+| `bun e2e:all`         | API then browser against a host setup | PostgreSQL + Chromium |
+| `bun run e2e:docker`  | Canonical self-contained path         | Docker only           |
+| `./scripts/e2e-ci.sh` | Direct entrypoint behind `e2e:docker` | Docker only           |
+
+## Files
+
+| Path                  | Purpose                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `api/auth.spec.ts`    | Auth endpoint coverage, including logout returning `200` without an active session |
+| `api/user.spec.ts`    | User endpoint coverage                                                             |
+| `fixtures/index.ts`   | Shared Playwright fixtures such as `authedRequest` and `testUser`                  |
+| `global-setup.ts`     | Seeds the E2E user, logs in, and writes `.auth/user.json`                          |
+| `healthcheck.spec.ts` | Verifies `GET /healthcheck`                                                        |
+| `frontend.spec.ts`    | Verifies the SPA boots and routing falls back correctly                            |
+| `seed-test-user.ts`   | Inserts the test user directly into PostgreSQL                                     |
+
+## Rules
+
+- You must treat `bun run e2e:docker` as the canonical no-host-deps path.
+- You must keep local Docker runs aligned with PR CI; `.github/workflows/pr-checks.yml` runs the same `bun run e2e:docker` command in a dedicated E2E job.
+- You must use the Docker path when you need a fresh database, seeded app, and Playwright with Chromium preinstalled.
+- You must keep `bun e2e:all` sequential so browser mutations cannot race API seeded-data assertions.
+- You must use `E2E_BASE_URL` only when pointing Playwright at an already-running app.
+- You must keep auth-required tests on `../fixtures` so they reuse the seeded login state.
+- You must keep logout expectations idempotent; `POST /api/auth/logout` succeeds with `200` even when no session is active.
+- You must not assume host browser packages exist outside the Docker flow.
+
+## Docker flow
+
+| Component | Role                                                           |
+| --------- | -------------------------------------------------------------- |
+| `db`      | Starts an ephemeral Postgres instance on tmpfs                 |
+| `app`     | Runs migrations, seeds data, and starts the app                |
+| `e2e`     | Waits for `app`, then runs Playwright API and browser projects |
+
+Safe defaults live in `docker-compose.e2e.yml`. Override them at the shell when needed:
 
 ```bash
-# API tests only — no browser required, works in WSL / Docker / CI
-bun e2e
-
-# Browser tests — requires Chromium (see setup below)
-bun e2e:browser
-
-# All tests (API + browser)
-bun e2e:all
-
-# Interactive UI mode
-bun e2e:ui
-
-# Debug mode (step through tests)
-bun e2e:debug
-
-# Against an already-running server
-E2E_BASE_URL=http://localhost:3000 bun e2e
+POSTGRES_PASSWORD=mypass bun run e2e:docker
 ```
 
-## Projects
-
-| Project   | Command           | Tests                               | Needs browser? |
-| --------- | ----------------- | ----------------------------------- | -------------- |
-| `api`     | `bun e2e`         | `e2e/api/**`, `healthcheck.spec.ts` | ❌ No          |
-| `browser` | `bun e2e:browser` | `e2e/frontend.spec.ts`              | ✅ Yes         |
-
-## Structure
-
-```
-e2e/
-├── api/
-│   ├── auth.spec.ts       # Auth controller — login, logout, refresh, create-user, change-password
-│   └── user.spec.ts       # User controller — GET /api/user, GET /api/user/:id
-├── fixtures/
-│   └── index.ts           # Custom fixtures: authedRequest, testUser
-├── seed-test-user.ts      # Bun script — seeds test user directly to DB
-├── global-setup.ts        # Runs seed-test-user.ts, logs in, saves token to .auth/user.json
-├── healthcheck.spec.ts    # Verifies GET /healthcheck returns 200 OK
-└── frontend.spec.ts       # SPA loads, #root mounts, unknown routes fall back to SPA
-```
-
-## Authentication
-
-Global setup runs once before all tests:
-
-1. **Seeds** the E2E test user directly to the DB (idempotent — skips if already exists)
-2. **Logs in** via `POST /api/auth/login` to get a Bearer token
-3. **Saves** `{ token, userId, email }` to `.auth/user.json`
-
-Tests that need auth import from `../fixtures`:
+## Auth pattern
 
 ```ts
 import { test, expect } from '../fixtures';
 
-test('returns users list', async ({ authedRequest, testUser }) => {
+test('returns users list', async ({ authedRequest }) => {
   const res = await authedRequest.get('/api/user');
   expect(res.status()).toBe(200);
 });
 ```
 
-## Test User Credentials
+## Host path
 
-Defaults (override via env vars if needed):
+| Env var             | Default                                |
+| ------------------- | -------------------------------------- |
+| `E2E_BASE_URL`      | `http://localhost:3000` outside Docker |
+| `E2E_TEST_EMAIL`    | `e2e-playwright@local.test`            |
+| `E2E_TEST_PASSWORD` | Long passphrase from `global-setup.ts` |
+| `E2E_TEST_NAME`     | `Playwright E2E User`                  |
 
-| Env var             | Default                                     |
-| ------------------- | ------------------------------------------- |
-| `E2E_TEST_EMAIL`    | `e2e-playwright@local.test`                 |
-| `E2E_TEST_PASSWORD` | _(long passphrase — see `global-setup.ts`)_ |
-| `E2E_TEST_NAME`     | `Playwright E2E User`                       |
-
-The passphrase is intentionally long — nobody has to type it manually.
-
-## Browser Tests Setup
-
-### WSL
-
-Install Chromium system dependencies:
+- You must provide `POSTGRES_*` and `JWT_SECRET` when running outside Docker.
+- You must install Chromium before `bun e2e:browser` on WSL or similar host setups.
 
 ```bash
 bunx playwright install --with-deps chromium
 ```
-
-Then run:
-
-```bash
-bun e2e:browser
-```
-
-### Docker / GitHub CI
-
-Use Playwright's official image which ships with all browser dependencies pre-installed:
-
-```dockerfile
-FROM mcr.microsoft.com/playwright:v1.58.2-jammy
-
-WORKDIR /app
-COPY . .
-RUN npm install -g bun
-RUN bun install
-
-CMD ["bun", "e2e:all"]
-```
-
-Or install deps into your own image:
-
-```dockerfile
-RUN bunx playwright install --with-deps chromium
-```
-
-## Configuration
-
-See `playwright.config.ts` at the project root.
-
-- **Web server**: `bun run dev` — auto-started before tests, reused between runs (non-CI)
-- **Base URL**: `http://localhost:3000` (override with `E2E_BASE_URL`)
-- **Auth state**: `.auth/user.json` (git-ignored)
-
-## Prerequisites
-
-A running PostgreSQL database is required. Use the same env vars as the main app (`POSTGRES_*`, `JWT_SECRET`).

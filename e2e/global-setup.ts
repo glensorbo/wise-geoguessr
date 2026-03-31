@@ -25,6 +25,7 @@ export default async function globalSetup(config: FullConfig) {
   const baseURL = project?.use.baseURL ?? 'http://localhost:3000';
 
   seedTestUser();
+  seedGameData();
   await loginAndSaveToken(baseURL);
 }
 
@@ -37,10 +38,22 @@ function seedTestUser() {
   execSync('bun e2e/seed-test-user.ts', { stdio: 'inherit' });
 }
 
+/**
+ * Wipes all game data and re-seeds the 48 canonical historical records.
+ * This ensures every test run starts from a known, consistent state.
+ */
+function seedGameData() {
+  console.log('🌱 Setup: seeding game data to canonical 48 records…');
+  execSync('bun e2e/seed-game-data.ts', { stdio: 'inherit' });
+}
+
 async function loginAndSaveToken(baseURL: string) {
   const res = await fetch(`${baseURL}/api/auth/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-e2e-test': 'true',
+    },
     body: JSON.stringify({ email: E2E_EMAIL, password: E2E_PASSWORD }),
   });
 
@@ -64,7 +77,26 @@ async function loginAndSaveToken(baseURL: string) {
   await mkdir(path.dirname(AUTH_FILE), { recursive: true });
   await writeFile(
     AUTH_FILE,
-    JSON.stringify({ token, userId, email: E2E_EMAIL }, null, 2),
+    JSON.stringify(
+      {
+        token,
+        userId,
+        email: E2E_EMAIL,
+        cookies: [
+          {
+            name: 'e2e_test',
+            value: 'true',
+            domain: 'localhost',
+            path: '/',
+            httpOnly: false,
+            secure: false,
+            sameSite: 'Lax',
+          },
+        ],
+      },
+      null,
+      2,
+    ),
   );
   console.log('🔐 E2E auth token saved');
 }

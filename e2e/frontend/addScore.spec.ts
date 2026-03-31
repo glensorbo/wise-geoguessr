@@ -22,6 +22,9 @@ async function openAddResultsModal(page: import('@playwright/test').Page) {
   await expect(page.getByRole('dialog')).toBeVisible();
 }
 
+const playerInputs = (dialog: import('@playwright/test').Locator) =>
+  dialog.locator('input:not([type="date"]):not([type="number"])');
+
 // Generate a unique far-future date to avoid 409 conflicts between test runs
 function uniqueTestDate(): string {
   const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
@@ -116,11 +119,11 @@ test.describe('Add results modal — Add player button', () => {
     page,
   }) => {
     const dialog = page.getByRole('dialog');
-    const before = await dialog.getByLabel('Player').count();
+    const before = await playerInputs(dialog).count();
 
     await dialog.getByRole('button', { name: /add player/i }).click();
 
-    await expect(dialog.getByLabel('Player')).toHaveCount(before + 1);
+    await expect(playerInputs(dialog)).toHaveCount(before + 1);
   });
 });
 
@@ -201,7 +204,7 @@ test.describe('Add results modal — duplicate date error', () => {
   });
 
   test('submitting a duplicate date shows an error toast', async ({ page }) => {
-    const testDate = uniqueTestDate();
+    const testDate = `2099-01-${String(1 + test.info().retry).padStart(2, '0')}`;
 
     // --- First submission (should succeed) ---
     await openAddResultsModal(page);
@@ -211,9 +214,18 @@ test.describe('Add results modal — duplicate date error', () => {
     await dialog.getByLabel('Score').first().fill('10000');
     await dialog.getByRole('button', { name: 'Save results' }).click();
 
-    await expect(page.locator('.Toastify__toast--success')).toBeVisible({
-      timeout: 10_000,
-    });
+    const firstSubmitResult = await Promise.race([
+      page
+        .locator('.Toastify__toast--success')
+        .waitFor({ state: 'visible', timeout: 10_000 })
+        .then(() => 'success' as const),
+      page
+        .locator('.Toastify__toast--error')
+        .waitFor({ state: 'visible', timeout: 10_000 })
+        .then(() => 'error' as const),
+    ]);
+
+    expect(firstSubmitResult).toBe('success');
     await expect(dialog).not.toBeVisible({ timeout: 10_000 });
 
     // --- Second submission with same date (should fail with 409) ---

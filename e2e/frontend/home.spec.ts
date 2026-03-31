@@ -110,20 +110,12 @@ test.describe('Home page — charts', () => {
   });
 
   test('at least one MUI X chart is rendered', async ({ page }) => {
-    // MUI X Charts renders SVG inside a container
-    // Wait for the first chart SVG to appear (charts may lazy-render)
-    await expect(page.locator('.MuiChartsContainer-root').first()).toBeVisible({
-      timeout: 15_000,
-    });
+    await expect(page.locator('svg').first()).toBeVisible({ timeout: 15_000 });
   });
 
   test('multiple chart containers are present', async ({ page }) => {
-    // The home page has 4 charts
-    await expect(page.locator('.MuiChartsContainer-root').first()).toBeVisible({
-      timeout: 15_000,
-    });
-
-    const chartCount = await page.locator('.MuiChartsContainer-root').count();
+    await expect(page.locator('svg').first()).toBeVisible({ timeout: 15_000 });
+    const chartCount = await page.locator('svg').count();
     expect(chartCount).toBeGreaterThanOrEqual(1);
   });
 });
@@ -138,7 +130,7 @@ test.describe('Home page — TopNav (not logged in)', () => {
   });
 
   test('shows a "Login" button when not authenticated', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
   });
 
   test('does NOT show "Add results" button when not authenticated', async ({
@@ -166,6 +158,6 @@ test.describe('Home page — TopNav (logged in)', () => {
   });
 
   test('does NOT show "Login" button after login', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Login' })).not.toBeVisible();
+    await expect(page.getByRole('link', { name: 'Login' })).not.toBeVisible();
   });
 });

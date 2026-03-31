@@ -22,11 +22,12 @@
     "db:seed": "bun backend/db/seed.ts",
     "db:push": "bunx --bun drizzle-kit check && bunx --bun drizzle-kit push",
     "db:studio": "bunx --bun drizzle-kit studio",
-    "e2e": "bunx playwright test --project=api",
-    "e2e:browser": "bunx playwright test --project=browser",
-    "e2e:all": "bunx playwright test",
-    "e2e:ui": "bunx playwright test --ui --project=api --project=browser",
-    "e2e:debug": "bunx playwright test --debug"
+    "e2e": "playwright test --project=api",
+    "e2e:browser": "playwright test --project=browser",
+    "e2e:all": "playwright test --project=api && playwright test --project=browser",
+    "e2e:ui": "playwright test --ui --project=api --project=browser",
+    "e2e:debug": "playwright test --debug",
+    "e2e:docker": "./scripts/e2e-ci.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

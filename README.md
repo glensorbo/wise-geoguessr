@@ -1,130 +1,72 @@
-# 🌍 Wise GeoGuessr
+# 🌍 Wise GeoGuessr — a Bun-first GeoGuessr scoreboard with real tests, real auth, and a no-host-deps E2E path
 
-**The Friday scoreboard for the team that takes GeoGuessr very, very seriously.**
+## Why
 
-Every Friday the Wise team drops into GeoGuessr for a round of competitive geography. This app tracks every score, ranks every player, and makes sure nobody forgets who won (or lost) three weeks ago.
+| Choose this if you want...                             | What you get here                                                                 |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| A small full-stack starter that stays typed end to end | Bun, React 19, Drizzle, PostgreSQL, and shared TypeScript from UI to DB           |
+| CI that proves the app actually works                  | Unit checks plus a dedicated Docker E2E job that runs `bun run e2e:docker` in PRs |
+| E2E tests without local browser setup pain             | A self-contained Docker flow that boots Postgres, app, and Playwright for you     |
+| Optional extras without permanent complexity           | SMTP, OpenTelemetry, and Rybbit stay off until you set env vars                   |
 
----
+## 🛠️ Tech stack
 
-## 🗺️ What it does
+| Layer    | Choice                                                   | Why this choice                                                          |
+| -------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Runtime  | [Bun](https://bun.sh)                                    | Fast installs, native TypeScript, one toolchain for dev, build, and test |
+| Frontend | React 19 + Redux Toolkit + MUI v7                        | Mature UI pieces, typed state, and fast iteration                        |
+| Backend  | `Bun.serve()` with layered handlers                      | Minimal overhead without giving up structure                             |
+| Database | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team)     | Migration-first schema changes and type-safe queries                     |
+| Auth     | JWT + HttpOnly refresh cookies                           | Stateless sessions with refresh rotation                                 |
+| Quality  | oxlint + oxfmt + React Compiler lint + knip + Playwright | Fast feedback locally and in CI                                          |
 
-- 📊 **Live leaderboard** — DataGrid of all results, sortable and filterable
-- 📈 **Accumulated points chart** — who's pulling ahead over the season
-- 📅 **Weekly bar chart** — how each round stacked up
-- 🎯 **Points-per-round chart** — consistency vs. clutch performance
-- 🏆 **Won/played stats** — bragging rights, quantified
-- ➕ **Log results** — log in after each Friday session and add the scores
-
----
-
-## 🛠️ Stack
-
-| Layer    | Choice                                               | Why                                               |
-| -------- | ---------------------------------------------------- | ------------------------------------------------- |
-| Runtime  | [Bun](https://bun.sh)                                | Fast installs, native TypeScript, unified tooling |
-| Frontend | React 19 + Redux Toolkit + MUI v7                    | Typed, component-rich, great charts               |
-| Backend  | `Bun.serve()` + Controller → Service → Repository    | No framework overhead, fully tested layers        |
-| Database | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team) | Type-safe queries, migration-first                |
-| Auth     | JWT + HttpOnly refresh cookies                       | Stateless, secure, rotation built-in              |
-| Quality  | oxlint + oxfmt + React Compiler + knip + Husky       | Enforced at commit time, not just "recommended"   |
-
----
-
-## ⚡️ Getting Started
+## ⚡ Quick start
 
 ```bash
-cp .env.example .env          # fill in POSTGRES_* and JWT_SECRET
-docker compose up -d          # spin up Postgres
+cp .env.example .env
+docker compose up -d
 bun install
 bun run db:migrate
-bun run db:seed               # creates the admin user + historical rounds
-bun dev                       # http://localhost:3000
+bun run db:seed
+bun dev
 ```
-
----
 
 ## ✨ Features
 
-- 🔐 **Auth** — JWT login, refresh token rotation, invite-based signup
-- 🛡️ **RBAC** — `admin` | `user` roles, enforced in middleware
-- 🏗️ **Layered backend** — Controller → Service → Repository with factory DI
-- 🧪 **Unit tests** — every service and controller ships with tests; no DB required
-- ⚛️ **React 19 + HMR** — fast dev loop, optimised production build via Bun bundler
-- 🔄 **RTK Query** — typed server state with auto token refresh on 401
-- 📧 **SMTP email** — opt-in invite emails; no-op when `SMTP_HOST` is unset
-- 🔭 **OTel tracing** — opt-in observability via SigNoz; zero overhead when off
-- 📊 **Analytics** — opt-in Rybbit pageview tracking; zero overhead when off
-- 🐶 **Quality gate** — Husky blocks pushes that fail lint, format, tests, or knip
+- 📊 Show a sortable leaderboard, weekly breakdowns, and season trends
+- 🔐 Handle login, refresh rotation, password changes, and invite-based signup
+- 🛡️ Enforce `admin` and `user` access rules in middleware
+- 🧪 Run unit tests without a database and E2E tests against the real app
+- 🐳 Run the canonical self-contained E2E flow with `bun run e2e:docker`
+- 🚪 Treat logout as idempotent, including when no active session exists
+- 📧 Send invite emails when SMTP is configured and stay quiet when it is not
+- 🔭 Emit telemetry only when OpenTelemetry is configured
+- 📊 Track analytics only when Rybbit is configured
+- 🐶 Block bad pushes with lint, format, test, and knip checks
 
----
-
-## 🏗️ Architecture
-
-```
-Request → Bun.serve() → withMiddleware() → Controller → Service → Repository → Drizzle → PostgreSQL
-```
-
-```
-wise-geoguessr/
-├── backend/            # Bun.serve() server — routes, controllers, services, repositories
-│   ├── db/             # Drizzle client, schemas (source of truth for types), migrations, seed
-│   ├── middleware/     # Auth guards, rate limiting, CORS
-│   ├── telemetry/      # Optional OTel tracing + structured logger
-│   └── utils/          # Response helpers, auth utilities, Zod validation
-├── frontend/
-│   ├── features/       # Self-contained feature modules (components, hooks, state)
-│   ├── pages/          # Thin route components — homePage.tsx is the GeoGuessr dashboard
-│   ├── shared/         # Generic components (skeletons, error boundary)
-│   └── redux/          # Store, RTK Query API slices
-├── e2e/                # Playwright tests — API and browser
-├── rest/               # .http request files for every endpoint (kulala.nvim)
-└── docker/             # Dockerfiles and service configs
-```
-
-See the READMEs inside each directory for layer-specific conventions.
-
----
-
-## 🔑 Key Commands
+## 🔑 Key commands
 
 ```bash
-bun dev                # Dev server with HMR → http://localhost:3000
-bun run build          # Production bundle
-bun test               # Unit tests
-bun run cc             # Full quality check — test + lint + format + knip
-bun run db:generate    # Generate Drizzle migration from schema changes
-bun run db:migrate     # Apply migrations
-bun run db:studio      # Drizzle Studio GUI
-bun e2e                # Playwright API tests
-bun e2e:browser        # Playwright browser tests
+bun dev
+bun run build
+bun test
+bun run cc
+bun e2e
+bun e2e:browser
+bun run e2e:docker
 ```
 
----
+## ⚙️ Optional integrations
 
-## ⚙️ Optional Integrations
+| Integration   | Enable it with                                      | Notes                                                                     |
+| ------------- | --------------------------------------------------- | ------------------------------------------------------------------------- |
+| OpenTelemetry | `docker compose -f docker-compose.signoz.yml up -d` | Set `OTEL_ENDPOINT=http://localhost:4318`                                 |
+| Rybbit        | `docker compose -f docker-compose.rybbit.yml up -d` | Set `BUN_PUBLIC_RYBBIT_HOST` and `BUN_PUBLIC_RYBBIT_SITE_ID`              |
+| SMTP email    | `.env` only                                         | Set `SMTP_HOST`, `SMTP_PORT`, and `SMTP_FROM`; Mailpit works well locally |
 
-Both are opt-in — zero overhead when the env vars are not set.
+## 📚 Docs
 
-### 🔭 OpenTelemetry
-
-```bash
-docker compose -f docker-compose.signoz.yml up -d
-```
-
-Set in `.env`: `OTEL_ENDPOINT=http://localhost:4318` · SigNoz UI → **http://localhost:8080**
-
-### 📊 Rybbit Analytics
-
-```bash
-docker compose -f docker-compose.rybbit.yml up -d
-```
-
-Set in `.env`: `BUN_PUBLIC_RYBBIT_HOST` + `BUN_PUBLIC_RYBBIT_SITE_ID` · See `frontend/features/analytics/README.md`
-
-### 📧 SMTP Email
-
-Set in `.env`: `SMTP_HOST` + `SMTP_PORT` + `SMTP_FROM` · For local dev, use [Mailpit](https://github.com/axllent/mailpit) · See `backend/mail/README.md`
-
----
-
-_May your pings always land in Europe and your scores always beat your teammates. 🗺️_
+- `e2e/README.md` — Playwright commands, Docker E2E flow, and test rules
+- `backend/README.md` — backend structure and conventions
+- `backend/mail/README.md` — SMTP opt-in behavior
+- `frontend/features/analytics/README.md` — Rybbit setup

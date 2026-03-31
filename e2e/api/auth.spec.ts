@@ -110,7 +110,7 @@ test.describe('POST /api/auth/create-user (authenticated)', () => {
     const res = await authedRequest.post('/api/auth/create-user', {
       data: { email: testUser.email, name: 'Duplicate' },
     });
-    expect(res.status()).toBe(400);
+    expect(res.status()).toBe(409);
   });
 
   test('returns 401 without auth token', async ({ request }) => {
@@ -361,6 +361,7 @@ publicTest.describe('Rate limiting on auth endpoints', () => {
 
       for (let i = 0; i < 11; i++) {
         const res = await request.post('/api/auth/login', {
+          headers: { 'x-e2e-test': 'false' },
           data: {
             email: `rate-limit-probe-${i}@example.invalid`,
             password: 'irrelevant-password',

@@ -267,9 +267,25 @@ test.describe('Login Page — remember me persistence', () => {
       localStorage.setItem('redux_state', JSON.stringify(state));
     });
 
-    // Reload so Redux re-hydrates from localStorage with no token.
+    // Reload so Redux re-hydrates from localStorage with no token. The refresh
+    // cookie keeps the user authenticated, so the app stays on the home page.
     await page.reload();
-    await expect(page).toHaveURL('/login');
+    await expect(page).toHaveURL('/');
+
+    await page.evaluate(() => {
+      const raw = localStorage.getItem('redux_state');
+      if (!raw) {
+        return;
+      }
+      const state = JSON.parse(raw) as {
+        auth?: { token?: string | null; rememberedEmail?: string | null };
+      };
+      if (state.auth) {
+        state.auth.token = null;
+      }
+      localStorage.setItem('redux_state', JSON.stringify(state));
+    });
+    await page.goto('/login');
     await expect(page.getByLabel('Email')).toHaveValue(E2E_EMAIL);
   });
 
@@ -303,7 +319,12 @@ test.describe('Login Page — remember me persistence', () => {
     });
 
     await page.reload();
-    await expect(page).toHaveURL('/login');
+    await expect(page).toHaveURL('/');
+
+    await page.evaluate(() => {
+      localStorage.removeItem('redux_state');
+    });
+    await page.goto('/login');
     await expect(page.getByLabel('Email')).toHaveValue('');
   });
 });

@@ -17,6 +17,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
   globalSetup: './e2e/global-setup.ts',
+  globalTeardown: './e2e/global-teardown.ts',
 
   use: {
     baseURL: process.env.E2E_BASE_URL ?? 'http://localhost:3000',
@@ -31,7 +32,12 @@ export default defineConfig({
     {
       name: 'browser',
       testMatch: ['**/frontend.spec.ts', '**/frontend/**/*.spec.ts'],
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        extraHTTPHeaders: {
+          'x-e2e-test': 'true',
+        },
+      },
     },
   ],
 

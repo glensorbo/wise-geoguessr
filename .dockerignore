@@ -13,4 +13,3 @@ docker-compose.yml
 eslint.config.js
 coverage
 rest
-e2e
