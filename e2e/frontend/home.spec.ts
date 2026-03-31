@@ -33,7 +33,9 @@ test.describe('Home page — public access', () => {
 
   test('shows the page title / app bar', async ({ page }) => {
     await expect(page.getByRole('banner')).toBeVisible();
-    await expect(page.getByRole('banner').getByText('🌍 Wise GeoGuessr')).toBeVisible();
+    await expect(
+      page.getByRole('banner').getByText('🌍 Wise GeoGuessr'),
+    ).toBeVisible();
   });
 });
 
