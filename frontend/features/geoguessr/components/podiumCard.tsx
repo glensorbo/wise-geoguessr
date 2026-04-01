@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { keyframes, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
 
 import { formatAxisNumber } from '../constants';
 
@@ -17,49 +17,7 @@ const PLATFORM_COLOR = {
 } as const;
 
 // rank 3 reveals first, rank 1 last for dramatic effect
-const ANIMATION_DELAY_MS = { 1: 800, 2: 400, 3: 0 } as const;
-
-const riseUp = keyframes`
-  from { transform: scaleY(0); }
-  to   { transform: scaleY(1); }
-`;
-
-const fadeSlideDown = keyframes`
-  from { opacity: 0; transform: translateY(-16px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-// Using styled() ensures emotion injects the @keyframes rule into the stylesheet
-const AnimatedCard = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'delay',
-})<{ delay: string }>(({ delay }) => ({
-  width: '100%',
-  animation: `${fadeSlideDown} 400ms ease calc(${delay} + 350ms) both`,
-  '@media (prefers-reduced-motion: reduce)': {
-    animation: 'none',
-    opacity: 1,
-  },
-}));
-
-const AnimatedPlatform = styled(Box, {
-  shouldForwardProp: (prop) =>
-    prop !== 'delay' && prop !== 'platformHeight' && prop !== 'platformColor',
-})<{ delay: string; platformHeight: number; platformColor: string }>(
-  ({ delay, platformHeight, platformColor }) => ({
-    width: '100%',
-    height: platformHeight,
-    backgroundColor: platformColor,
-    borderRadius: '4px 4px 0 0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transformOrigin: 'bottom',
-    animation: `${riseUp} 500ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay} both`,
-    '@media (prefers-reduced-motion: reduce)': {
-      animation: 'none',
-    },
-  }),
-);
+const PLATFORM_DELAY_MS = { 1: 800, 2: 400, 3: 0 } as const;
 
 const PodiumSlot = ({
   entry,
@@ -68,7 +26,18 @@ const PodiumSlot = ({
   entry: PodiumEntry;
   order: { xs: number; sm: number };
 }) => {
-  const delay = `${ANIMATION_DELAY_MS[entry.rank]}ms`;
+  const [platformUp, setPlatformUp] = useState(false);
+  const [cardVisible, setCardVisible] = useState(false);
+
+  useEffect(() => {
+    const platformDelay = PLATFORM_DELAY_MS[entry.rank];
+    const t1 = setTimeout(() => setPlatformUp(true), platformDelay);
+    const t2 = setTimeout(() => setCardVisible(true), platformDelay + 350);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [entry.rank]);
 
   return (
     <Box
@@ -81,7 +50,20 @@ const PodiumSlot = ({
         minWidth: 0,
       }}
     >
-      <AnimatedCard delay={delay}>
+      {/* Card fades + slides in after platform has risen */}
+      <Box
+        sx={{
+          width: '100%',
+          opacity: cardVisible ? 1 : 0,
+          transform: cardVisible ? 'translateY(0)' : 'translateY(-16px)',
+          transition: 'opacity 400ms ease, transform 400ms ease',
+          '@media (prefers-reduced-motion: reduce)': {
+            opacity: 1,
+            transform: 'none',
+            transition: 'none',
+          },
+        }}
+      >
         <Paper
           elevation={entry.rank === 1 ? 4 : 1}
           sx={{
@@ -120,12 +102,26 @@ const PodiumSlot = ({
             </Typography>
           </Stack>
         </Paper>
-      </AnimatedCard>
+      </Box>
 
-      <AnimatedPlatform
-        delay={delay}
-        platformHeight={PLATFORM_HEIGHT[entry.rank]}
-        platformColor={PLATFORM_COLOR[entry.rank]}
+      {/* Platform rises from the bottom */}
+      <Box
+        sx={{
+          width: '100%',
+          height: PLATFORM_HEIGHT[entry.rank],
+          bgcolor: PLATFORM_COLOR[entry.rank],
+          borderRadius: '4px 4px 0 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transformOrigin: 'bottom',
+          transform: platformUp ? 'scaleY(1)' : 'scaleY(0)',
+          transition: 'transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+          '@media (prefers-reduced-motion: reduce)': {
+            transform: 'scaleY(1)',
+            transition: 'none',
+          },
+        }}
       >
         <Typography
           variant="h6"
@@ -133,7 +129,7 @@ const PodiumSlot = ({
         >
           {entry.rank}
         </Typography>
-      </AnimatedPlatform>
+      </Box>
     </Box>
   );
 };
