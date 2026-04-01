@@ -31,7 +31,8 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
           key={entry.name}
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            flexWrap: 'wrap',
             gap: 2,
             px: 2,
             py: 1.25,
@@ -53,7 +54,7 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
           <Typography
             variant="body1"
             fontWeight={entry.isWinner ? 'bold' : 'normal'}
-            sx={{ flex: 1 }}
+            sx={{ flex: 1, minWidth: 140 }}
           >
             {entry.name}
           </Typography>

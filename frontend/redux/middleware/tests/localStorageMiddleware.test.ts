@@ -52,10 +52,11 @@ describe('localStorageMiddleware', () => {
 
   const next = (action: unknown) => action;
 
-  test('persists whitelisted keys (auth, theme) to localStorage', () => {
+  test('persists whitelisted keys (auth, theme, sidebar) to localStorage', () => {
     const store = buildStore({
       auth: { token: 'tok' },
       theme: { mode: 'dark' },
+      sidebar: { desktopCollapsed: true },
     });
     localStorageMiddleware(store as any)(next)({ type: 'test' });
     const saved = JSON.parse(
@@ -63,6 +64,7 @@ describe('localStorageMiddleware', () => {
     ) as Record<string, unknown>;
     expect(saved.auth).toEqual({ token: 'tok' });
     expect(saved.theme).toEqual({ mode: 'dark' });
+    expect(saved.sidebar).toEqual({ desktopCollapsed: true });
   });
 
   test('does not persist non-whitelisted keys', () => {

@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import { useMemo } from 'react';
@@ -28,6 +29,7 @@ type PointsGridRow = { id: string; date: string } & Record<
 >;
 
 export const ResultsPage = () => {
+  const isPhone = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const {
     year,
     setYear,
@@ -134,21 +136,32 @@ export const ResultsPage = () => {
           {isLoading ? (
             <TableSkeleton rows={8} cols={5} />
           ) : noResults || hasError ? null : (
-            <DataGrid
-              rows={gridRows}
-              columns={gridColumns}
-              autoHeight
-              pagination
-              disableRowSelectionOnClick
-              showToolbar
-              density="compact"
-              initialState={{
-                pagination: { paginationModel: { page: 0, pageSize: 10 } },
-                sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
-              }}
-              pageSizeOptions={[10]}
-              sx={{ border: 0 }}
-            />
+            <Box sx={{ width: '100%', overflowX: 'auto' }}>
+              <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
+                <DataGrid
+                  rows={gridRows}
+                  columns={gridColumns}
+                  autoHeight
+                  pagination
+                  disableRowSelectionOnClick
+                  showToolbar
+                  density="compact"
+                  initialState={{
+                    pagination: { paginationModel: { page: 0, pageSize: 10 } },
+                    sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
+                  }}
+                  pageSizeOptions={[10]}
+                  sx={{
+                    border: 0,
+                    '& .MuiDataGrid-toolbarContainer': {
+                      gap: 1,
+                      px: { xs: 1, sm: 0 },
+                      py: 1,
+                    },
+                  }}
+                />
+              </Box>
+            </Box>
           )}
         </DashboardSection>
 
@@ -156,43 +169,50 @@ export const ResultsPage = () => {
           {isLoading ? (
             <Skeleton variant="rounded" height={340} sx={{ borderRadius: 2 }} />
           ) : noResults || hasError ? null : (
-            <Box sx={{ width: '100%' }}>
-              <LineChart
-                dataset={sortedPlayerData}
-                series={chartSeries.map((s) => ({
-                  dataKey: s.name,
-                  label: s.name,
-                  color: s.color,
-                  curve: 'monotoneX',
-                  connectNulls: true,
-                  showMark: false,
-                }))}
-                xAxis={[
-                  {
-                    scaleType: 'point',
-                    dataKey: 'date',
-                    height: 88,
-                    valueFormatter: (v) => String(v),
-                    tickLabelStyle: {
-                      angle: -45,
-                      textAnchor: 'end',
-                      dominantBaseline: 'central',
-                      fontSize: 11,
+            <Box sx={{ width: '100%', overflowX: 'auto' }}>
+              <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
+                <LineChart
+                  dataset={sortedPlayerData}
+                  series={chartSeries.map((s) => ({
+                    dataKey: s.name,
+                    label: s.name,
+                    color: s.color,
+                    curve: 'monotoneX',
+                    connectNulls: true,
+                    showMark: false,
+                  }))}
+                  xAxis={[
+                    {
+                      scaleType: 'point',
+                      dataKey: 'date',
+                      height: 88,
+                      valueFormatter: (v) => String(v),
+                      tickLabelStyle: {
+                        angle: -45,
+                        textAnchor: 'end',
+                        dominantBaseline: 'central',
+                        fontSize: 11,
+                      },
                     },
-                  },
-                ]}
-                yAxis={[
-                  {
-                    label: 'Points',
-                    width: 72,
-                    valueFormatter: (v: unknown) => formatAxisNumber(v),
-                  },
-                ]}
-                grid={{ horizontal: true, vertical: true }}
-                margin={{ top: 16, right: 24, bottom: 28, left: 24 }}
-                height={340}
-                sx={{ width: '100%' }}
-              />
+                  ]}
+                  yAxis={[
+                    {
+                      label: 'Points',
+                      width: 72,
+                      valueFormatter: (v: unknown) => formatAxisNumber(v),
+                    },
+                  ]}
+                  grid={{ horizontal: true, vertical: true }}
+                  margin={{
+                    top: 16,
+                    right: isPhone ? 12 : 24,
+                    bottom: 28,
+                    left: isPhone ? 12 : 24,
+                  }}
+                  height={isPhone ? 300 : 340}
+                  sx={{ width: '100%' }}
+                />
+              </Box>
             </Box>
           )}
         </DashboardSection>

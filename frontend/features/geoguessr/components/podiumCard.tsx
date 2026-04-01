@@ -15,13 +15,21 @@ const PLATFORM_COLOR = {
   3: '#b45309',
 } as const;
 
-const PodiumSlot = ({ entry }: { entry: PodiumEntry }) => (
+const PodiumSlot = ({
+  entry,
+  order,
+}: {
+  entry: PodiumEntry;
+  order: { xs: number; sm: number };
+}) => (
   <Box
     sx={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       flex: 1,
+      order,
+      minWidth: 0,
     }}
   >
     <Paper
@@ -44,7 +52,7 @@ const PodiumSlot = ({ entry }: { entry: PodiumEntry }) => (
         <Typography
           variant={entry.rank === 1 ? 'h6' : 'subtitle1'}
           fontWeight="bold"
-          noWrap
+          sx={{ wordBreak: 'break-word' }}
         >
           {entry.name}
         </Typography>
@@ -90,16 +98,17 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'flex-end',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: { xs: 'stretch', sm: 'flex-end' },
         gap: { xs: 1, sm: 2 },
         maxWidth: 640,
         mx: 'auto',
         width: '100%',
       }}
     >
-      {second && <PodiumSlot entry={second} />}
-      {first && <PodiumSlot entry={first} />}
-      {third && <PodiumSlot entry={third} />}
+      {second && <PodiumSlot entry={second} order={{ xs: 2, sm: 1 }} />}
+      {first && <PodiumSlot entry={first} order={{ xs: 1, sm: 2 }} />}
+      {third && <PodiumSlot entry={third} order={{ xs: 3, sm: 3 }} />}
     </Box>
   );
 };

@@ -20,11 +20,20 @@ export const YearSelector = ({
   onChange,
 }: YearSelectorProps) => {
   if (yearsLoading) {
-    return <Skeleton variant="rounded" height={40} sx={{ minWidth: 140 }} />;
+    return (
+      <Skeleton
+        variant="rounded"
+        height={40}
+        sx={{ minWidth: 140, width: { xs: '100%', sm: 'auto' } }}
+      />
+    );
   }
 
   return (
-    <FormControl size="small" sx={{ minWidth: 140 }}>
+    <FormControl
+      size="small"
+      sx={{ minWidth: 140, width: { xs: '100%', sm: 'auto' } }}
+    >
       <InputLabel id="year-select-label">Year</InputLabel>
       <Select
         labelId="year-select-label"

@@ -1,6 +1,6 @@
 # ◀️ leftNav
 
-Permanent sidebar navigation rendered on the left of every page.
+Sidebar navigation for the app shell on desktop and mobile.
 
 ## Nav items
 
@@ -12,4 +12,13 @@ Permanent sidebar navigation rendered on the left of every page.
 
 ## Structure
 
-- `components/leftNav.tsx` — the `LeftNav` component (MUI `Drawer`)
+| File                     | Role                                                                                               |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| `components/leftNav.tsx` | Renders the permanent desktop drawer, the temporary mobile drawer, and collapsed desktop nav items |
+
+## Rules
+
+- `LeftNav` must render both drawer variants in one place so routes stay in sync across breakpoints.
+- Desktop collapsed mode must keep icons centered and labels available via tooltip.
+- Mobile navigation must use the temporary drawer and must close after navigation.
+- Nav items must stay declarative and route-driven.
