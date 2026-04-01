@@ -604,6 +604,8 @@ test.describe('TopNav — logout clears Add results button', () => {
       page.getByRole('button', { name: /add results/i }),
     ).not.toBeVisible();
     await expect(page).toHaveURL('/');
-    await expect(page.getByRole('button', { name: 'Open user menu' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Open user menu' }),
+    ).toBeVisible();
   });
 });

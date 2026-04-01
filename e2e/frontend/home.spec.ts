@@ -151,7 +151,9 @@ test.describe('Home page — TopNav (not logged in)', () => {
   test('shows the public user menu with a "Login" action when not authenticated', async ({
     page,
   }) => {
-    await expect(page.getByRole('button', { name: 'Open user menu' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Open user menu' }),
+    ).toBeVisible();
     await page.getByRole('button', { name: 'Open user menu' }).click();
     await expect(page.getByRole('menuitem', { name: 'Login' })).toBeVisible();
   });
@@ -181,7 +183,9 @@ test.describe('Home page — TopNav (logged in)', () => {
   });
 
   test('does NOT show "Login" button after login', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Open user menu' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Open user menu' }),
+    ).toBeVisible();
     await page.getByRole('button', { name: 'Open user menu' }).click();
     await expect(page.getByRole('menuitem', { name: 'Logout' })).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Login' })).toHaveCount(0);

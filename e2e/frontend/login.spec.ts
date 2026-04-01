@@ -40,7 +40,9 @@ async function openLoginModal(page: import('@playwright/test').Page) {
 // ---------------------------------------------------------------------------
 
 test.describe('Login Modal — layout', () => {
-  test('opens when the user menu "Login" action is clicked', async ({ page }) => {
+  test('opens when the user menu "Login" action is clicked', async ({
+    page,
+  }) => {
     await page.goto('/');
     await expect(page.getByRole('banner')).toBeVisible();
     await page.getByRole('button', { name: 'Open user menu' }).click();
