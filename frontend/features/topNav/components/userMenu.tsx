@@ -3,6 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import Accordion from '@mui/material/Accordion';
@@ -24,6 +25,7 @@ import { useLogout } from '../hooks/useLogout';
 import { ChangePasswordModal } from './changePasswordModal';
 import { SetPasswordModal } from './setPasswordModal';
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
+import { LoginModal } from '@frontend/features/login/components/loginModal';
 import { setThemeMode } from '@frontend/redux/slices/themeSlice';
 
 import type { AppDispatch, RootState } from '@frontend/redux/store';
@@ -63,6 +65,7 @@ export const UserMenu = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [setPasswordOpen, setSetPasswordOpen] = useState(false);
   const [themeAccordionOpen, setThemeAccordionOpen] = useState(false);
 
@@ -94,6 +97,30 @@ export const UserMenu = () => {
     closeMenu();
     logout();
   };
+
+  const handleLogin = () => {
+    closeMenu();
+    setLoginOpen(true);
+  };
+
+  const passwordMenuItems = token
+    ? [
+        <MenuItem key="password-action" onClick={handlePasswordAction}>
+          <ListItemIcon>
+            {isSignupToken ? (
+              <LockOpenIcon fontSize="small" />
+            ) : (
+              <LockIcon fontSize="small" />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            primary={isSignupToken ? 'Set password' : 'Change password'}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>,
+        <Divider key="password-divider" />,
+      ]
+    : [];
 
   return (
     <>
@@ -148,31 +175,38 @@ export const UserMenu = () => {
           </AccordionDetails>
         </Accordion>
 
-        {/* ── Password action (context-sensitive) ── */}
-        <MenuItem onClick={handlePasswordAction}>
+        {passwordMenuItems}
+
+        <MenuItem
+          data-highlight-tone={token ? 'danger' : 'primary'}
+          onClick={token ? handleLogout : handleLogin}
+          sx={(theme) => ({
+            backgroundColor: token
+              ? theme.palette.error.main
+              : theme.palette.primary.main,
+            color: token
+              ? theme.palette.error.contrastText
+              : theme.palette.primary.contrastText,
+            '&:hover': {
+              backgroundColor: token
+                ? theme.palette.error.dark
+                : theme.palette.primary.dark,
+            },
+            '& .MuiListItemIcon-root': {
+              color: 'inherit',
+            },
+          })}
+        >
           <ListItemIcon>
-            {isSignupToken ? (
-              <LockOpenIcon fontSize="small" />
+            {token ? (
+              <LogoutIcon fontSize="small" />
             ) : (
-              <LockIcon fontSize="small" />
+              <LoginIcon fontSize="small" />
             )}
           </ListItemIcon>
           <ListItemText
-            primary={isSignupToken ? 'Set password' : 'Change password'}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>
-
-        <Divider />
-
-        {/* ── Logout ── */}
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText
-            primary="Logout"
-            primaryTypographyProps={{ variant: 'body2' }}
+            primary={token ? 'Logout' : 'Login'}
+            primaryTypographyProps={{ variant: 'body2', fontWeight: 600 }}
           />
         </MenuItem>
       </Menu>
@@ -181,6 +215,7 @@ export const UserMenu = () => {
         open={changePasswordOpen}
         onClose={() => setChangePasswordOpen(false)}
       />
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
       <SetPasswordModal
         open={setPasswordOpen}
         onClose={() => setSetPasswordOpen(false)}

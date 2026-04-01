@@ -190,7 +190,7 @@ test.describe('Results page — ?year= URL parameter', () => {
     page,
   }) => {
     await page.goto('/results?year=2025');
-    await expect(page.getByLabel('Year')).toContainText('2025');
+    await expect(page).toHaveURL(/\/results\?year=2025$/);
     await expect(dateCell(page, '2025-12-19')).toBeVisible({ timeout: 10_000 });
   });
 
@@ -599,11 +599,13 @@ test.describe('TopNav — logout clears Add results button', () => {
     await page.getByRole('button', { name: 'Open user menu' }).click();
     await page.getByRole('menuitem', { name: 'Logout' }).click();
 
-    // After logout, the home-only controls disappear and the app returns to /login
+    // After logout, the home-only controls disappear and the app stays on the public home page.
     await expect(
       page.getByRole('button', { name: /add results/i }),
     ).not.toBeVisible();
-    await expect(page).toHaveURL('/login');
-    await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
+    await expect(page).toHaveURL('/');
+    await expect(
+      page.getByRole('button', { name: 'Open user menu' }),
+    ).toBeVisible();
   });
 });

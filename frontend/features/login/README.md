@@ -1,25 +1,26 @@
 # 🔐 login
 
-Handles user authentication: the login form, modal, auth state (JWT token), and validation.
+Login form UI, auth state, and validation shared by the modal and `/login` page.
 
 ## Structure
 
-| File                         | Purpose                                                                   |
-| ---------------------------- | ------------------------------------------------------------------------- |
-| `components/loginForm.tsx`   | Email/password form with `onSubmitHandler`, error display, and validation |
-| `components/loginModal.tsx`  | MUI `Dialog` wrapper around `LoginForm` — opened from TopNav              |
-| `hooks/useLogin.ts`          | Wraps the login mutation, dispatches token on success                     |
-| `logic/loginSchema.ts`       | Zod schema for login credentials                                          |
-| `logic/validateLoginForm.ts` | Form validation logic                                                     |
-| `state/authSlice.ts`         | Redux slice storing the JWT token (persisted to localStorage)             |
-| `state/loginFormSlice.ts`    | Redux slice for login form UI state                                       |
+| File                         | Purpose                                                                 |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `components/loginForm.tsx`   | Email/password form with submit handling, error display, and validation |
+| `components/loginModal.tsx`  | MUI `Dialog` wrapper around `LoginForm` — opened from `topNav/UserMenu` |
+| `hooks/useLogin.ts`          | Wraps the login mutation and stores auth state on success               |
+| `logic/loginSchema.ts`       | Zod schema for login credentials                                        |
+| `logic/validateLoginForm.ts` | Form validation logic                                                   |
+| `state/authSlice.ts`         | Redux slice storing the JWT token and remembered email                  |
+| `state/loginFormSlice.ts`    | Redux slice for login form UI state                                     |
 
-> `ProtectedRoute` lives in `shared/components/` — it is not owned by this feature.
+> `ProtectedRoute` lives in `shared/components/`; see `frontend/pages/README.md` for route-level ownership.
 
-## Auth flow
+## Rules
 
-1. TopNav "Login" button → opens `LoginModal` (no navigation)
-2. User submits form → `useLogin` calls the API → token stored in Redux + localStorage
-3. `AuthProvider` (in `providers/`) decodes token on mount and clears it if expired
-4. Unauthenticated visit to a protected route → `ProtectedRoute` redirects to `/`
-5. `/login` visited directly while authenticated → `LoginPage` redirects to `/`
+- `LoginForm` must stay reusable between `LoginModal` and `frontend/pages/loginPage.tsx`.
+- Guest login from the top bar must open `LoginModal` from `topNav/UserMenu`, not a standalone TopNav button.
+- Successful login must store the token in Redux and persist it through `authSlice`.
+- `AuthProvider` must validate persisted auth state on mount and clear expired tokens.
+- `ProtectedRoute` must keep redirect behavior outside this feature.
+- `/login` must remain available for direct navigation and must redirect authenticated users to `/`.
