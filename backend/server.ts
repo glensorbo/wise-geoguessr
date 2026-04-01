@@ -4,6 +4,7 @@ import index from '../public/index.html';
 import { pingDb } from './db/client';
 import { authRoutes } from './routes/authRoutes';
 import { gameResultRoutes } from './routes/gameResultRoutes';
+import { hallOfFameRoutes } from './routes/hallOfFameRoutes';
 import { telemetryRoutes } from './routes/telemetryRoutes';
 import { userRoutes } from './routes/userRoutes';
 import { serveProdBuild } from './serveProdBuild.ts';
@@ -28,6 +29,7 @@ const server = serve({
     ...userRoutes,
     ...authRoutes,
     ...gameResultRoutes,
+    ...hallOfFameRoutes,
     ...telemetryRoutes,
 
     '/*': isProduction

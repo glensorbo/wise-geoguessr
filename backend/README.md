@@ -56,6 +56,7 @@ Bun.serve({
     ...userRoutes,
     ...authRoutes,
     ...gameResultRoutes,
+    ...hallOfFameRoutes,
     '/*': isProduction ? (req) => serveProdBuild(pathname) : index,
   },
   development: !isProduction && { hmr: true, console: true },

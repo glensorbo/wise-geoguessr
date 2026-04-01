@@ -10,6 +10,7 @@ RTK Query API definitions. One file per backend controller.
 | `authApi.ts`       | `POST /api/auth/create-user`, `POST /api/auth/set-password`                 | `useCreateUserMutation`, `useSetPasswordMutation`                |
 | `usersApi.ts`      | `GET /api/user`, `GET /api/user/:id`                                        | `useGetUsersQuery`, `useGetUserByIdQuery`                        |
 | `gameResultApi.ts` | `GET /api/results/years`, `GET /api/results?year=YYYY`, `POST /api/results` | `useGetYearsQuery`, `useGetResultsQuery`, `useAddResultMutation` |
+| `hallOfFameApi.ts` | `GET /api/hall-of-fame`                                                     | `useGetHallOfFameQuery`                                          |
 
 ## Architecture
 

@@ -1,0 +1,2 @@
+### Get Hall of Fame records
+GET {{BASE_URL}}/api/hall-of-fame

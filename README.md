@@ -33,6 +33,7 @@ bun dev
 
 ## ✨ Features
 
+- 🏆 Surface all-time records (highest score, longest win streak, best season total) on a public Hall of Fame page
 - 📊 Show a sortable leaderboard, weekly breakdowns, and season trends
 - 🔐 Handle login, refresh rotation, password changes, and invite-based signup
 - 🛡️ Enforce `admin` and `user` access rules in middleware

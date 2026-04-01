@@ -1,4 +1,5 @@
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TableChartRoundedIcon from '@mui/icons-material/TableChartRounded';
 import Box from '@mui/material/Box';
@@ -157,6 +158,13 @@ const DrawerContent = ({
           to="/stats"
           label="Statistics"
           Icon={BarChartRoundedIcon}
+          collapsed={collapsed}
+          onNavigate={onNavigate}
+        />
+        <NavItem
+          to="/hall-of-fame"
+          label="Hall of Fame"
+          Icon={EmojiEventsRoundedIcon}
           collapsed={collapsed}
           onNavigate={onNavigate}
         />
