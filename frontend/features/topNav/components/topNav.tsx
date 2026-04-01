@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 
 import { UserMenu } from './userMenu';
 import { AddScoreModal } from '@frontend/features/geoguessr/components/addScoreModal';
-import { LoginModal } from '@frontend/features/login/components/loginModal';
 
 import type { RootState } from '@frontend/redux/store';
 
@@ -31,7 +30,6 @@ export const TopNav = ({
 }: TopNavProps) => {
   const token = useSelector((state: RootState) => state.auth.token);
   const [addScoreOpen, setAddScoreOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const isPhone = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   return (
@@ -76,34 +74,22 @@ export const TopNav = ({
             🌍 Wise GeoGuessr
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {token ? (
-              <>
-                <Button
-                  color="inherit"
-                  variant="outlined"
-                  size="small"
-                  onClick={() => setAddScoreOpen(true)}
-                  sx={{
-                    borderColor: 'rgba(255,255,255,0.5)',
-                    px: { xs: 1.25, sm: 1.75 },
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {isPhone ? '+ Add' : '+ Add results'}
-                </Button>
-                <UserMenu />
-              </>
-            ) : (
+            {token && (
               <Button
                 color="inherit"
                 variant="outlined"
                 size="small"
-                onClick={() => setLoginOpen(true)}
-                sx={{ borderColor: 'rgba(255,255,255,0.5)' }}
+                onClick={() => setAddScoreOpen(true)}
+                sx={{
+                  borderColor: 'rgba(255,255,255,0.5)',
+                  px: { xs: 1.25, sm: 1.75 },
+                  whiteSpace: 'nowrap',
+                }}
               >
-                Login
+                {isPhone ? '+ Add' : '+ Add results'}
               </Button>
             )}
+            <UserMenu />
           </Box>
         </Toolbar>
       </AppBar>
@@ -112,7 +98,6 @@ export const TopNav = ({
         open={addScoreOpen}
         onClose={() => setAddScoreOpen(false)}
       />
-      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </>
   );
 };

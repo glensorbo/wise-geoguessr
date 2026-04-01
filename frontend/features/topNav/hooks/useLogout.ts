@@ -21,7 +21,7 @@ export const useLogout = () => {
     void logoutMutation();
     dispatch(clearToken());
     toast.info('Logged out 👋');
-    void navigate('/login');
+    void navigate('/');
   };
 
   return { logout };

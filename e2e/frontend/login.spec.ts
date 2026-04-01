@@ -6,7 +6,7 @@ import { E2E_EMAIL, E2E_PASSWORD } from '../global-setup';
  * Login E2E tests
  *
  * PRIMARY: Login Modal flow
- *  - TopNav "Login" button opens an inline MUI Dialog
+ *  - TopNav user menu exposes a "Login" action that opens an inline MUI Dialog
  *  - Form validation (empty fields, invalid email, field-level errors)
  *  - Error clearing on input change
  *  - Password visibility toggle inside the modal
@@ -28,7 +28,9 @@ import { E2E_EMAIL, E2E_PASSWORD } from '../global-setup';
 
 async function openLoginModal(page: import('@playwright/test').Page) {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.getByRole('banner')).toBeVisible();
+  await page.getByRole('button', { name: 'Open user menu' }).click();
+  await page.getByRole('menuitem', { name: 'Login' }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   return page.getByRole('dialog');
 }
@@ -38,9 +40,11 @@ async function openLoginModal(page: import('@playwright/test').Page) {
 // ---------------------------------------------------------------------------
 
 test.describe('Login Modal — layout', () => {
-  test('opens when the TopNav "Login" button is clicked', async ({ page }) => {
+  test('opens when the user menu "Login" action is clicked', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await expect(page.getByRole('banner')).toBeVisible();
+    await page.getByRole('button', { name: 'Open user menu' }).click();
+    await page.getByRole('menuitem', { name: 'Login' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
   });
 
@@ -272,7 +276,7 @@ test.describe('Login Modal — authentication', () => {
     await expect(page).toHaveURL('/');
   });
 
-  test('shows the user menu and hides the Login button after successful login', async ({
+  test('shows authenticated menu actions after successful login', async ({
     page,
   }) => {
     const dialog = await openLoginModal(page);
@@ -282,11 +286,13 @@ test.describe('Login Modal — authentication', () => {
       .fill(E2E_PASSWORD);
     await dialog.getByRole('button', { name: 'Sign in' }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible();
-    // Login button should be gone; authenticated controls appear instead
-    await expect(page.getByRole('button', { name: 'Login' })).not.toBeVisible();
     await expect(
       page.getByRole('button', { name: /add results/i }),
     ).toBeVisible();
+    await expect(page.getByRole('banner')).toBeVisible();
+    await page.getByRole('button', { name: 'Open user menu' }).click();
+    await expect(page.getByRole('menuitem', { name: 'Logout' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Login' })).toHaveCount(0);
   });
 });
 
