@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { formatAxisNumber } from '../constants';
 
@@ -17,7 +17,7 @@ const PLATFORM_COLOR = {
 } as const;
 
 // rank 3 reveals first, rank 1 last for dramatic effect
-const PLATFORM_DELAY_MS = { 1: 800, 2: 400, 3: 0 } as const;
+const PLATFORM_DELAY_S = { 1: 0.8, 2: 0.4, 3: 0 } as const;
 
 const PodiumSlot = ({
   entry,
@@ -26,27 +26,7 @@ const PodiumSlot = ({
   entry: PodiumEntry;
   order: { xs: number; sm: number };
 }) => {
-  const [platformUp, setPlatformUp] = useState(false);
-  const [cardVisible, setCardVisible] = useState(false);
-
-  useEffect(() => {
-    let t1: ReturnType<typeof setTimeout>;
-    let t2: ReturnType<typeof setTimeout>;
-
-    // Wait for the browser to paint the initial hidden state before
-    // starting the timers — otherwise rank 3 (0ms delay) flickers
-    const raf = requestAnimationFrame(() => {
-      const platformDelay = PLATFORM_DELAY_MS[entry.rank];
-      t1 = setTimeout(() => setPlatformUp(true), platformDelay);
-      t2 = setTimeout(() => setCardVisible(true), platformDelay + 350);
-    });
-
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [entry.rank]);
+  const platformDelay = PLATFORM_DELAY_S[entry.rank];
 
   return (
     <Box
@@ -60,18 +40,11 @@ const PodiumSlot = ({
       }}
     >
       {/* Card fades + slides in after platform has risen */}
-      <Box
-        sx={{
-          width: '100%',
-          opacity: cardVisible ? 1 : 0,
-          transform: cardVisible ? 'translateY(0)' : 'translateY(-16px)',
-          transition: 'opacity 400ms ease, transform 400ms ease',
-          '@media (prefers-reduced-motion: reduce)': {
-            opacity: 1,
-            transform: 'none',
-            transition: 'none',
-          },
-        }}
+      <motion.div
+        style={{ width: '100%' }}
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: platformDelay + 0.35 }}
       >
         <Paper
           elevation={entry.rank === 1 ? 4 : 1}
@@ -111,25 +84,27 @@ const PodiumSlot = ({
             </Typography>
           </Stack>
         </Paper>
-      </Box>
+      </motion.div>
 
       {/* Platform rises from the bottom */}
-      <Box
-        sx={{
+      <motion.div
+        style={{
           width: '100%',
           height: PLATFORM_HEIGHT[entry.rank],
-          bgcolor: PLATFORM_COLOR[entry.rank],
+          backgroundColor: PLATFORM_COLOR[entry.rank],
           borderRadius: '4px 4px 0 0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          transformOrigin: 'bottom',
-          transform: platformUp ? 'scaleY(1)' : 'scaleY(0)',
-          transition: 'transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-          '@media (prefers-reduced-motion: reduce)': {
-            transform: 'scaleY(1)',
-            transition: 'none',
-          },
+          originY: 1,
+        }}
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{
+          type: 'spring',
+          bounce: 0.4,
+          duration: 0.6,
+          delay: platformDelay,
         }}
       >
         <Typography
@@ -138,7 +113,7 @@ const PodiumSlot = ({
         >
           {entry.rank}
         </Typography>
-      </Box>
+      </motion.div>
     </Box>
   );
 };
