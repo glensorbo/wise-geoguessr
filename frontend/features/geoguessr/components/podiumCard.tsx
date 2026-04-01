@@ -47,15 +47,15 @@ const PodiumSlot = ({
         transition={{ duration: 0.4, delay: platformDelay + 0.35 }}
       >
         <Paper
-          elevation={entry.rank === 1 ? 4 : 1}
+          elevation={entry.rank === 1 ? 4 : 0}
           sx={{
             p: { xs: 1.5, sm: 2 },
             width: '100%',
             textAlign: 'center',
-            border:
-              entry.rank === 1
-                ? '2px solid #f59e0b'
-                : '1px solid rgba(0,0,0,0.08)',
+            ...(entry.rank === 1 && {
+              border: '2px solid #f59e0b !important',
+              boxShadow: '0 0 24px rgba(245, 158, 11, 0.25)',
+            }),
           }}
         >
           <Stack spacing={0.5} alignItems="center">

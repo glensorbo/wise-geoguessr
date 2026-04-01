@@ -119,7 +119,7 @@ export const HallOfFamePage = () => {
                 ) : data?.longestWinStreak ? (
                   <RecordCard
                     {...RECORD_STYLES.winStreak}
-                    emoji="��"
+                    emoji="🔥"
                     title="Longest Win Streak"
                     value={`${data.longestWinStreak.streak} ${data.longestWinStreak.streak === 1 ? 'round' : 'rounds'}`}
                     holders={data.longestWinStreak.holders.map((h) => ({
