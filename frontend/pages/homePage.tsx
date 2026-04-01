@@ -66,7 +66,7 @@ export const HomePage = () => {
                 />
               ) : podium.length > 0 ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <PodiumCard podium={podium} />
+                  <PodiumCard key={year} podium={podium} />
                 </Box>
               ) : null}
             </DashboardSection>
