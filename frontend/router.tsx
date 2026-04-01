@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { AnalyticsProvider } from './features/analytics/analyticsProvider';
 import { PageLayout } from './layout/pageLayout';
+import { HallOfFamePage } from './pages/hallOfFamePage';
 import { HomePage } from './pages/homePage';
 import { LoginPage } from './pages/loginPage';
 import { NotFoundPage } from './pages/notFoundPage';
@@ -26,6 +27,7 @@ export const AppRouter = () => (
         <Route index element={<HomePage />} />
         <Route path="results" element={<ResultsPage />} />
         <Route path="stats" element={<StatsPage />} />
+        <Route path="hall-of-fame" element={<HallOfFamePage />} />
       </Route>
 
       {/* Protected — authenticated users only */}

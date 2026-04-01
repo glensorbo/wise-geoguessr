@@ -11,9 +11,25 @@ export const DashboardSection = ({
   title: string;
   children: ReactNode;
 }) => (
-  <Paper elevation={0} sx={{ p: { xs: 2, md: 3 } }}>
-    <Stack spacing={2.5}>
-      <Typography variant="h5" component="h2">
+  <Paper
+    sx={(theme) => ({
+      p: { xs: 2.5, md: 3.5 },
+      position: 'relative',
+      overflow: 'hidden',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '3px',
+        background: `linear-gradient(90deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+        opacity: theme.palette.mode === 'dark' ? 0.6 : 0.4,
+      },
+    })}
+  >
+    <Stack spacing={3}>
+      <Typography variant="h5" component="h2" sx={{ pt: 0.25 }}>
         {title}
       </Typography>
       {children}

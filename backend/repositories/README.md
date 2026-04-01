@@ -6,8 +6,10 @@ The repository layer is the only place that talks to the database. Repositories 
 
 ```
 repositories/
-├── userRepository.ts         # Database queries for the users table
-└── gameResultRepository.ts   # getAll, getByYear, getAvailableYears, getByDate, create (transaction)
+├── userRepository.ts           # CRUD queries for the users table
+├── refreshTokenRepository.ts   # Refresh token storage and invalidation
+├── gameResultRepository.ts     # getAll, getByYear, getAvailableYears, getByDate, create (transaction)
+└── hallOfFameRepository.ts     # All-time aggregates: highest score, longest win streak, best season total
 ```
 
 ## 📐 Responsibilities
