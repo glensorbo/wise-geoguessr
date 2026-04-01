@@ -30,10 +30,19 @@ const PodiumSlot = ({
   const [cardVisible, setCardVisible] = useState(false);
 
   useEffect(() => {
-    const platformDelay = PLATFORM_DELAY_MS[entry.rank];
-    const t1 = setTimeout(() => setPlatformUp(true), platformDelay);
-    const t2 = setTimeout(() => setCardVisible(true), platformDelay + 350);
+    let t1: ReturnType<typeof setTimeout>;
+    let t2: ReturnType<typeof setTimeout>;
+
+    // Wait for the browser to paint the initial hidden state before
+    // starting the timers — otherwise rank 3 (0ms delay) flickers
+    const raf = requestAnimationFrame(() => {
+      const platformDelay = PLATFORM_DELAY_MS[entry.rank];
+      t1 = setTimeout(() => setPlatformUp(true), platformDelay);
+      t2 = setTimeout(() => setCardVisible(true), platformDelay + 350);
+    });
+
     return () => {
+      cancelAnimationFrame(raf);
       clearTimeout(t1);
       clearTimeout(t2);
     };
