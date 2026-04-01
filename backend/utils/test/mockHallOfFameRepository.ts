@@ -32,6 +32,18 @@ const mockData: HallOfFame = {
     count: 4,
     holders: [{ playerName: 'Thomas' }],
   },
+  allTimePointsLeader: {
+    total: 234567,
+    holders: [{ playerName: 'Glen' }],
+  },
+  highestWinRate: {
+    winRate: 66.7,
+    holders: [{ playerName: 'Malin' }],
+  },
+  biggestWinningMargin: {
+    margin: 8500,
+    holders: [{ playerName: 'Malin', date: '2026-03-13' }],
+  },
 };
 
 export const mockHallOfFameRepository: typeof hallOfFameRepository = {

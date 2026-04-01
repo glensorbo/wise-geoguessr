@@ -37,6 +37,9 @@ const MENTION_COLORS = {
   mostRounds: '#10b981',
   avgScore: '#f59e0b',
   runnerUp: '#8b5cf6',
+  allTimeLeader: '#06b6d4',
+  winRate: '#f43f5e',
+  margin: '#f97316',
 } as const;
 
 const RecordSkeleton = () => (
@@ -56,7 +59,8 @@ export const HallOfFamePage = () => {
     !error &&
     !data?.highestSingleRoundScore &&
     !data?.longestWinStreak &&
-    !data?.highestSeasonTotal;
+    !data?.highestSeasonTotal &&
+    !data?.allTimePointsLeader;
 
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 3, md: 6 } }}>
@@ -155,7 +159,10 @@ export const HallOfFamePage = () => {
             {(isLoading ||
               data?.mostRoundsPlayed ||
               data?.highestAverageScore ||
-              data?.mostRunnerUpFinishes) && (
+              data?.mostRunnerUpFinishes ||
+              data?.allTimePointsLeader ||
+              data?.highestWinRate ||
+              data?.biggestWinningMargin) && (
               <Stack spacing={3}>
                 <Divider>
                   <Typography
@@ -212,6 +219,54 @@ export const HallOfFamePage = () => {
                         value={`${data.mostRunnerUpFinishes.count} runner-ups`}
                         holders={data.mostRunnerUpFinishes.holders.map((h) => ({
                           label: h.playerName,
+                        }))}
+                      />
+                    ) : null}
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    {isLoading ? (
+                      <MentionSkeleton />
+                    ) : data?.allTimePointsLeader ? (
+                      <HonorableMentionCard
+                        accentColor={MENTION_COLORS.allTimeLeader}
+                        emoji="🌍"
+                        title="All-Time Points Leader"
+                        value={formatScore(data.allTimePointsLeader.total)}
+                        holders={data.allTimePointsLeader.holders.map((h) => ({
+                          label: h.playerName,
+                        }))}
+                      />
+                    ) : null}
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    {isLoading ? (
+                      <MentionSkeleton />
+                    ) : data?.highestWinRate ? (
+                      <HonorableMentionCard
+                        accentColor={MENTION_COLORS.winRate}
+                        emoji="👑"
+                        title="Highest Win Rate"
+                        value={`${data.highestWinRate.winRate}%`}
+                        holders={data.highestWinRate.holders.map((h) => ({
+                          label: h.playerName,
+                        }))}
+                      />
+                    ) : null}
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    {isLoading ? (
+                      <MentionSkeleton />
+                    ) : data?.biggestWinningMargin ? (
+                      <HonorableMentionCard
+                        accentColor={MENTION_COLORS.margin}
+                        emoji="💥"
+                        title="Biggest Winning Margin"
+                        value={`+${formatScore(data.biggestWinningMargin.margin)}`}
+                        holders={data.biggestWinningMargin.holders.map((h) => ({
+                          label: `${h.playerName} (${h.date})`,
                         }))}
                       />
                     ) : null}

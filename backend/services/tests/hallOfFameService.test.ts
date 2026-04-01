@@ -16,6 +16,9 @@ const emptyMockRepository = {
       mostRoundsPlayed: null,
       highestAverageScore: null,
       mostRunnerUpFinishes: null,
+      allTimePointsLeader: null,
+      highestWinRate: null,
+      biggestWinningMargin: null,
     };
   },
 };
@@ -24,7 +27,7 @@ const emptyService = createHallOfFameService(emptyMockRepository);
 
 describe('HallOfFameService', () => {
   describe('getHallOfFame — with data', () => {
-    test('returns an object with all six record categories', async () => {
+    test('returns an object with all nine record categories', async () => {
       const result = await service.getHallOfFame();
       expect(typeof result).toBe('object');
       expect('highestSingleRoundScore' in result).toBe(true);
@@ -33,6 +36,9 @@ describe('HallOfFameService', () => {
       expect('mostRoundsPlayed' in result).toBe(true);
       expect('highestAverageScore' in result).toBe(true);
       expect('mostRunnerUpFinishes' in result).toBe(true);
+      expect('allTimePointsLeader' in result).toBe(true);
+      expect('highestWinRate' in result).toBe(true);
+      expect('biggestWinningMargin' in result).toBe(true);
     });
 
     test('highestSingleRoundScore has a numeric score and a non-empty holders array', async () => {
@@ -104,6 +110,30 @@ describe('HallOfFameService', () => {
       expect(typeof result.mostRunnerUpFinishes!.count).toBe('number');
       expect(result.mostRunnerUpFinishes!.holders.length).toBeGreaterThan(0);
     });
+
+    test('allTimePointsLeader has a numeric total and a non-empty holders array', async () => {
+      const result = await service.getHallOfFame();
+      expect(result.allTimePointsLeader).not.toBeNull();
+      expect(typeof result.allTimePointsLeader!.total).toBe('number');
+      expect(result.allTimePointsLeader!.holders.length).toBeGreaterThan(0);
+    });
+
+    test('highestWinRate has a numeric winRate and a non-empty holders array', async () => {
+      const result = await service.getHallOfFame();
+      expect(result.highestWinRate).not.toBeNull();
+      expect(typeof result.highestWinRate!.winRate).toBe('number');
+      expect(result.highestWinRate!.holders.length).toBeGreaterThan(0);
+    });
+
+    test('biggestWinningMargin has a numeric margin and holders with playerName and date', async () => {
+      const result = await service.getHallOfFame();
+      expect(result.biggestWinningMargin).not.toBeNull();
+      expect(typeof result.biggestWinningMargin!.margin).toBe('number');
+      for (const holder of result.biggestWinningMargin!.holders) {
+        expect(typeof holder.playerName).toBe('string');
+        expect(typeof holder.date).toBe('string');
+      }
+    });
   });
 
   describe('getHallOfFame — empty database', () => {
@@ -115,6 +145,9 @@ describe('HallOfFameService', () => {
       expect(result.mostRoundsPlayed).toBeNull();
       expect(result.highestAverageScore).toBeNull();
       expect(result.mostRunnerUpFinishes).toBeNull();
+      expect(result.allTimePointsLeader).toBeNull();
+      expect(result.highestWinRate).toBeNull();
+      expect(result.biggestWinningMargin).toBeNull();
     });
   });
 });

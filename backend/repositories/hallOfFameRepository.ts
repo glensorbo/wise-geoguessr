@@ -257,6 +257,77 @@ export const hallOfFameRepository = {
       };
     }
 
+    // ── 7. All-time points leader ─────────────────────────────────────────
+    // Reuse playerScoreTotal (already summed from allRows)
+    let allTimePointsLeader: HallOfFame['allTimePointsLeader'] = null;
+    if (playerScoreTotal.size > 0) {
+      const maxAllTime = Math.max(...playerScoreTotal.values());
+      allTimePointsLeader = {
+        total: maxAllTime,
+        holders: [...playerScoreTotal.entries()]
+          .filter(([, t]) => t === maxAllTime)
+          .map(([playerName]) => ({ playerName })),
+      };
+    }
+
+    // ── 8. Highest win rate (min 5 rounds) ────────────────────────────────
+    // Reuse playerHistory (already built for streak computation)
+    let highestWinRate: HallOfFame['highestWinRate'] = null;
+    const winRates: Array<{ playerName: string; winRate: number }> = [];
+    for (const [playerName, history] of playerHistory) {
+      if (history.length < 5) {
+        continue;
+      }
+      const wins = history.filter((h) => h.won).length;
+      const winRate = Math.round((wins / history.length) * 1000) / 10;
+      winRates.push({ playerName, winRate });
+    }
+    if (winRates.length > 0) {
+      const maxRate = Math.max(...winRates.map((p) => p.winRate));
+      highestWinRate = {
+        winRate: maxRate,
+        holders: winRates
+          .filter((p) => p.winRate === maxRate)
+          .map(({ playerName }) => ({ playerName })),
+      };
+    }
+
+    // ── 9. Biggest winning margin ─────────────────────────────────────────
+    // For each round: winner's score minus the second-highest score
+    let biggestWinningMargin: HallOfFame['biggestWinningMargin'] = null;
+    let maxMargin = 0;
+    const marginHolders: Array<{ playerName: string; date: string }> = [];
+
+    for (const [date, scores] of roundsByDate) {
+      if (scores.size < 2) {
+        continue;
+      }
+      const sortedScores = [...scores.values()].sort((a, b) => b - a);
+      const firstScore = sortedScores[0]!;
+      const secondScore = sortedScores[1]!;
+      const margin = firstScore - secondScore;
+
+      if (margin > maxMargin) {
+        maxMargin = margin;
+        marginHolders.length = 0;
+        for (const [playerName, score] of scores) {
+          if (score === firstScore) {
+            marginHolders.push({ playerName, date });
+          }
+        }
+      } else if (margin === maxMargin && margin > 0) {
+        for (const [playerName, score] of scores) {
+          if (score === firstScore) {
+            marginHolders.push({ playerName, date });
+          }
+        }
+      }
+    }
+
+    if (maxMargin > 0) {
+      biggestWinningMargin = { margin: maxMargin, holders: marginHolders };
+    }
+
     return {
       highestSingleRoundScore,
       longestWinStreak,
@@ -264,6 +335,9 @@ export const hallOfFameRepository = {
       mostRoundsPlayed,
       highestAverageScore,
       mostRunnerUpFinishes,
+      allTimePointsLeader,
+      highestWinRate,
+      biggestWinningMargin,
     };
   },
 };
