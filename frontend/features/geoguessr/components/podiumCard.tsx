@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { keyframes } from '@mui/material/styles';
+import { keyframes, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { formatAxisNumber } from '../constants';
@@ -29,7 +29,37 @@ const fadeSlideDown = keyframes`
   to   { opacity: 1; transform: translateY(0); }
 `;
 
-const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+// Using styled() ensures emotion injects the @keyframes rule into the stylesheet
+const AnimatedCard = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'delay',
+})<{ delay: string }>(({ delay }) => ({
+  width: '100%',
+  animation: `${fadeSlideDown} 400ms ease calc(${delay} + 350ms) both`,
+  '@media (prefers-reduced-motion: reduce)': {
+    animation: 'none',
+    opacity: 1,
+  },
+}));
+
+const AnimatedPlatform = styled(Box, {
+  shouldForwardProp: (prop) =>
+    prop !== 'delay' && prop !== 'platformHeight' && prop !== 'platformColor',
+})<{ delay: string; platformHeight: number; platformColor: string }>(
+  ({ delay, platformHeight, platformColor }) => ({
+    width: '100%',
+    height: platformHeight,
+    backgroundColor: platformColor,
+    borderRadius: '4px 4px 0 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transformOrigin: 'bottom',
+    animation: `${riseUp} 500ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay} both`,
+    '@media (prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  }),
+);
 
 const PodiumSlot = ({
   entry,
@@ -51,15 +81,7 @@ const PodiumSlot = ({
         minWidth: 0,
       }}
     >
-      {/* Card fades + slides down after its platform has risen */}
-      <Box
-        sx={{
-          width: '100%',
-          animation: `${fadeSlideDown} 400ms ease both`,
-          animationDelay: `calc(${delay} + 350ms)`,
-          [reducedMotion]: { animation: 'none', opacity: 1 },
-        }}
-      >
+      <AnimatedCard delay={delay}>
         <Paper
           elevation={entry.rank === 1 ? 4 : 1}
           sx={{
@@ -98,23 +120,12 @@ const PodiumSlot = ({
             </Typography>
           </Stack>
         </Paper>
-      </Box>
+      </AnimatedCard>
 
-      {/* Platform rises from the bottom */}
-      <Box
-        sx={{
-          width: '100%',
-          height: PLATFORM_HEIGHT[entry.rank],
-          bgcolor: PLATFORM_COLOR[entry.rank],
-          borderRadius: '4px 4px 0 0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transformOrigin: 'bottom',
-          animation: `${riseUp} 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both`,
-          animationDelay: delay,
-          [reducedMotion]: { animation: 'none' },
-        }}
+      <AnimatedPlatform
+        delay={delay}
+        platformHeight={PLATFORM_HEIGHT[entry.rank]}
+        platformColor={PLATFORM_COLOR[entry.rank]}
       >
         <Typography
           variant="h6"
@@ -122,7 +133,7 @@ const PodiumSlot = ({
         >
           {entry.rank}
         </Typography>
-      </Box>
+      </AnimatedPlatform>
     </Box>
   );
 };
