@@ -8,6 +8,7 @@ State management for the frontend, powered by Redux Toolkit.
 | ---------- | ------------------------------------------------------------------------------------------------------- |
 | `store.ts` | Configures the Redux store, wires RTK Query middleware, and exports `RootState` and `AppDispatch` types |
 | `api/`     | RTK Query API definitions — one file per backend controller                                             |
+| `slices/`  | Redux Toolkit slices for persisted client-side preferences and other UI state                           |
 
 ## Usage
 
@@ -35,3 +36,5 @@ export const store = configureStore({
   ...
 });
 ```
+
+If the slice should survive refreshes, load its initial state via `loadSliceState(...)` and add its key to `PERSISTED_KEYS` in `redux/middleware/localStorageMiddleware.ts`.

@@ -4,7 +4,7 @@ import type { Middleware } from '@reduxjs/toolkit';
  * Keys of the Redux state that should be persisted to localStorage.
  * Add a key here whenever a new slice should survive page refreshes.
  */
-const PERSISTED_KEYS = ['theme', 'auth'] as const;
+const PERSISTED_KEYS = ['theme', 'auth', 'sidebar'] as const;
 
 const STORAGE_KEY = 'redux_state';
 
