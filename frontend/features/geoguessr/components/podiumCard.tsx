@@ -72,13 +72,30 @@ const PodiumSlot = ({
           }}
         >
           <Stack spacing={0.5} alignItems="center">
-            <Typography
-              component="span"
-              sx={{ fontSize: entry.rank === 1 ? '2.5rem' : '1.75rem' }}
+            {/* Avatar with medal overlapping from below */}
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'inline-flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
             >
-              {MEDAL[entry.rank]}
-            </Typography>
-            <PlayerAvatar name={entry.name} size={entry.rank === 1 ? 64 : 48} />
+              <PlayerAvatar
+                name={entry.name}
+                size={entry.rank === 1 ? 80 : 60}
+              />
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: entry.rank === 1 ? '2rem' : '1.5rem',
+                  lineHeight: 1,
+                  mt: '-10px',
+                }}
+              >
+                {MEDAL[entry.rank]}
+              </Typography>
+            </Box>
             <Typography
               variant={entry.rank === 1 ? 'h6' : 'subtitle1'}
               fontWeight="bold"
