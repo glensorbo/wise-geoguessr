@@ -119,7 +119,9 @@ export const RoundDetailPage = () => {
                 ))}
               </Box>
             ) : (
-              <PodiumCard podium={podium} />
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <PodiumCard podium={podium} />
+              </Box>
             )}
           </DashboardSection>
         )}

@@ -149,37 +149,44 @@ export const ResultsPage = () => {
           {isLoading ? (
             <TableSkeleton rows={8} cols={5} />
           ) : noResults || hasError ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
-                <DataGrid
-                  rows={gridRows}
-                  columns={gridColumns}
-                  autoHeight
-                  pagination
-                  showToolbar
-                  density="compact"
-                  initialState={{
-                    pagination: { paginationModel: { page: 0, pageSize: 10 } },
-                    sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
-                  }}
-                  pageSizeOptions={[10]}
-                  onRowClick={(params: GridRowParams<PointsGridRow>) => {
-                    if (params.row.roundId) {
-                      void navigate(`/results/${params.row.roundId}`);
-                    }
-                  }}
-                  sx={{
-                    border: 0,
-                    '& .MuiDataGrid-row': { cursor: 'pointer' },
-                    '& .MuiDataGrid-toolbarContainer': {
-                      gap: 1,
-                      px: { xs: 1, sm: 0 },
-                      py: 1,
-                    },
-                  }}
-                />
+            <Stack spacing={1}>
+              <Typography variant="caption" color="text.secondary">
+                👆 Click any row to view round details
+              </Typography>
+              <Box sx={{ width: '100%', overflowX: 'auto' }}>
+                <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
+                  <DataGrid
+                    rows={gridRows}
+                    columns={gridColumns}
+                    autoHeight
+                    pagination
+                    showToolbar
+                    density="compact"
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 10 },
+                      },
+                      sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
+                    }}
+                    pageSizeOptions={[10]}
+                    onRowClick={(params: GridRowParams<PointsGridRow>) => {
+                      if (params.row.roundId) {
+                        void navigate(`/results/${params.row.roundId}`);
+                      }
+                    }}
+                    sx={{
+                      border: 0,
+                      '& .MuiDataGrid-row': { cursor: 'pointer' },
+                      '& .MuiDataGrid-toolbarContainer': {
+                        gap: 1,
+                        px: { xs: 1, sm: 0 },
+                        py: 1,
+                      },
+                    }}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </Stack>
           )}
         </DashboardSection>
 
