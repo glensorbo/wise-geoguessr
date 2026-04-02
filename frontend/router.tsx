@@ -8,6 +8,7 @@ import { HomePage } from './pages/homePage';
 import { LoginPage } from './pages/loginPage';
 import { NotFoundPage } from './pages/notFoundPage';
 import { PlayerProfilePage } from './pages/playerProfilePage';
+import { RecapPage } from './pages/recapPage';
 import { ResultsPage } from './pages/resultsPage';
 import { RoundDetailPage } from './pages/roundDetailPage';
 import { StatsPage } from './pages/statsPage';
@@ -33,6 +34,7 @@ export const AppRouter = () => (
         <Route path="hall-of-fame" element={<HallOfFamePage />} />
         <Route path="head-to-head" element={<HeadToHeadPage />} />
         <Route path="players/:name" element={<PlayerProfilePage />} />
+        <Route path="recap/:year" element={<RecapPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

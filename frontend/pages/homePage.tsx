@@ -1,9 +1,11 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useMemo } from 'react';
+import { Link } from 'react-router';
 
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
 import { LastRoundCard } from '@frontend/features/geoguessr/components/lastRoundCard';
@@ -57,6 +59,15 @@ export const HomePage = () => {
               disabled={isLoading}
               onChange={setYear}
             />
+            <Button
+              component={Link}
+              to={`/recap/${year}`}
+              variant="outlined"
+              size="small"
+              sx={{ whiteSpace: 'nowrap' }}
+            >
+              View {year} Recap →
+            </Button>
           </Stack>
 
           {noResults ? (

@@ -43,6 +43,7 @@ bun dev
 - 🚪 Treat logout as idempotent, including when no active session exists
 - 📧 Send invite emails when SMTP is configured and stay quiet when it is not
 - 🔭 Emit telemetry only when OpenTelemetry is configured
+- 🌟 Recap the season Wrapped-style — champion, sharpshooter, most improved, closest rivalry, longest streak — in an animated slide deck at `/recap/:year`
 - 📊 Track analytics only when Rybbit is configured
 - 🐶 Block bad pushes with lint, format, test, and knip checks
 

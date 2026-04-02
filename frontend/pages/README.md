@@ -13,6 +13,7 @@ One file per route. Pages are intentionally thin — they import and compose fea
 | `playerProfilePage.tsx` | `/players/:name`    | Name, avatar, all-time stats (rounds, wins, win rate, personal best), current win streak, cumulative season rank history chart, 🏅 Achievements section (earned chips + greyed-out unearned chips with tooltips) |
 | `roundDetailPage.tsx`   | `/results/:roundId` | Podium + score breakdown table for a single round, with delta vs season average                                                                                                                                  |
 | `headToHeadPage.tsx`    | `/head-to-head`     | Two Autocomplete player pickers (pre-populated from `?a=X&b=Y` URL params) + year selector; shows shared-round count, wins-per-player stat cards, and a score comparison LineChart                               |
+| `recapPage.tsx`         | `/recap/:year`      | Animated Wrapped-style slideshow of season stat highlights (champion, sharpshooter, most improved, closest rivalry, most inconsistent, longest streak); keyboard ← → and clickable dot navigation                |
 
 ## Rules
 
