@@ -1,3 +1,4 @@
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
@@ -16,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Link, useMatch, useResolvedPath } from 'react-router';
 
+import { getCurrentYear } from '@frontend/features/geoguessr/logic';
 import {
   DRAWER_COLLAPSED_WIDTH,
   DRAWER_WIDTH,
@@ -23,6 +25,8 @@ import {
 
 import type { SvgIconProps } from '@mui/material/SvgIcon';
 import type { ComponentType } from 'react';
+
+const currentYear = getCurrentYear();
 
 type NavItemProps = {
   to: string;
@@ -173,6 +177,13 @@ const DrawerContent = ({
           to="/head-to-head"
           label="Head-to-Head"
           Icon={CompareArrowsRoundedIcon}
+          collapsed={collapsed}
+          onNavigate={onNavigate}
+        />
+        <NavItem
+          to={`/recap/${currentYear}`}
+          label="Season Recap"
+          Icon={AutoAwesomeRoundedIcon}
           collapsed={collapsed}
           onNavigate={onNavigate}
         />
