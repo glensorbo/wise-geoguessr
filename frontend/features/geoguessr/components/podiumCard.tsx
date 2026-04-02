@@ -90,7 +90,7 @@ const PodiumSlot = ({
                 sx={{
                   fontSize: entry.rank === 1 ? '2rem' : '1.5rem',
                   lineHeight: 1,
-                  mt: '-10px',
+                  mt: entry.rank === 1 ? '-20px' : '-15px',
                   position: 'relative',
                   zIndex: 1,
                 }}
