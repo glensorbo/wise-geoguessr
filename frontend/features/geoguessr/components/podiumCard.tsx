@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
+import { useConfetti } from '../hooks/useConfetti';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { PodiumEntry } from '../logic/podium';
@@ -29,6 +30,8 @@ const PodiumSlot = ({
   order: { xs: number; sm: number };
 }) => {
   const platformDelay = PLATFORM_DELAY_S[entry.rank];
+  // Fire confetti after rank 1's platform + card animation completes (~1.55s total)
+  useConfetti(entry.rank === 1, 1600);
 
   return (
     <Box

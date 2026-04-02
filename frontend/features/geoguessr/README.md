@@ -10,6 +10,7 @@ All GeoGuessr scoreboard logic, components, and hooks.
 | `hooks/useResults.ts`                  | Shared hook — year state + data fetching for Results and Stats pages                                                                                                                         |
 | `hooks/useRoundDetail.ts`              | Fetches a single round by ID, derives `RoundDetailData` and podium                                                                                                                           |
 | `hooks/usePlayerProfile.ts`            | Fetches all results and derives player stats, rank history, streak, and achievements for `/players/:name`                                                                                    |
+| `hooks/useConfetti.ts`                 | Fires a one-shot confetti burst via `canvas-confetti`; gated by `shouldFire`, optional `delayMs`; respects `prefers-reduced-motion`                                                          |
 | `components/dashboardSection.tsx`      | Paper section wrapper used across dashboard                                                                                                                                                  |
 | `components/podiumCard.tsx`            | Gold/silver/bronze podium display (top 3 by wins)                                                                                                                                            |
 | `components/lastRoundCard.tsx`         | Ranked last round results                                                                                                                                                                    |
@@ -34,4 +35,5 @@ All GeoGuessr scoreboard logic, components, and hooks.
 - `useResults.ts` is the single source for year-state + fetch logic — reuse it, don't duplicate.
 - `useRoundDetail.ts` is the single source for per-round fetch + derivation logic — reuse it, don't duplicate.
 - `usePlayerProfile.ts` is the single source for per-player stats, rank history, streak, and achievements — reuse it, don't duplicate.
+- `useConfetti` fires **once per mount** — keep `shouldFire: false` until the trigger condition is actually met, otherwise it fires immediately on mount.
 - `getPlayerSparklineData` filters to played rounds only — never pass raw scores containing `null`/absent entries to a chart.
