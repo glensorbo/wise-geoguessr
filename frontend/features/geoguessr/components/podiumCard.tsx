@@ -2,7 +2,9 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
@@ -158,6 +160,24 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
   const first = podium.find((e) => e.rank === 1);
   const second = podium.find((e) => e.rank === 2);
   const third = podium.find((e) => e.rank === 3);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (first) {
+      timer = setTimeout(() => {
+        void confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.45, x: 0.55 },
+        });
+      }, 1600);
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [first]);
 
   return (
     <Box
