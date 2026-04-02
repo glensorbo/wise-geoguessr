@@ -10,13 +10,12 @@ import { PlayerProfilePage } from './pages/playerProfilePage';
 import { ResultsPage } from './pages/resultsPage';
 import { RoundDetailPage } from './pages/roundDetailPage';
 import { StatsPage } from './pages/statsPage';
-import { ProtectedRoute } from './shared/components/protectedRoute';
 
 /**
  * Application router.
  *
  * Public routes use PageLayout (TopNav + LeftNav, no auth required).
- * Protected routes sit inside ProtectedRoute → PageLayout.
+ * Add protected routes inside a ProtectedRoute wrapper when needed.
  */
 export const AppRouter = () => (
   <BrowserRouter>
@@ -32,13 +31,7 @@ export const AppRouter = () => (
         <Route path="stats" element={<StatsPage />} />
         <Route path="hall-of-fame" element={<HallOfFamePage />} />
         <Route path="players/:name" element={<PlayerProfilePage />} />
-      </Route>
-
-      {/* Protected — authenticated users only */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<PageLayout />}>
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   </BrowserRouter>
