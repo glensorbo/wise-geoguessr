@@ -160,16 +160,14 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
   const first = podium.find((e) => e.rank === 1);
   const second = podium.find((e) => e.rank === 2);
   const third = podium.find((e) => e.rank === 3);
-  const fireConfetti = useConfetti('season-leader');
+  const fireConfetti = useConfetti();
 
   useEffect(() => {
-    if (first) {
-      // No cleanup return — intentional. Without a cleanup the timer
-      // survives StrictMode's unmount/remount cycle. The module-level
-      // `fired` Set in useConfetti prevents the second invocation from
-      // firing confetti a second time.
-      setTimeout(fireConfetti, 1600);
+    if (!first) {
+      return;
     }
+    const timer = setTimeout(fireConfetti, 1600);
+    return () => clearTimeout(timer);
   }, [first, fireConfetti]);
 
   return (

@@ -25,13 +25,15 @@ const rankLabel = (rank: number): string => {
 };
 
 export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
-  const fireConfetti = useConfetti('last-round-winner');
+  const fireConfetti = useConfetti();
   const hasWinner = lastRound.rankings.some((e) => e.isWinner);
 
   useEffect(() => {
-    if (hasWinner) {
-      fireConfetti();
+    if (!hasWinner) {
+      return;
     }
+    const timer = setTimeout(fireConfetti, 300);
+    return () => clearTimeout(timer);
   }, [hasWinner, fireConfetti]);
 
   return (
