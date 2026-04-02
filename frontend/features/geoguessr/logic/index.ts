@@ -1,4 +1,5 @@
 export { getActivePlayers } from './players';
+export { getPlayerSparklineData } from './playerSparkline';
 export { getPlayerDetails } from './player-details';
 export { getPerPlayedRoundDetails } from './per-played-round-details';
 export { getPlayerData } from './player-series';
