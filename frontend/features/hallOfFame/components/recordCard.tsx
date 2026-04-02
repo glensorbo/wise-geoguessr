@@ -5,6 +5,8 @@ import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
+
 import type { ReactNode } from 'react';
 
 type RecordCardProps = {
@@ -87,6 +89,7 @@ export const RecordCard = ({
             alignItems="center"
             flexWrap="wrap"
           >
+            <PlayerAvatar name={label} size={24} />
             <Chip
               label={label}
               size="small"
@@ -157,19 +160,21 @@ export const HonorableMentionCard = ({
         {value}
       </Typography>
 
-      <Stack direction="row" spacing={0.75} flexWrap="wrap">
+      <Stack direction="row" spacing={0.75} flexWrap="wrap" alignItems="center">
         {holders.map(({ label }) => (
-          <Chip
-            key={label}
-            label={label}
-            size="small"
-            sx={{
-              fontWeight: 600,
-              borderColor: alpha(accentColor, 0.5),
-              color: accentColor,
-            }}
-            variant="outlined"
-          />
+          <Stack key={label} direction="row" spacing={0.5} alignItems="center">
+            <PlayerAvatar name={label} size={24} />
+            <Chip
+              label={label}
+              size="small"
+              sx={{
+                fontWeight: 600,
+                borderColor: alpha(accentColor, 0.5),
+                color: accentColor,
+              }}
+              variant="outlined"
+            />
+          </Stack>
         ))}
       </Stack>
     </Stack>

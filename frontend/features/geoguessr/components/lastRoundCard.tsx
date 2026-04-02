@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { formatAxisNumber } from '../constants';
+import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { LastRound } from '../logic/lastRound';
 
@@ -51,6 +52,7 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
           >
             {rankLabel(entry.rank)}
           </Typography>
+          <PlayerAvatar name={entry.name} size={32} />
           <Typography
             variant="body1"
             fontWeight={entry.isWinner ? 'bold' : 'normal'}

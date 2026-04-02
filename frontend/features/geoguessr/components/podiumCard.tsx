@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 
 import { formatAxisNumber } from '../constants';
+import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { PodiumEntry } from '../logic/podium';
 
@@ -65,6 +66,7 @@ const PodiumSlot = ({
             >
               {MEDAL[entry.rank]}
             </Typography>
+            <PlayerAvatar name={entry.name} size={entry.rank === 1 ? 64 : 48} />
             <Typography
               variant={entry.rank === 1 ? 'h6' : 'subtitle1'}
               fontWeight="bold"

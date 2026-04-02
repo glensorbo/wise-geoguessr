@@ -9,7 +9,6 @@ import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -27,6 +26,7 @@ import { SetPasswordModal } from './setPasswordModal';
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
 import { LoginModal } from '@frontend/features/login/components/loginModal';
 import { setThemeMode } from '@frontend/redux/slices/themeSlice';
+import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { AppDispatch, RootState } from '@frontend/redux/store';
 
@@ -52,6 +52,28 @@ export const UserMenu = () => {
   const themeMode = useSelector((state: RootState) => state.theme.mode);
   const token = useSelector((state: RootState) => state.auth.token);
   const { trackEvent } = useAnalytics();
+
+  const [guestSeed] = useState(() => {
+    const key = 'guest-avatar-seed';
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      return stored;
+    }
+    const seed = crypto.randomUUID();
+    localStorage.setItem(key, seed);
+    return seed;
+  });
+
+  const avatarSeed = (() => {
+    if (!token) {
+      return guestSeed;
+    }
+    try {
+      return (decodeJwt(token).email as string | undefined) ?? guestSeed;
+    } catch {
+      return guestSeed;
+    }
+  })();
 
   const isSignupToken =
     !!token &&
@@ -125,7 +147,7 @@ export const UserMenu = () => {
   return (
     <>
       <IconButton onClick={openMenu} aria-label="Open user menu" size="small">
-        <Avatar sx={{ width: 34, height: 34 }} />
+        <PlayerAvatar name={avatarSeed} size={34} />
       </IconButton>
 
       <Menu
