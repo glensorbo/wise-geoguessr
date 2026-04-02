@@ -96,6 +96,26 @@ Each span includes:
 - **Attributes:** `http.request.method`, `http.route`, `url.path`, `http.response.status_code`
 - **W3C `traceparent` extraction** — if the request carries a `traceparent` header (e.g. injected by the browser frontend), the server span is automatically parented to the upstream span
 
+### Plain public routes (no `withMiddleware`)
+
+The following routes are registered directly in `gameResultRoutes.ts` **without** `withMiddleware`. They do **not** get automatic HTTP spans, metrics, or request logs:
+
+| Route                       | Handler        |
+| --------------------------- | -------------- |
+| `GET /api/results/years`    | `getYears`     |
+| `GET /api/results`          | `getResults`   |
+| `GET /api/results/:roundId` | `getRoundById` |
+
+This is intentional — these are unauthenticated, low-risk read endpoints. Any **application-level errors** on these routes (e.g. 404 not-found) must be logged explicitly with `logger.warn/error` in the controller, since the middleware logging pipeline is not active.
+
+If a future plain route needs full HTTP telemetry (spans + metrics), wrap it with `withMiddleware()` and pass zero middleware functions:
+
+```ts
+'/api/example': {
+  GET: withMiddleware()((req) => controller.doSomething(req)),
+},
+```
+
 ---
 
 ## Metrics (automatic)

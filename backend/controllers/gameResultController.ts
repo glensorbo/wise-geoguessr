@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { gameResultService } from '@backend/services/gameResultService';
+import { logger } from '@backend/telemetry';
 import {
   serviceErrorResponse,
   successResponse,
@@ -26,6 +27,7 @@ export const createGameResultController = (
     const result = await service.getRoundById(id);
 
     if (result.error) {
+      logger.warn('Round not found', { roundId: id });
       return serviceErrorResponse(result.error);
     }
 
