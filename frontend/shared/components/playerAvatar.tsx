@@ -5,12 +5,14 @@ import { getPlayerProfile } from './playerGenders';
 
 const DICEBEAR_BASE = 'https://avatar.sorbo.io/9.x';
 const BG_COLORS = 'b6e3f4,c0aede,d1d4f9';
-const MALE_CLOTHES = 'openJacket,shirt,tShirt,turtleNeck';
-const MALE_HAIR = 'sideComed,spiky,undercut';
-const FEMALE_CLOTHES = 'dress,openJacket,shirt,tShirt,turtleNeck';
+
+const MALE_TOP =
+  'dreads01,dreads02,frizzle,shaggy,shaggyMullet,shortCurly,shortFlat,shortRound,shortWaved,sides,theCaesar,theCaesarAndSidePart';
+const FEMALE_TOP =
+  'bob,bun,curly,curvy,frida,fro,froBand,longButNotTooLong,miaWallace,straight01,straight02,straightAndStrand,bigHair';
 
 const buildAvatarUrl = (name: string): string => {
-  const base = `${DICEBEAR_BASE}/toon-head/svg?seed=${encodeURIComponent(name)}&radius=50&backgroundColor=${BG_COLORS}`;
+  const base = `${DICEBEAR_BASE}/avataaars/svg?seed=${encodeURIComponent(name)}&radius=50&backgroundColor=${BG_COLORS}`;
 
   const profile = getPlayerProfile(name);
   if (!profile) {
@@ -18,12 +20,16 @@ const buildAvatarUrl = (name: string): string => {
   }
 
   if (profile.gender === 'female') {
-    return `${base}&beardProbability=0&rearHairProbability=75&clothes=${FEMALE_CLOTHES}`;
+    return `${base}&facialHairProbability=0&top=${FEMALE_TOP}`;
   }
 
-  const beardProbability = profile.beard ? 100 : 0;
-  const hairParams = profile.bald ? 'hairProbability=0' : `hair=${MALE_HAIR}`;
-  return `${base}&beardProbability=${beardProbability}&rearHairProbability=0&${hairParams}&clothes=${MALE_CLOTHES}`;
+  if (profile.bald) {
+    const facialHairProbability = profile.beard ? 100 : 0;
+    return `${base}&facialHairProbability=${facialHairProbability}&topProbability=0`;
+  }
+
+  const facialHairProbability = profile.beard ? 100 : 0;
+  return `${base}&facialHairProbability=${facialHairProbability}&top=${MALE_TOP}`;
 };
 
 type PlayerAvatarProps = {
