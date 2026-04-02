@@ -16,15 +16,18 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
+import { PlayerSparklineHeader } from '@frontend/features/geoguessr/components/playerSparklineHeader';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
 import {
   getChartSeries,
   formatAxisNumber,
+  getPlayerColor,
 } from '@frontend/features/geoguessr/constants';
 import { useResults } from '@frontend/features/geoguessr/hooks/useResults';
 import {
   getActivePlayers,
   getPlayerData,
+  getPlayerSparklineData,
 } from '@frontend/features/geoguessr/logic';
 import { TableSkeleton } from '@frontend/shared/components/skeleton';
 
@@ -80,6 +83,19 @@ export const ResultsPage = () => {
       }),
     [playerData, players, results],
   );
+  const playerSparklineData = useMemo(
+    () =>
+      Object.fromEntries(
+        players.map((p, i) => [
+          p,
+          {
+            data: getPlayerSparklineData(results, p),
+            color: getPlayerColor(p, i),
+          },
+        ]),
+      ),
+    [players, results],
+  );
   const gridColumns = useMemo<GridColDef<PointsGridRow>[]>(
     () => [
       { field: 'date', headerName: 'Date', minWidth: 140, flex: 1 },
@@ -87,14 +103,21 @@ export const ResultsPage = () => {
         field: p,
         headerName: p,
         type: 'number' as const,
-        minWidth: 120,
+        minWidth: 140,
         flex: 1,
         align: 'right' as const,
         headerAlign: 'right' as const,
         valueFormatter: (value: number) => formatAxisNumber(value),
+        renderHeader: () => (
+          <PlayerSparklineHeader
+            name={p}
+            color={playerSparklineData[p]?.color ?? '#666666'}
+            data={playerSparklineData[p]?.data ?? []}
+          />
+        ),
       })),
     ],
-    [players],
+    [players, playerSparklineData],
   );
 
   const noResults = !isLoading && !error && playerData.length === 0;
