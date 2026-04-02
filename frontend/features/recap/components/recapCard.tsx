@@ -40,8 +40,12 @@ export const RecapCard = ({ slide, direction }: RecapCardProps) => {
       return;
     }
     const timer = setTimeout(() => {
-      void confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-    }, 1000);
+      void confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6, x: 0.55 },
+      });
+    }, 750);
     return () => clearTimeout(timer);
   }, [slide.confetti, slide.key]);
 
