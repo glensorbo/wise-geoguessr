@@ -2,11 +2,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Link } from 'react-router';
@@ -88,6 +90,7 @@ export const PlayerProfilePage = () => {
     stats,
     rankHistory,
     accumulatedPoints,
+    achievements,
     year,
     isLoading,
     noData,
@@ -215,6 +218,49 @@ export const PlayerProfilePage = () => {
                   />
                 </Box>
               ) : null}
+            </DashboardSection>
+
+            <DashboardSection
+              title={
+                isLoading
+                  ? '🏅 Achievements'
+                  : `🏅 Achievements ${achievements.filter((a) => a.earned).length}/${achievements.length}`
+              }
+            >
+              {isLoading ? (
+                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <Skeleton
+                      key={i}
+                      variant="rounded"
+                      width={130}
+                      height={32}
+                      sx={{ borderRadius: 4 }}
+                    />
+                  ))}
+                </Box>
+              ) : (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                  {achievements.map((a) => (
+                    <Tooltip
+                      key={a.id}
+                      title={a.earned ? a.description : `🔒 ${a.hint}`}
+                      arrow
+                    >
+                      <Chip
+                        label={`${a.emoji} ${a.name}`}
+                        color={a.earned ? 'primary' : 'default'}
+                        variant={a.earned ? 'filled' : 'outlined'}
+                        sx={{
+                          opacity: a.earned ? 1 : 0.45,
+                          fontWeight: a.earned ? 700 : 400,
+                          cursor: 'default',
+                        }}
+                      />
+                    </Tooltip>
+                  ))}
+                </Box>
+              )}
             </DashboardSection>
 
             <ChartSection

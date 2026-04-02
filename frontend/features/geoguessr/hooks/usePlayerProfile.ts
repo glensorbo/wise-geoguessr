@@ -2,12 +2,15 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import { getCurrentYear } from '../logic';
+import { getPlayerAchievements } from '../logic/achievements';
 import {
   getPlayerAccumulatedPoints,
   getPlayerRankHistory,
   getPlayerStats,
 } from '../logic/playerProfile';
 import { useGetResultsQuery } from '@frontend/redux/api/gameResultApi';
+
+import type { Achievement } from '../logic/achievements';
 
 export const usePlayerProfile = () => {
   const { name = '' } = useParams<{ name: string }>();
@@ -36,11 +39,18 @@ export const usePlayerProfile = () => {
     [results, playerName, year],
   );
 
+  const achievements: Achievement[] = useMemo(
+    () =>
+      results.length > 0 ? getPlayerAchievements(results, playerName) : [],
+    [results, playerName],
+  );
+
   return {
     playerName,
     stats,
     rankHistory,
     accumulatedPoints,
+    achievements,
     year,
     isLoading,
     noData: !isLoading && (stats?.roundsPlayed ?? 0) === 0,

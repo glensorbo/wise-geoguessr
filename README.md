@@ -34,7 +34,7 @@ bun dev
 ## ✨ Features
 
 - 🏆 Surface all-time records (highest score, longest win streak, best season total) on a public Hall of Fame page
-- 👤 Show per-player profiles with all-time stats, current win streak, and a cumulative rank history chart
+- 👤 Show per-player profiles with all-time stats, current win streak, cumulative rank history chart, and 9 earned/unearned achievements with tooltips
 - 📊 Show a sortable leaderboard, weekly breakdowns, and season trends
 - 🔐 Handle login, refresh rotation, password changes, and invite-based signup
 - 🛡️ Enforce `admin` and `user` access rules in middleware
