@@ -31,7 +31,6 @@ export const PlayerSparklineHeader = ({
           height={22}
           plotType="line"
           color={color}
-          disableAxisListener
           sx={{ flexShrink: 0 }}
         />
       )}
