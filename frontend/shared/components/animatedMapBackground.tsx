@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Simplified continent outlines in equirectangular projection (1000×500 viewBox).
 // Based on simplified Natural Earth data (public domain).
@@ -27,7 +27,6 @@ const CONTINENT_PATHS = [
 
 export const AnimatedMapBackground = () => {
   const theme = useTheme();
-  const prefersReducedMotion = useReducedMotion();
 
   const isDark = theme.palette.mode === 'dark';
   const fillColor = isDark ? '#8b5cf6' : '#6d28d9';
@@ -47,24 +46,16 @@ export const AnimatedMapBackground = () => {
       <motion.div
         style={{ width: '100%', height: '100%' }}
         initial={{ opacity: baseOpacity, scale: 1 }}
-        animate={
-          prefersReducedMotion
-            ? { opacity: baseOpacity, scale: 1 }
-            : {
-                opacity: [baseOpacity, baseOpacity * 1.8, baseOpacity],
-                scale: [1, 1.018, 1],
-              }
-        }
-        transition={
-          prefersReducedMotion
-            ? {}
-            : {
-                duration: 14,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                times: [0, 0.5, 1],
-              }
-        }
+        animate={{
+          opacity: [baseOpacity, baseOpacity * 1.8, baseOpacity],
+          scale: [1, 1.018, 1],
+        }}
+        transition={{
+          duration: 14,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          times: [0, 0.5, 1],
+        }}
       >
         <svg
           viewBox="0 0 1000 500"
