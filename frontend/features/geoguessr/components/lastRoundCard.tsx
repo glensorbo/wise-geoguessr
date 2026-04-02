@@ -2,8 +2,6 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import confetti from 'canvas-confetti';
-import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
@@ -25,22 +23,6 @@ const rankLabel = (rank: number): string => {
 };
 
 export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
-  const hasWinner = lastRound.rankings.some((e) => e.isWinner);
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    if (hasWinner) {
-      timer = setTimeout(() => {
-        void confetti({ particleCount: 80, spread: 70, origin: { y: 0.55 } });
-      }, 300);
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [hasWinner]);
-
   return (
     <Stack spacing={2}>
       <Typography variant="body2" color="text.secondary">

@@ -165,7 +165,11 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
     let timer: ReturnType<typeof setTimeout> | null = null;
     if (first) {
       timer = setTimeout(() => {
-        void confetti({ particleCount: 80, spread: 70, origin: { y: 0.55 } });
+        void confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.45, x: 0.55 },
+        });
       }, 1600);
     }
     return () => {
