@@ -8,9 +8,14 @@ import { useMemo } from 'react';
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
 import { LastRoundCard } from '@frontend/features/geoguessr/components/lastRoundCard';
 import { PodiumCard } from '@frontend/features/geoguessr/components/podiumCard';
+import { RivalryCard } from '@frontend/features/geoguessr/components/rivalryCard';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
 import { useResults } from '@frontend/features/geoguessr/hooks/useResults';
-import { getLastRound, getPodium } from '@frontend/features/geoguessr/logic';
+import {
+  getLastRound,
+  getPodium,
+  getRivalries,
+} from '@frontend/features/geoguessr/logic';
 
 export const HomePage = () => {
   const { year, setYear, yearOptions, yearsLoading, results, isLoading } =
@@ -18,6 +23,7 @@ export const HomePage = () => {
 
   const podium = useMemo(() => getPodium(results, year), [results, year]);
   const lastRound = useMemo(() => getLastRound(results), [results]);
+  const rivalries = useMemo(() => getRivalries(results, year), [results, year]);
 
   const noResults = !isLoading && results.length === 0;
 
@@ -82,6 +88,20 @@ export const HomePage = () => {
                 <LastRoundCard lastRound={lastRound} />
               ) : null}
             </DashboardSection>
+
+            {(isLoading || rivalries.length > 0) && (
+              <DashboardSection title="⚔️ Closest Rivalries">
+                {isLoading ? (
+                  <Skeleton
+                    variant="rounded"
+                    height={160}
+                    sx={{ borderRadius: 2 }}
+                  />
+                ) : (
+                  <RivalryCard rivalries={rivalries} />
+                )}
+              </DashboardSection>
+            )}
           </>
         )}
       </Stack>

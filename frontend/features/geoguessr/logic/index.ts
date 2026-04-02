@@ -7,3 +7,4 @@ export { getCurrentYear } from './results';
 export { getPodium } from './podium';
 export { getLastRound } from './lastRound';
 export { getRoundDetail, getRoundPodium } from './roundDetail';
+export { getRivalries } from './rivalries';
