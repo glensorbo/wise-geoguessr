@@ -9,12 +9,12 @@ export const useConfetti = (shouldFire: boolean, delayMs = 0) => {
       return;
     }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hasTriggered.current = true;
       return;
     }
 
-    hasTriggered.current = true;
-
     const timer = setTimeout(() => {
+      hasTriggered.current = true;
       void confetti({
         particleCount: 80,
         spread: 70,
