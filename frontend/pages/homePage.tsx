@@ -16,6 +16,7 @@ import {
   getPodium,
   getRivalries,
 } from '@frontend/features/geoguessr/logic';
+import { AnimatedMapBackground } from '@frontend/shared/components/animatedMapBackground';
 
 export const HomePage = () => {
   const { year, setYear, yearOptions, yearsLoading, results, isLoading } =
@@ -28,83 +29,89 @@ export const HomePage = () => {
   const noResults = !isLoading && results.length === 0;
 
   return (
-    <Container maxWidth="md" sx={{ py: { xs: 3, md: 6 } }}>
-      <Stack spacing={4}>
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={2}
-          justifyContent="space-between"
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-        >
-          <Stack spacing={0.5}>
-            <Typography variant="h4" component="h1">
-              Dashboard
-            </Typography>
-            <Typography color="text.secondary">
-              Season standings for {year}.
-            </Typography>
+    <Box sx={{ position: 'relative', minHeight: '100vh' }}>
+      <AnimatedMapBackground />
+      <Container
+        maxWidth="md"
+        sx={{ position: 'relative', zIndex: 1, py: { xs: 3, md: 6 } }}
+      >
+        <Stack spacing={4}>
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={2}
+            justifyContent="space-between"
+            alignItems={{ xs: 'flex-start', sm: 'center' }}
+          >
+            <Stack spacing={0.5}>
+              <Typography variant="h4" component="h1">
+                Dashboard
+              </Typography>
+              <Typography color="text.secondary">
+                Season standings for {year}.
+              </Typography>
+            </Stack>
+            <YearSelector
+              year={year}
+              yearOptions={yearOptions}
+              yearsLoading={yearsLoading}
+              disabled={isLoading}
+              onChange={setYear}
+            />
           </Stack>
-          <YearSelector
-            year={year}
-            yearOptions={yearOptions}
-            yearsLoading={yearsLoading}
-            disabled={isLoading}
-            onChange={setYear}
-          />
-        </Stack>
 
-        {noResults ? (
-          <Stack spacing={2} alignItems="center" sx={{ py: 6 }}>
-            <Typography variant="h5">No results for {year}</Typography>
-            <Typography color="text.secondary" align="center">
-              Log in and use the &ldquo;+ Add results&rdquo; button to get
-              started.
-            </Typography>
-          </Stack>
-        ) : (
-          <>
-            <DashboardSection title="🏆 Season Podium">
-              {isLoading ? (
-                <Skeleton
-                  variant="rounded"
-                  height={300}
-                  sx={{ borderRadius: 2 }}
-                />
-              ) : podium.length > 0 ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <PodiumCard key={year} podium={podium} />
-                </Box>
-              ) : null}
-            </DashboardSection>
-
-            <DashboardSection title="🎮 Last Round">
-              {isLoading ? (
-                <Skeleton
-                  variant="rounded"
-                  height={200}
-                  sx={{ borderRadius: 2 }}
-                />
-              ) : lastRound ? (
-                <LastRoundCard lastRound={lastRound} />
-              ) : null}
-            </DashboardSection>
-
-            {(isLoading || rivalries.length > 0) && (
-              <DashboardSection title="⚔️ Closest Rivalries">
+          {noResults ? (
+            <Stack spacing={2} alignItems="center" sx={{ py: 6 }}>
+              <Typography variant="h5">No results for {year}</Typography>
+              <Typography color="text.secondary" align="center">
+                Log in and use the &ldquo;+ Add results&rdquo; button to get
+                started.
+              </Typography>
+            </Stack>
+          ) : (
+            <>
+              <DashboardSection title="🏆 Season Podium">
                 {isLoading ? (
                   <Skeleton
                     variant="rounded"
-                    height={160}
+                    height={300}
                     sx={{ borderRadius: 2 }}
                   />
-                ) : (
-                  <RivalryCard rivalries={rivalries} />
-                )}
+                ) : podium.length > 0 ? (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <PodiumCard key={year} podium={podium} />
+                  </Box>
+                ) : null}
               </DashboardSection>
-            )}
-          </>
-        )}
-      </Stack>
-    </Container>
+
+              <DashboardSection title="🎮 Last Round">
+                {isLoading ? (
+                  <Skeleton
+                    variant="rounded"
+                    height={200}
+                    sx={{ borderRadius: 2 }}
+                  />
+                ) : lastRound ? (
+                  <LastRoundCard lastRound={lastRound} />
+                ) : null}
+              </DashboardSection>
+
+              {(isLoading || rivalries.length > 0) && (
+                <DashboardSection title="⚔️ Closest Rivalries">
+                  {isLoading ? (
+                    <Skeleton
+                      variant="rounded"
+                      height={160}
+                      sx={{ borderRadius: 2 }}
+                    />
+                  ) : (
+                    <RivalryCard rivalries={rivalries} />
+                  )}
+                </DashboardSection>
+              )}
+            </>
+          )}
+        </Stack>
+      </Container>
+    </Box>
   );
 };
