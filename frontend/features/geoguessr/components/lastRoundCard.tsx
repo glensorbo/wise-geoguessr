@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
@@ -24,7 +25,14 @@ const rankLabel = (rank: number): string => {
 };
 
 export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
-  useConfetti(lastRound.rankings.some((e) => e.isWinner));
+  const fireConfetti = useConfetti('last-round-winner');
+  const hasWinner = lastRound.rankings.some((e) => e.isWinner);
+
+  useEffect(() => {
+    if (hasWinner) {
+      fireConfetti();
+    }
+  }, [hasWinner, fireConfetti]);
 
   return (
     <Stack spacing={2}>

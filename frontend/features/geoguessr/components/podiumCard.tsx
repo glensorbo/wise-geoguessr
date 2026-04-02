@@ -30,8 +30,7 @@ const PodiumSlot = ({
   order: { xs: number; sm: number };
 }) => {
   const platformDelay = PLATFORM_DELAY_S[entry.rank];
-  // Fire confetti after rank 1's platform + card animation completes (~1.55s total)
-  useConfetti(entry.rank === 1, 1600);
+  const fireConfetti = useConfetti('season-leader');
 
   return (
     <Box
@@ -50,6 +49,7 @@ const PodiumSlot = ({
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: platformDelay + 0.35 }}
+        onAnimationComplete={entry.rank === 1 ? fireConfetti : undefined}
       >
         <Paper
           component={Link}

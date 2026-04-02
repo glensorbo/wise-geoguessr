@@ -1,27 +1,20 @@
 import confetti from 'canvas-confetti';
-import { useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 
-export const useConfetti = (shouldFire: boolean, delayMs = 0) => {
-  const hasTriggered = useRef(false);
+// Module-level Set: persists until page reload, survives component re-mounts.
+// This ensures confetti fires at most once per key per page visit.
+const fired = new Set<string>();
 
-  useEffect(() => {
-    if (!shouldFire || hasTriggered.current) {
+export const useConfetti = (key: string) => {
+  return useCallback(() => {
+    if (fired.has(key)) {
       return;
     }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      hasTriggered.current = true;
+      fired.add(key);
       return;
     }
-
-    const timer = setTimeout(() => {
-      hasTriggered.current = true;
-      void confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.55 },
-      });
-    }, delayMs);
-
-    return () => clearTimeout(timer);
-  }, [shouldFire, delayMs]);
+    fired.add(key);
+    void confetti({ particleCount: 80, spread: 70, origin: { y: 0.55 } });
+  }, [key]);
 };
