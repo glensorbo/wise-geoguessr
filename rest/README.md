@@ -10,7 +10,7 @@ HTTP request files for testing the API with [kulala.nvim](https://github.com/mis
 | `user.http`         | `GET /api/user`, `GET /api/user/:id`                                                                                                                                     |
 | `auth.http`         | `POST /api/auth/login`, `POST /api/auth/create-user`, `POST /api/auth/set-password`, `POST /api/auth/change-password`, `POST /api/auth/refresh`, `POST /api/auth/logout` |
 | `telemetry.http`    | `POST /api/telemetry/traces`                                                                                                                                             |
-| `results.http`      | `GET /api/results/years`, `GET /api/results?year=YYYY`, `POST /api/results`                                                                                              |
+| `results.http`      | `GET /api/results/years`, `GET /api/results?year=YYYY`, `GET /api/results/:roundId`, `POST /api/results`                                                                 |
 | `hall-of-fame.http` | `GET /api/hall-of-fame`                                                                                                                                                  |
 
 ## ⚙️ Environment
@@ -29,6 +29,7 @@ Then fill in your values. Switch environments in Neovim with kulala's env switch
 | `JWT_TOKEN`    | Bearer auth token for authenticated routes                   |
 | `SIGNUP_TOKEN` | Short-lived signup token returned by `/api/auth/create-user` |
 | `USER_ID`      | UUID of a user — used in `/api/user/:id`                     |
+| `ROUND_ID`     | UUID of a round — used in `/api/results/:roundId`            |
 
 To get a `JWT_TOKEN` for local dev, call `POST /api/auth/login` with the seeded admin credentials. Copy the returned `token` into `http-client.env.json`.
 

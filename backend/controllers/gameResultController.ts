@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { gameResultService } from '@backend/services/gameResultService';
+import { logger } from '@backend/telemetry';
 import {
   serviceErrorResponse,
   successResponse,
@@ -19,6 +20,18 @@ export const createGameResultController = (
   async getYears(): Promise<Response> {
     const years = await service.getAvailableYears();
     return successResponse(years);
+  },
+
+  async getRoundById(req: BunRequest): Promise<Response> {
+    const id = req.params['roundId'] ?? '';
+    const result = await service.getRoundById(id);
+
+    if (result.error) {
+      logger.warn('Round not found', { roundId: id });
+      return serviceErrorResponse(result.error);
+    }
+
+    return successResponse(result.data);
   },
 
   async getResults(req: BunRequest): Promise<Response> {

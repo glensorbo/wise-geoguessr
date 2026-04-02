@@ -13,6 +13,11 @@ GET {{BASE_URL}}/api/results?year=2025
 
 ###
 
+### Get a single round by ID
+GET {{BASE_URL}}/api/results/{{ROUND_ID}}
+
+###
+
 ### Add a new game result (authenticated)
 POST {{BASE_URL}}/api/results
 Content-Type: application/json

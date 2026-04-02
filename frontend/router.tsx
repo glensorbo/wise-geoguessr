@@ -7,6 +7,7 @@ import { HomePage } from './pages/homePage';
 import { LoginPage } from './pages/loginPage';
 import { NotFoundPage } from './pages/notFoundPage';
 import { ResultsPage } from './pages/resultsPage';
+import { RoundDetailPage } from './pages/roundDetailPage';
 import { StatsPage } from './pages/statsPage';
 import { ProtectedRoute } from './shared/components/protectedRoute';
 
@@ -26,6 +27,7 @@ export const AppRouter = () => (
       <Route element={<PageLayout />}>
         <Route index element={<HomePage />} />
         <Route path="results" element={<ResultsPage />} />
+        <Route path="results/:roundId" element={<RoundDetailPage />} />
         <Route path="stats" element={<StatsPage />} />
         <Route path="hall-of-fame" element={<HallOfFamePage />} />
       </Route>

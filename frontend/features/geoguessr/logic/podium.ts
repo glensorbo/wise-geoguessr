@@ -5,7 +5,7 @@ import type { GameResult } from './types';
 export type PodiumEntry = {
   rank: 1 | 2 | 3;
   name: string;
-  wins: number;
+  wins?: number;
   totalPoints: number;
 };
 

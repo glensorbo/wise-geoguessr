@@ -7,8 +7,13 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LineChart } from '@mui/x-charts/LineChart';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  type GridColDef,
+  type GridRowParams,
+} from '@mui/x-data-grid';
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router';
 
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
@@ -23,13 +28,14 @@ import {
 } from '@frontend/features/geoguessr/logic';
 import { TableSkeleton } from '@frontend/shared/components/skeleton';
 
-type PointsGridRow = { id: string; date: string } & Record<
+type PointsGridRow = { id: string; roundId: string; date: string } & Record<
   string,
   string | number
 >;
 
 export const ResultsPage = () => {
   const isPhone = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
   const {
     year,
     setYear,
@@ -58,14 +64,21 @@ export const ResultsPage = () => {
   );
   const gridRows = useMemo<PointsGridRow[]>(
     () =>
-      playerData.map((entry) => ({
-        id: entry.date,
-        date: entry.date,
-        ...Object.fromEntries(
-          players.map((p) => [p, typeof entry[p] === 'number' ? entry[p] : 0]),
-        ),
-      })),
-    [playerData, players],
+      playerData.map((entry) => {
+        const round = results.find((r) => r.date === entry.date);
+        return {
+          id: entry.date,
+          roundId: round?.id ?? '',
+          date: entry.date,
+          ...Object.fromEntries(
+            players.map((p) => [
+              p,
+              typeof entry[p] === 'number' ? entry[p] : 0,
+            ]),
+          ),
+        };
+      }),
+    [playerData, players, results],
   );
   const gridColumns = useMemo<GridColDef<PointsGridRow>[]>(
     () => [
@@ -136,32 +149,44 @@ export const ResultsPage = () => {
           {isLoading ? (
             <TableSkeleton rows={8} cols={5} />
           ) : noResults || hasError ? null : (
-            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-              <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
-                <DataGrid
-                  rows={gridRows}
-                  columns={gridColumns}
-                  autoHeight
-                  pagination
-                  disableRowSelectionOnClick
-                  showToolbar
-                  density="compact"
-                  initialState={{
-                    pagination: { paginationModel: { page: 0, pageSize: 10 } },
-                    sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
-                  }}
-                  pageSizeOptions={[10]}
-                  sx={{
-                    border: 0,
-                    '& .MuiDataGrid-toolbarContainer': {
-                      gap: 1,
-                      px: { xs: 1, sm: 0 },
-                      py: 1,
-                    },
-                  }}
-                />
+            <Stack spacing={1}>
+              <Typography variant="caption" color="text.secondary">
+                👆 Click any row to view round details
+              </Typography>
+              <Box sx={{ width: '100%', overflowX: 'auto' }}>
+                <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
+                  <DataGrid
+                    rows={gridRows}
+                    columns={gridColumns}
+                    autoHeight
+                    pagination
+                    showToolbar
+                    density="compact"
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 10 },
+                      },
+                      sorting: { sortModel: [{ field: 'date', sort: 'desc' }] },
+                    }}
+                    pageSizeOptions={[10]}
+                    onRowClick={(params: GridRowParams<PointsGridRow>) => {
+                      if (params.row.roundId) {
+                        void navigate(`/results/${params.row.roundId}`);
+                      }
+                    }}
+                    sx={{
+                      border: 0,
+                      '& .MuiDataGrid-row': { cursor: 'pointer' },
+                      '& .MuiDataGrid-toolbarContainer': {
+                        gap: 1,
+                        px: { xs: 1, sm: 0 },
+                        py: 1,
+                      },
+                    }}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </Stack>
           )}
         </DashboardSection>
 
