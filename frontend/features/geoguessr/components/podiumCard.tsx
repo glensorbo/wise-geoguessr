@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
-import { useConfetti } from '../hooks/useConfetti';
+import { fireConfetti } from '../hooks/useConfetti';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { PodiumEntry } from '../logic/podium';
@@ -160,7 +160,6 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
   const first = podium.find((e) => e.rank === 1);
   const second = podium.find((e) => e.rank === 2);
   const third = podium.find((e) => e.rank === 3);
-  const fireConfetti = useConfetti();
 
   useEffect(() => {
     if (!first) {
@@ -168,7 +167,7 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
     }
     const timer = setTimeout(fireConfetti, 1600);
     return () => clearTimeout(timer);
-  }, [first, fireConfetti]);
+  }, [first]);
 
   return (
     <Box

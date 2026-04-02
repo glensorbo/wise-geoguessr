@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
-import { useConfetti } from '../hooks/useConfetti';
+import { fireConfetti } from '../hooks/useConfetti';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { LastRound } from '../logic/lastRound';
@@ -25,7 +25,6 @@ const rankLabel = (rank: number): string => {
 };
 
 export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
-  const fireConfetti = useConfetti();
   const hasWinner = lastRound.rankings.some((e) => e.isWinner);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
     }
     const timer = setTimeout(fireConfetti, 300);
     return () => clearTimeout(timer);
-  }, [hasWinner, fireConfetti]);
+  }, [hasWinner]);
 
   return (
     <Stack spacing={2}>
