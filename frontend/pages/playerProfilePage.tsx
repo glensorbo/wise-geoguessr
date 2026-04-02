@@ -41,9 +41,57 @@ const StatCard = ({ emoji, label, value }: StatCardProps) => (
   </Card>
 );
 
+const ChartSection = ({
+  title,
+  isLoading,
+  hasData,
+  noDataYear,
+  children,
+}: {
+  title: string;
+  isLoading: boolean;
+  hasData: boolean;
+  noDataYear: number;
+  children: React.ReactNode;
+}) => (
+  <DashboardSection title={title}>
+    {isLoading ? (
+      <Skeleton variant="rounded" height={300} sx={{ borderRadius: 2 }} />
+    ) : hasData ? (
+      <Box sx={{ width: '100%', overflowX: 'auto' }}>
+        <Box sx={{ minWidth: { xs: 400, md: '100%' } }}>{children}</Box>
+      </Box>
+    ) : (
+      <Typography color="text.secondary">
+        No rounds played in {noDataYear}.
+      </Typography>
+    )}
+  </DashboardSection>
+);
+
+const xAxisConfig = {
+  scaleType: 'point' as const,
+  dataKey: 'date',
+  height: 88,
+  valueFormatter: (v: unknown) => String(v),
+  tickLabelStyle: {
+    angle: -45,
+    textAnchor: 'end' as const,
+    dominantBaseline: 'central' as const,
+    fontSize: 11,
+  },
+};
+
 export const PlayerProfilePage = () => {
-  const { playerName, stats, rankHistory, year, isLoading, noData } =
-    usePlayerProfile();
+  const {
+    playerName,
+    stats,
+    rankHistory,
+    accumulatedPoints,
+    year,
+    isLoading,
+    noData,
+  } = usePlayerProfile();
 
   const playerColor = getPlayerColor(playerName);
 
@@ -110,7 +158,7 @@ export const PlayerProfilePage = () => {
             <DashboardSection title="📊 All-time stats">
               {isLoading ? (
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  {[1, 2, 3, 4].map((i) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                     <Skeleton
                       key={i}
                       variant="rounded"
@@ -141,72 +189,102 @@ export const PlayerProfilePage = () => {
                         : '—'
                     }
                   />
+                  <StatCard
+                    emoji="🎯"
+                    label="Avg score"
+                    value={
+                      stats.averageScore !== null
+                        ? formatAxisNumber(stats.averageScore)
+                        : '—'
+                    }
+                  />
+                  <StatCard
+                    emoji="💰"
+                    label="Total points"
+                    value={formatAxisNumber(stats.totalPoints)}
+                  />
+                  <StatCard
+                    emoji="🥈"
+                    label="Runner-up finishes"
+                    value={stats.runnerUpFinishes}
+                  />
+                  <StatCard
+                    emoji="⚡"
+                    label="Best streak"
+                    value={stats.bestStreak}
+                  />
                 </Box>
               ) : null}
             </DashboardSection>
 
-            <DashboardSection title={`📉 Season ${year} rank history`}>
-              {isLoading ? (
-                <Skeleton
-                  variant="rounded"
-                  height={300}
-                  sx={{ borderRadius: 2 }}
-                />
-              ) : rankHistory.length > 1 ? (
-                <Box sx={{ width: '100%', overflowX: 'auto' }}>
-                  <Box sx={{ minWidth: { xs: 400, md: '100%' } }}>
-                    <LineChart
-                      dataset={rankHistory}
-                      series={[
-                        {
-                          dataKey: 'rank',
-                          label: 'Rank',
-                          color: playerColor,
-                          showMark: true,
-                          curve: 'monotoneX',
-                        },
-                      ]}
-                      xAxis={[
-                        {
-                          scaleType: 'point',
-                          dataKey: 'date',
-                          height: 88,
-                          valueFormatter: (v) => String(v),
-                          tickLabelStyle: {
-                            angle: -45,
-                            textAnchor: 'end',
-                            dominantBaseline: 'central',
-                            fontSize: 11,
-                          },
-                        },
-                      ]}
-                      yAxis={[
-                        {
-                          label: 'Rank',
-                          width: 56,
-                          reverse: true,
-                          tickMinStep: 1,
-                          valueFormatter: (v: unknown) =>
-                            typeof v === 'number' ? `#${v}` : String(v),
-                        },
-                      ]}
-                      grid={{ horizontal: true }}
-                      height={300}
-                      sx={{ width: '100%' }}
-                    />
-                  </Box>
-                </Box>
-              ) : rankHistory.length === 1 ? (
-                <Typography color="text.secondary">
-                  Only one round played in {year} — check back after more
-                  rounds.
-                </Typography>
-              ) : (
-                <Typography color="text.secondary">
-                  No rounds played in {year}.
-                </Typography>
-              )}
-            </DashboardSection>
+            <ChartSection
+              title={`📈 Season ${year} accumulated points`}
+              isLoading={isLoading}
+              hasData={accumulatedPoints.length > 0}
+              noDataYear={year}
+            >
+              <LineChart
+                dataset={accumulatedPoints}
+                series={[
+                  {
+                    dataKey: 'total',
+                    label: 'Points',
+                    color: playerColor,
+                    showMark: true,
+                    curve: 'monotoneX',
+                    area: true,
+                  },
+                ]}
+                xAxis={[xAxisConfig]}
+                yAxis={[
+                  {
+                    label: 'Points',
+                    width: 72,
+                    valueFormatter: (v: unknown) => formatAxisNumber(v),
+                  },
+                ]}
+                grid={{ horizontal: true }}
+                height={300}
+                sx={{
+                  width: '100%',
+                  '& .MuiAreaElement-root': { opacity: 0.15 },
+                }}
+              />
+            </ChartSection>
+
+            <ChartSection
+              title={`📉 Season ${year} rank history`}
+              isLoading={isLoading}
+              hasData={rankHistory.length > 0}
+              noDataYear={year}
+            >
+              <LineChart
+                dataset={rankHistory}
+                series={[
+                  {
+                    dataKey: 'rank',
+                    label: 'Rank',
+                    color: playerColor,
+                    showMark: true,
+                    curve: 'monotoneX',
+                  },
+                ]}
+                xAxis={[xAxisConfig]}
+                yAxis={[
+                  {
+                    label: 'Rank',
+                    width: 56,
+                    reverse: true,
+                    tickMinStep: 1,
+                    valueFormatter: (v: unknown) =>
+                      typeof v === 'number' ? `#${v}` : String(v),
+                  },
+                ]}
+                grid={{ horizontal: true }}
+                height={300}
+                sx={{ width: '100%' }}
+              />
+            </ChartSection>
           </>
         )}
       </Stack>

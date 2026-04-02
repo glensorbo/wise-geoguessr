@@ -2,7 +2,11 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import { getCurrentYear } from '../logic';
-import { getPlayerRankHistory, getPlayerStats } from '../logic/playerProfile';
+import {
+  getPlayerAccumulatedPoints,
+  getPlayerRankHistory,
+  getPlayerStats,
+} from '../logic/playerProfile';
 import { useGetResultsQuery } from '@frontend/redux/api/gameResultApi';
 
 export const usePlayerProfile = () => {
@@ -24,10 +28,19 @@ export const usePlayerProfile = () => {
     [results, playerName, year],
   );
 
+  const accumulatedPoints = useMemo(
+    () =>
+      results.length > 0
+        ? getPlayerAccumulatedPoints(results, playerName, year)
+        : [],
+    [results, playerName, year],
+  );
+
   return {
     playerName,
     stats,
     rankHistory,
+    accumulatedPoints,
     year,
     isLoading,
     noData: !isLoading && (stats?.roundsPlayed ?? 0) === 0,
