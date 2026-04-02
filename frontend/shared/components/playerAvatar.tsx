@@ -22,7 +22,8 @@ const buildAvatarUrl = (name: string): string => {
   }
 
   const beardProbability = profile.beard ? 100 : 0;
-  return `${base}&beardProbability=${beardProbability}&rearHairProbability=0&hair=${MALE_HAIR}&clothes=${MALE_CLOTHES}`;
+  const hairParams = profile.bald ? 'hairProbability=0' : `hair=${MALE_HAIR}`;
+  return `${base}&beardProbability=${beardProbability}&rearHairProbability=0&${hairParams}&clothes=${MALE_CLOTHES}`;
 };
 
 type PlayerAvatarProps = {
