@@ -2,11 +2,11 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import confetti from 'canvas-confetti';
 import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
-import { fireConfetti } from '../hooks/useConfetti';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 
 import type { LastRound } from '../logic/lastRound';
@@ -28,11 +28,17 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
   const hasWinner = lastRound.rankings.some((e) => e.isWinner);
 
   useEffect(() => {
-    if (!hasWinner) {
-      return;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (hasWinner) {
+      timer = setTimeout(() => {
+        void confetti({ particleCount: 80, spread: 70, origin: { y: 0.55 } });
+      }, 300);
     }
-    const timer = setTimeout(fireConfetti, 300);
-    return () => clearTimeout(timer);
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [hasWinner]);
 
   return (
