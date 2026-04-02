@@ -36,13 +36,13 @@ const variants = {
 
 export const RecapCard = ({ slide, direction }: RecapCardProps) => {
   useEffect(() => {
-    if (slide.confetti) {
-      void confetti({
-        particleCount: 120,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
+    if (!slide.confetti) {
+      return;
     }
+    const timer = setTimeout(() => {
+      void confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [slide.confetti, slide.key]);
 
   return (

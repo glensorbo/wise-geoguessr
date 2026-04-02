@@ -6,12 +6,14 @@ import IconButton from '@mui/material/IconButton';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
 
+import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
 import { getCurrentYear } from '@frontend/features/geoguessr/logic';
 import { RecapCard } from '@frontend/features/recap/components/recapCard';
 import { useRecap } from '@frontend/features/recap/hooks/useRecap';
+import { useGetYearsQuery } from '@frontend/redux/api/gameResultApi';
 
 import type { RecapSlide } from '@frontend/features/recap/components/recapCard';
 import type { RecapStats } from '@frontend/features/recap/logic/recapStats';
@@ -110,6 +112,23 @@ const buildSlides = (year: number, stats: RecapStats): RecapSlide[] => {
 export const RecapPage = () => {
   const { year: yearParam } = useParams<{ year: string }>();
   const year = Number(yearParam) > 2000 ? Number(yearParam) : getCurrentYear();
+  const navigate = useNavigate();
+
+  const { data: availableYears = [], isLoading: yearsLoading } =
+    useGetYearsQuery();
+
+  const yearOptions = useMemo(
+    () =>
+      Array.from(new Set([getCurrentYear(), ...availableYears])).toSorted(
+        (a, b) => b - a,
+      ),
+    [availableYears],
+  );
+
+  const handleYearChange = (newYear: number) => {
+    setCurrentIndex(0);
+    void navigate(`/recap/${newYear}`);
+  };
 
   const { stats, isLoading, hasData } = useRecap(year);
 
@@ -183,7 +202,13 @@ export const RecapPage = () => {
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
             {year} Season Recap
           </Typography>
-          <Box sx={{ width: 48 }} />
+          <YearSelector
+            year={year}
+            yearOptions={yearOptions}
+            yearsLoading={yearsLoading}
+            disabled={isLoading}
+            onChange={handleYearChange}
+          />
         </Stack>
 
         {isLoading ? (
