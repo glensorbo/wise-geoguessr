@@ -25,12 +25,93 @@ const CONTINENT_PATHS = [
   'M 778,368 L 800,345 L 830,338 L 865,342 L 898,355 L 920,372 L 928,392 L 918,408 L 895,420 L 862,425 L 828,420 L 800,410 L 780,395 Z',
 ];
 
+// City coordinates in 1000×500 equirectangular space.
+// Formula: x = (lon + 180) × (1000/360), y = (90 − lat) × (500/180)
+const PINS = [
+  { x: 173, y: 156 }, // Los Angeles
+  { x: 295, y: 136 }, // New York
+  { x: 370, y: 316 }, // São Paulo
+  { x: 500, y: 108 }, // London
+  { x: 508, y: 233 }, // Lagos
+  { x: 586, y: 167 }, // Cairo
+  { x: 603, y: 94 }, // Moscow
+  { x: 653, y: 181 }, // Dubai
+  { x: 714, y: 169 }, // Delhi
+  { x: 822, y: 139 }, // Beijing
+  { x: 889, y: 150 }, // Tokyo
+  { x: 919, y: 345 }, // Sydney
+];
+
+const PIN_DURATION = 4;
+const PIN_SPACING = 2.8;
+const PIN_CYCLE = PINS.length * PIN_SPACING;
+
+interface MapPinProps {
+  x: number;
+  y: number;
+  index: number;
+  pinFill: string;
+}
+
+const MapPin = ({ x, y, index, pinFill }: MapPinProps) => {
+  const delay = index * PIN_SPACING;
+  const repeatDelay = PIN_CYCLE - PIN_DURATION;
+
+  return (
+    <>
+      {/* Ripple ring that expands outward after the pin lands */}
+      <motion.circle
+        cx={x}
+        cy={y - 12}
+        r={6}
+        fill="none"
+        stroke={pinFill}
+        strokeWidth={1.5}
+        initial={{ opacity: 0 }}
+        animate={{ r: [6, 20], opacity: [0.8, 0] }}
+        transition={{
+          duration: 0.9,
+          delay: delay + 0.65,
+          repeat: Infinity,
+          repeatDelay: PIN_CYCLE - 0.9,
+          ease: 'easeOut',
+        }}
+      />
+      {/* Pin body: drops in, holds, then fades out */}
+      <motion.g
+        initial={{ opacity: 0, y: -22 }}
+        animate={{
+          opacity: [0, 1, 1, 0],
+          y: [-22, 0, 0, 0],
+        }}
+        transition={{
+          duration: PIN_DURATION,
+          times: [0, 0.18, 0.82, 1],
+          delay,
+          repeat: Infinity,
+          repeatDelay,
+          ease: ['easeOut', 'linear', 'easeIn'],
+        }}
+      >
+        {/* Teardrop pin shape: tip at (x,y), head centred at (x, y-12) */}
+        <path
+          d={`M ${x},${y} C ${x - 3},${y - 4} ${x - 6},${y - 8} ${x - 6},${y - 12} A 6,6 0 1,1 ${x + 6},${y - 12} C ${x + 6},${y - 8} ${x + 3},${y - 4} ${x},${y} Z`}
+          fill={pinFill}
+        />
+        <circle cx={x} cy={y - 12} r={2.2} fill="white" opacity={0.5} />
+      </motion.g>
+    </>
+  );
+};
+
 export const AnimatedMapBackground = () => {
   const theme = useTheme();
 
   const isDark = theme.palette.mode === 'dark';
-  const fillColor = isDark ? '#8b5cf6' : '#6d28d9';
-  const baseOpacity = isDark ? 0.07 : 0.04;
+  const mapFill = isDark ? '#8b5cf6' : '#6d28d9';
+  const mapOpacity = isDark ? 0.08 : 0.05;
+  const pinFill = isDark ? '#fbbf24' : '#d97706';
+  const pinOpacity = isDark ? 0.6 : 0.4;
 
   return (
     <Box
@@ -43,29 +124,53 @@ export const AnimatedMapBackground = () => {
         zIndex: 0,
       }}
     >
+      {/* 200%-wide container scrolls left continuously, creating a seamless world loop */}
       <motion.div
-        style={{ width: '100%', height: '100%' }}
-        initial={{ opacity: baseOpacity, scale: 1 }}
-        animate={{
-          opacity: [baseOpacity, baseOpacity * 1.8, baseOpacity],
-          scale: [1, 1.018, 1],
+        style={{
+          position: 'absolute',
+          width: '200%',
+          height: '100%',
+          top: 0,
+          left: 0,
         }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          times: [0, 0.5, 1],
-        }}
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
       >
         <svg
-          viewBox="0 0 1000 500"
+          viewBox="0 0 2000 500"
           preserveAspectRatio="xMidYMid slice"
           style={{ width: '100%', height: '100%', display: 'block' }}
           xmlns="http://www.w3.org/2000/svg"
         >
-          {CONTINENT_PATHS.map((d, i) => (
-            <path key={i} d={d} fill={fillColor} />
-          ))}
+          {/* Continent fills — two side-by-side copies for seamless wrap */}
+          <g fill={mapFill} opacity={mapOpacity}>
+            {CONTINENT_PATHS.map((d, i) => (
+              <path key={i} d={d} />
+            ))}
+          </g>
+          <g fill={mapFill} opacity={mapOpacity} transform="translate(1000, 0)">
+            {CONTINENT_PATHS.map((d, i) => (
+              <path key={`b${i}`} d={d} />
+            ))}
+          </g>
+
+          {/* Pins — duplicated across both map copies */}
+          <g opacity={pinOpacity}>
+            {PINS.map((pin, i) => (
+              <MapPin key={i} x={pin.x} y={pin.y} index={i} pinFill={pinFill} />
+            ))}
+          </g>
+          <g opacity={pinOpacity} transform="translate(1000, 0)">
+            {PINS.map((pin, i) => (
+              <MapPin
+                key={`b${i}`}
+                x={pin.x}
+                y={pin.y}
+                index={i}
+                pinFill={pinFill}
+              />
+            ))}
+          </g>
         </svg>
       </motion.div>
     </Box>
