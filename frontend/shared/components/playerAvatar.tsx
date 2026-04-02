@@ -6,6 +6,7 @@ import { getPlayerProfile } from './playerGenders';
 const DICEBEAR_BASE = 'https://avatar.sorbo.io/9.x';
 const BG_COLORS = 'b6e3f4,c0aede,d1d4f9';
 const MALE_CLOTHES = 'openJacket,shirt,tShirt,turtleNeck';
+const MALE_HAIR = 'sideComed,spiky,undercut';
 const FEMALE_CLOTHES = 'dress,openJacket,shirt,tShirt,turtleNeck';
 
 const buildAvatarUrl = (name: string): string => {
@@ -21,7 +22,7 @@ const buildAvatarUrl = (name: string): string => {
   }
 
   const beardProbability = profile.beard ? 100 : 0;
-  return `${base}&beardProbability=${beardProbability}&rearHairProbability=0&clothes=${MALE_CLOTHES}`;
+  return `${base}&beardProbability=${beardProbability}&rearHairProbability=0&hair=${MALE_HAIR}&clothes=${MALE_CLOTHES}`;
 };
 
 type PlayerAvatarProps = {
