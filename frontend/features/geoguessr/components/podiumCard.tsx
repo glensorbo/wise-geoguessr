@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
@@ -30,7 +31,6 @@ const PodiumSlot = ({
   order: { xs: number; sm: number };
 }) => {
   const platformDelay = PLATFORM_DELAY_S[entry.rank];
-  const fireConfetti = useConfetti('season-leader');
 
   return (
     <Box
@@ -49,7 +49,6 @@ const PodiumSlot = ({
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: platformDelay + 0.35 }}
-        onAnimationComplete={entry.rank === 1 ? fireConfetti : undefined}
       >
         <Paper
           component={Link}
@@ -161,6 +160,17 @@ export const PodiumCard = ({ podium }: { podium: PodiumEntry[] }) => {
   const first = podium.find((e) => e.rank === 1);
   const second = podium.find((e) => e.rank === 2);
   const third = podium.find((e) => e.rank === 3);
+  const fireConfetti = useConfetti('season-leader');
+
+  useEffect(() => {
+    if (first) {
+      // No cleanup return — intentional. Without a cleanup the timer
+      // survives StrictMode's unmount/remount cycle. The module-level
+      // `fired` Set in useConfetti prevents the second invocation from
+      // firing confetti a second time.
+      setTimeout(fireConfetti, 1600);
+    }
+  }, [first, fireConfetti]);
 
   return (
     <Box
