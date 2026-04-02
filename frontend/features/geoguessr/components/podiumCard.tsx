@@ -1,8 +1,10 @@
 import Box from '@mui/material/Box';
+import MuiLink from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
@@ -72,7 +74,14 @@ const PodiumSlot = ({
               fontWeight="bold"
               sx={{ wordBreak: 'break-word' }}
             >
-              {entry.name}
+              <MuiLink
+                component={Link}
+                to={`/players/${encodeURIComponent(entry.name)}`}
+                underline="hover"
+                color="inherit"
+              >
+                {entry.name}
+              </MuiLink>
             </Typography>
             {entry.wins !== undefined && (
               <Typography variant="body2" color="text.secondary">

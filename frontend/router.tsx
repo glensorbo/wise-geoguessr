@@ -6,6 +6,7 @@ import { HallOfFamePage } from './pages/hallOfFamePage';
 import { HomePage } from './pages/homePage';
 import { LoginPage } from './pages/loginPage';
 import { NotFoundPage } from './pages/notFoundPage';
+import { PlayerProfilePage } from './pages/playerProfilePage';
 import { ResultsPage } from './pages/resultsPage';
 import { RoundDetailPage } from './pages/roundDetailPage';
 import { StatsPage } from './pages/statsPage';
@@ -30,6 +31,7 @@ export const AppRouter = () => (
         <Route path="results/:roundId" element={<RoundDetailPage />} />
         <Route path="stats" element={<StatsPage />} />
         <Route path="hall-of-fame" element={<HallOfFamePage />} />
+        <Route path="players/:name" element={<PlayerProfilePage />} />
       </Route>
 
       {/* Protected — authenticated users only */}
