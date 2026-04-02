@@ -83,7 +83,7 @@ const PodiumSlot = ({
             >
               <PlayerAvatar
                 name={entry.name}
-                size={entry.rank === 1 ? 80 : 60}
+                size={entry.rank === 1 ? 88 : 68}
               />
               <Typography
                 component="span"
@@ -91,6 +91,8 @@ const PodiumSlot = ({
                   fontSize: entry.rank === 1 ? '2rem' : '1.5rem',
                   lineHeight: 1,
                   mt: '-10px',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 {MEDAL[entry.rank]}
