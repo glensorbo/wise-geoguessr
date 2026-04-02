@@ -79,6 +79,7 @@ const PodiumSlot = ({
                 display: 'inline-flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                pb: 1,
               }}
             >
               <PlayerAvatar
