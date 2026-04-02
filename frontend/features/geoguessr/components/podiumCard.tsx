@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
@@ -48,11 +49,22 @@ const PodiumSlot = ({
         transition={{ duration: 0.4, delay: platformDelay + 0.35 }}
       >
         <Paper
+          component={Link}
+          to={`/players/${encodeURIComponent(entry.name)}`}
           elevation={entry.rank === 1 ? 4 : 0}
           sx={{
             p: { xs: 1.5, sm: 2 },
             width: '100%',
             textAlign: 'center',
+            textDecoration: 'none',
+            color: 'inherit',
+            display: 'block',
+            cursor: 'pointer',
+            transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+            '&:hover': {
+              transform: 'translateY(-3px)',
+              boxShadow: (theme) => theme.shadows[entry.rank === 1 ? 8 : 4],
+            },
             ...(entry.rank === 1 && {
               border: '2px solid #f59e0b !important',
               boxShadow: '0 0 24px rgba(245, 158, 11, 0.25)',
@@ -60,13 +72,33 @@ const PodiumSlot = ({
           }}
         >
           <Stack spacing={0.5} alignItems="center">
-            <Typography
-              component="span"
-              sx={{ fontSize: entry.rank === 1 ? '2.5rem' : '1.75rem' }}
+            {/* Avatar with medal overlapping from below */}
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'inline-flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                pb: 1,
+              }}
             >
-              {MEDAL[entry.rank]}
-            </Typography>
-            <PlayerAvatar name={entry.name} size={entry.rank === 1 ? 64 : 48} />
+              <PlayerAvatar
+                name={entry.name}
+                size={entry.rank === 1 ? 88 : 68}
+              />
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: entry.rank === 1 ? '2rem' : '1.5rem',
+                  lineHeight: 1,
+                  mt: entry.rank === 1 ? '-20px' : '-15px',
+                  position: 'relative',
+                  zIndex: 1,
+                }}
+              >
+                {MEDAL[entry.rank]}
+              </Typography>
+            </Box>
             <Typography
               variant={entry.rank === 1 ? 'h6' : 'subtitle1'}
               fontWeight="bold"

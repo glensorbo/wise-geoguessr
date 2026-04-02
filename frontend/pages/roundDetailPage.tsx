@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
+import MuiLink from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
@@ -179,12 +180,15 @@ export const RoundDetailPage = () => {
                       <TableCell>
                         <Stack direction="row" spacing={1} alignItems="center">
                           <PlayerAvatar name={entry.name} size={28} />
-                          <Typography
-                            variant="body2"
-                            fontWeight={entry.isWinner ? 700 : 400}
+                          <MuiLink
+                            component={Link}
+                            to={`/players/${encodeURIComponent(entry.name)}`}
+                            underline="hover"
+                            color="inherit"
+                            sx={{ fontWeight: entry.isWinner ? 700 : 400 }}
                           >
                             {entry.name}
-                          </Typography>
+                          </MuiLink>
                         </Stack>
                       </TableCell>
                       <TableCell align="right">

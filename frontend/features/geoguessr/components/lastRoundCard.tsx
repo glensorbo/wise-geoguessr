@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router';
 
 import { formatAxisNumber } from '../constants';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
@@ -30,6 +31,8 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
       {lastRound.rankings.map((entry) => (
         <Box
           key={entry.name}
+          component={Link}
+          to={`/players/${encodeURIComponent(entry.name)}`}
           sx={{
             display: 'flex',
             alignItems: { xs: 'flex-start', sm: 'center' },
@@ -38,12 +41,23 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => (
             px: 2,
             py: 1.25,
             borderRadius: 1,
+            textDecoration: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
             bgcolor: entry.isWinner
               ? 'rgba(245, 158, 11, 0.08)'
               : 'action.hover',
             border: entry.isWinner
               ? '1px solid rgba(245, 158, 11, 0.3)'
               : '1px solid transparent',
+            transition: 'transform 0.12s ease, box-shadow 0.12s ease',
+            '&:hover': {
+              transform: 'translateX(3px)',
+              boxShadow: 1,
+              bgcolor: entry.isWinner
+                ? 'rgba(245, 158, 11, 0.15)'
+                : 'action.selected',
+            },
           }}
         >
           <Typography

@@ -20,7 +20,7 @@ const FALLBACK_COLORS = [
   '#db2777',
 ];
 
-const getPlayerColor = (name: string, index: number): string =>
+export const getPlayerColor = (name: string, index = 0): string =>
   PLAYER_COLORS[name] ??
   FALLBACK_COLORS[index % FALLBACK_COLORS.length] ??
   '#666666';
