@@ -1,4 +1,5 @@
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TableChartRoundedIcon from '@mui/icons-material/TableChartRounded';
@@ -165,6 +166,13 @@ const DrawerContent = ({
           to="/hall-of-fame"
           label="Hall of Fame"
           Icon={EmojiEventsRoundedIcon}
+          collapsed={collapsed}
+          onNavigate={onNavigate}
+        />
+        <NavItem
+          to="/head-to-head"
+          label="Head-to-Head"
+          Icon={CompareArrowsRoundedIcon}
           collapsed={collapsed}
           onNavigate={onNavigate}
         />
