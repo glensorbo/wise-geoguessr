@@ -5,3 +5,4 @@ export { getPlayerData } from './player-series';
 export { getCurrentYear } from './results';
 export { getPodium } from './podium';
 export { getLastRound } from './lastRound';
+export { getRoundDetail, getRoundPodium } from './roundDetail';

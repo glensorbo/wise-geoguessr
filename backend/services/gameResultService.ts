@@ -15,6 +15,17 @@ export const createGameResultService = (repo: typeof gameResultRepository) => ({
     return repo.getAvailableYears();
   },
 
+  async getRoundById(id: string): Promise<ErrorOr<GameResult>> {
+    const result = await repo.getById(id);
+    if (!result) {
+      return {
+        data: null,
+        error: [{ type: 'not_found', message: `Round ${id} not found` }],
+      };
+    }
+    return { data: result, error: null };
+  },
+
   async addResult(
     date: string,
     scores: Record<string, number>,

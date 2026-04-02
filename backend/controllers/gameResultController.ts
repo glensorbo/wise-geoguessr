@@ -21,6 +21,17 @@ export const createGameResultController = (
     return successResponse(years);
   },
 
+  async getRoundById(req: BunRequest): Promise<Response> {
+    const id = req.params['roundId'] ?? '';
+    const result = await service.getRoundById(id);
+
+    if (result.error) {
+      return serviceErrorResponse(result.error);
+    }
+
+    return successResponse(result.data);
+  },
+
   async getResults(req: BunRequest): Promise<Response> {
     const url = new URL(req.url);
     const yearParam = url.searchParams.get('year');

@@ -16,6 +16,31 @@ export const gameResultRepository = {
     return this._fetchAndAssemble(year);
   },
 
+  async getById(id: string): Promise<GameResult | null> {
+    const db = getDb();
+    const rounds = await db
+      .select()
+      .from(gameRounds)
+      .where(eq(gameRounds.id, id))
+      .limit(1);
+
+    if (rounds.length === 0) {
+      return null;
+    }
+
+    const round = rounds[0]!;
+    const scores = await db
+      .select()
+      .from(gameScores)
+      .where(eq(gameScores.roundId, round.id));
+
+    return {
+      id: round.id,
+      date: round.date,
+      scores: Object.fromEntries(scores.map((s) => [s.playerName, s.score])),
+    };
+  },
+
   async getAvailableYears(): Promise<number[]> {
     const db = getDb();
     const rows = await db
@@ -49,6 +74,7 @@ export const gameResultRepository = {
       .where(eq(gameScores.roundId, round.id));
 
     return {
+      id: round.id,
       date: round.date,
       scores: Object.fromEntries(scores.map((s) => [s.playerName, s.score])),
     };
@@ -74,7 +100,7 @@ export const gameResultRepository = {
 
     await db.insert(gameScores).values(scoreEntries);
 
-    return { date, scores };
+    return { id: round.id, date, scores };
   },
 
   async _fetchAndAssemble(year?: number): Promise<GameResult[]> {
@@ -82,6 +108,7 @@ export const gameResultRepository = {
 
     const query = db
       .select({
+        id: gameRounds.id,
         date: gameRounds.date,
         playerName: gameScores.playerName,
         score: gameScores.score,
@@ -96,15 +123,18 @@ export const gameResultRepository = {
         )
       : await query;
 
-    const roundMap = new Map<string, Record<string, number>>();
+    const roundMap = new Map<
+      string,
+      { id: string; scores: Record<string, number> }
+    >();
     for (const row of rows) {
-      const existing = roundMap.get(row.date) ?? {};
-      existing[row.playerName] = row.score;
+      const existing = roundMap.get(row.date) ?? { id: row.id, scores: {} };
+      existing.scores[row.playerName] = row.score;
       roundMap.set(row.date, existing);
     }
 
     return Array.from(roundMap.entries())
-      .map(([date, scores]) => ({ date, scores }))
+      .map(([date, { id, scores }]) => ({ id, date, scores }))
       .toSorted((a, b) => b.date.localeCompare(a.date));
   },
 };

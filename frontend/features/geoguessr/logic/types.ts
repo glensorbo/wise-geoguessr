@@ -1,6 +1,7 @@
 export type Player = string;
 
 export type GameResult = {
+  id: string;
   date: string;
   scores: Record<Player, number>;
 };
@@ -30,4 +31,19 @@ export type PerPlayedRoundDetail = {
   pointsPerPlayed: number;
   roundsPlayed: number;
   totalPoints: number;
+};
+
+export type RoundDetailEntry = {
+  rank: number;
+  name: Player;
+  score: number;
+  isWinner: boolean;
+  /** Score minus player's season average from prior rounds. null if no prior data. */
+  delta: number | null;
+};
+
+export type RoundDetailData = {
+  id: string;
+  date: string;
+  entries: RoundDetailEntry[];
 };

@@ -22,6 +22,12 @@ const gameResultApi = baseApi.injectEndpoints({
       ],
     }),
 
+    getRoundById: build.query<GameResult, string>({
+      query: (id) => ({ url: `/results/${id}`, method: 'GET' }),
+      transformResponse: (res: ApiSuccessResponse<GameResult>) => res.data,
+      providesTags: (_, __, id) => [{ type: 'GameResults', id }],
+    }),
+
     addResult: build.mutation<
       GameResult,
       { date: string; scores: Record<string, number> }
@@ -39,5 +45,9 @@ const gameResultApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetYearsQuery, useGetResultsQuery, useAddResultMutation } =
-  gameResultApi;
+export const {
+  useGetYearsQuery,
+  useGetResultsQuery,
+  useGetRoundByIdQuery,
+  useAddResultMutation,
+} = gameResultApi;

@@ -56,6 +56,30 @@ describe('GameResultController', () => {
     });
   });
 
+  describe('getRoundById', () => {
+    test('returns 200 for an existing round ID', async () => {
+      const req = new Request(
+        'http://localhost/api/results/00000000-0000-0000-0000-000000000001',
+        { method: 'GET' },
+      ) as Parameters<typeof controller.getRoundById>[0];
+      req.params = { roundId: '00000000-0000-0000-0000-000000000001' };
+      const res = await controller.getRoundById(req);
+      expect(res.status).toBe(200);
+      const body = (await res.json()) as { data: GameResult };
+      expect(body.data.id).toBe('00000000-0000-0000-0000-000000000001');
+    });
+
+    test('returns 404 for a non-existent round ID', async () => {
+      const req = new Request(
+        'http://localhost/api/results/00000000-0000-0000-0000-000000000999',
+        { method: 'GET' },
+      ) as Parameters<typeof controller.getRoundById>[0];
+      req.params = { roundId: '00000000-0000-0000-0000-000000000999' };
+      const res = await controller.getRoundById(req);
+      expect(res.status).toBe(404);
+    });
+  });
+
   describe('addResult', () => {
     test('returns 400 for missing date', async () => {
       const req = makeRequest({ scores: { Glen: 1000 } });

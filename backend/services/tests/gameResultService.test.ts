@@ -33,6 +33,24 @@ describe('GameResultService', () => {
     });
   });
 
+  describe('getRoundById', () => {
+    test('returns the round for a valid ID', async () => {
+      const result = await service.getRoundById(
+        '00000000-0000-0000-0000-000000000001',
+      );
+      expect(result.error).toBeNull();
+      expect(result.data?.date).toBe('2026-03-27');
+    });
+
+    test('returns not_found error for unknown ID', async () => {
+      const result = await service.getRoundById(
+        '00000000-0000-0000-0000-000000000999',
+      );
+      expect(result.data).toBeNull();
+      expect(result.error?.[0]?.type).toBe('not_found');
+    });
+  });
+
   describe('addResult', () => {
     test('returns conflict error if date already exists', async () => {
       const result = await service.addResult('2026-03-27', { Glen: 1000 });

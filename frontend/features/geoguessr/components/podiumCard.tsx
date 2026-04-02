@@ -74,9 +74,11 @@ const PodiumSlot = ({
             >
               {entry.name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {entry.wins} win{entry.wins !== 1 ? 's' : ''}
-            </Typography>
+            {entry.wins !== undefined && (
+              <Typography variant="body2" color="text.secondary">
+                {entry.wins} win{entry.wins !== 1 ? 's' : ''}
+              </Typography>
+            )}
             <Typography
               variant={entry.rank === 1 ? 'subtitle1' : 'body2'}
               fontWeight={entry.rank === 1 ? 'bold' : 'normal'}
