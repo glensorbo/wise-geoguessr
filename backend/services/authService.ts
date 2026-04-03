@@ -56,8 +56,8 @@ export const createAuthService = (
       await sendMail({
         to: email,
         subject: "You've been invited — set your password",
-        html: `<p>Hi ${name},</p><p>Your account has been created. Click the link below to set your password:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 24 hours.</p>`,
-        text: `Hi ${name},\n\nYour account has been created. Set your password at:\n${signupLink}\n\nThis link expires in 24 hours.`,
+        html: `<p>Hi ${name},</p><p>Your account has been created. Click the link below to set your password:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 1 hour.</p>`,
+        text: `Hi ${name},\n\nYour account has been created. Set your password at:\n${signupLink}\n\nThis link expires in 1 hour.`,
       });
     } catch (err) {
       logger.warn('📧 Failed to send signup email', {

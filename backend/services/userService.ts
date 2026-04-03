@@ -1,4 +1,4 @@
-import { sendMail } from '@backend/mail';
+import { isMailEnabled, sendMail } from '@backend/mail';
 import { userRepository } from '@backend/repositories/userRepository';
 import { logger, withSpan } from '@backend/telemetry';
 import { errorOr } from '@backend/types/errorOr';
@@ -27,11 +27,11 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
     email: string,
     name: string,
     role: 'admin' | 'user',
-  ): Promise<ErrorOr<User & { signupLink: string }>> {
+  ): Promise<ErrorOr<User & { signupLink: string; mailSent: boolean }>> {
     return withSpan('user.create', { 'user.role': role }, async (span) => {
       const existing = await repo.getByEmail(email);
       if (existing) {
-        return errorOr<User & { signupLink: string }>(null, [
+        return errorOr<User & { signupLink: string; mailSent: boolean }>(null, [
           {
             type: 'conflict',
             message: 'A user with this email already exists',
@@ -49,13 +49,15 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       const appUrl = Bun.env.APP_URL ?? 'http://localhost:3000';
       const signupLink = `${appUrl}/set-password?token=${token}`;
 
+      let mailSent = false;
       try {
         await sendMail({
           to: email,
           subject: "You've been invited — set your password",
-          html: `<p>Hi ${name},</p><p>Your account has been created. Click the link below to set your password:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 24 hours.</p>`,
-          text: `Hi ${name},\n\nYour account has been created. Set your password at:\n${signupLink}\n\nThis link expires in 24 hours.`,
+          html: `<p>Hi ${name},</p><p>Your account has been created. Click the link below to set your password:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 1 hour.</p>`,
+          text: `Hi ${name},\n\nYour account has been created. Set your password at:\n${signupLink}\n\nThis link expires in 1 hour.`,
         });
+        mailSent = isMailEnabled();
       } catch (err) {
         logger.warn('📧 Failed to send signup email', {
           email,
@@ -66,7 +68,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       span.setAttribute('user.id', safeUser.id ?? '');
       logger.info('User created', { userId: safeUser.id ?? '', role });
 
-      return errorOr({ ...safeUser, signupLink });
+      return errorOr({ ...safeUser, signupLink, mailSent });
     });
   },
 });

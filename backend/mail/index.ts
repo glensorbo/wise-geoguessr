@@ -35,6 +35,8 @@ export const initMail = (): void => {
   logger.info(`📧 Mail enabled → ${host}:${port}`);
 };
 
+export const isMailEnabled = (): boolean => _transporter !== null;
+
 export const sendMail = async (options: MailOptions): Promise<void> => {
   if (!_transporter) {
     return;

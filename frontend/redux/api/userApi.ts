@@ -9,11 +9,14 @@ type CreateUserRequest = {
   role: 'admin' | 'user';
 };
 
+type CreateUserResponse = User & { signupLink: string; mailSent: boolean };
+
 const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    createUser: build.mutation<User, CreateUserRequest>({
+    createUser: build.mutation<CreateUserResponse, CreateUserRequest>({
       query: (body) => ({ url: '/user', method: 'POST', body }),
-      transformResponse: (res: ApiSuccessResponse<User>) => res.data,
+      transformResponse: (res: ApiSuccessResponse<CreateUserResponse>) =>
+        res.data,
     }),
   }),
 });

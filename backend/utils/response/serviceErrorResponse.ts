@@ -27,7 +27,12 @@ export const serviceErrorResponse = (errors: AppError[]): Response => {
         {
           status: 409,
           message: first.message,
-          error: { type: 'conflict', errors: [] },
+          error: {
+            type: 'conflict',
+            errors: errors
+              .filter((e) => e.field !== undefined)
+              .map((e) => ({ field: e.field!, message: e.message })),
+          },
         },
         { status: 409 },
       );
