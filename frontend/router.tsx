@@ -11,6 +11,7 @@ import { PlayerProfilePage } from './pages/playerProfilePage';
 import { RecapPage } from './pages/recapPage';
 import { ResultsPage } from './pages/resultsPage';
 import { RoundDetailPage } from './pages/roundDetailPage';
+import { SetPasswordPage } from './pages/setPasswordPage';
 import { StatsPage } from './pages/statsPage';
 
 /**
@@ -24,6 +25,7 @@ export const AppRouter = () => (
     <AnalyticsProvider />
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/set-password" element={<SetPasswordPage />} />
 
       {/* Public — accessible without auth, full layout with sidebar */}
       <Route element={<PageLayout />}>
