@@ -45,7 +45,6 @@ export const createUserController = (service: typeof UserServiceType) => ({
     const result = await service.createUser(
       validation.data.email,
       validation.data.name,
-      validation.data.password,
       validation.data.role,
     );
 

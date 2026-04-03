@@ -1,13 +1,9 @@
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -26,34 +22,14 @@ interface Props {
 const EMPTY_FORM = {
   email: '',
   name: '',
-  password: '',
-  confirmPassword: '',
   role: 'user' as 'admin' | 'user',
 };
 
-const EyeToggle = ({
-  visible,
-  onToggle,
-}: {
-  visible: boolean;
-  onToggle: () => void;
-}) => (
-  <InputAdornment position="end">
-    <IconButton
-      aria-label={visible ? 'Hide password' : 'Show password'}
-      onClick={onToggle}
-      edge="end"
-    >
-      {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-    </IconButton>
-  </InputAdornment>
-);
-
 export const AddUserModal = ({ open, onClose }: Props) => {
   const [form, setForm] = useState(EMPTY_FORM);
-  const [errors, setErrors] = useState<Partial<typeof EMPTY_FORM>>({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof typeof EMPTY_FORM, string>>
+  >({});
 
   const [createUser, { isLoading }] = useCreateUserMutation();
 
@@ -69,13 +45,11 @@ export const AddUserModal = ({ open, onClose }: Props) => {
   const handleClose = () => {
     setForm(EMPTY_FORM);
     setErrors({});
-    setShowPassword(false);
-    setShowConfirm(false);
     onClose();
   };
 
   const validate = (): boolean => {
-    const next: Partial<typeof EMPTY_FORM> = {};
+    const next: Partial<Record<keyof typeof EMPTY_FORM, string>> = {};
     if (!form.email) {
       next.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -83,14 +57,6 @@ export const AddUserModal = ({ open, onClose }: Props) => {
     }
     if (!form.name) {
       next.name = 'Name is required';
-    }
-    if (form.password.length < 12) {
-      next.password = 'Password must be at least 12 characters';
-    }
-    if (!form.confirmPassword) {
-      next.confirmPassword = 'Please confirm your password';
-    } else if (form.password !== form.confirmPassword) {
-      next.confirmPassword = 'Passwords do not match';
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -104,7 +70,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
 
     try {
       await createUser(form).unwrap();
-      toast.success(`✅ User ${form.email} created`);
+      toast.success(`✅ Invite sent to ${form.email}`);
       handleClose();
     } catch (err: unknown) {
       const apiErr = err as {
@@ -120,7 +86,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
           }
         }
         if (Object.keys(next).length > 0) {
-          setErrors(next as Partial<typeof EMPTY_FORM>);
+          setErrors(next);
           return;
         }
       }
@@ -152,46 +118,6 @@ export const AddUserModal = ({ open, onClose }: Props) => {
               error={!!errors.name}
               helperText={errors.name}
               fullWidth
-            />
-            <TextField
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              autoComplete="new-password"
-              value={form.password}
-              onChange={set('password')}
-              error={!!errors.password}
-              helperText={errors.password}
-              fullWidth
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <EyeToggle
-                      visible={showPassword}
-                      onToggle={() => setShowPassword((p) => !p)}
-                    />
-                  ),
-                },
-              }}
-            />
-            <TextField
-              label="Confirm Password"
-              type={showConfirm ? 'text' : 'password'}
-              autoComplete="new-password"
-              value={form.confirmPassword}
-              onChange={set('confirmPassword')}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
-              fullWidth
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <EyeToggle
-                      visible={showConfirm}
-                      onToggle={() => setShowConfirm((p) => !p)}
-                    />
-                  ),
-                },
-              }}
             />
             <FormControl fullWidth>
               <InputLabel id="add-user-role-label">Role</InputLabel>

@@ -6,8 +6,6 @@ import type { User } from '@backend/types/user';
 type CreateUserRequest = {
   email: string;
   name: string;
-  password: string;
-  confirmPassword: string;
   role: 'admin' | 'user';
 };
 
