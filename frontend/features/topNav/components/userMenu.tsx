@@ -5,6 +5,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -21,6 +22,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useLogout } from '../hooks/useLogout';
+import { AddUserModal } from './addUserModal';
 import { ChangePasswordModal } from './changePasswordModal';
 import { SetPasswordModal } from './setPasswordModal';
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
@@ -85,10 +87,21 @@ export const UserMenu = () => {
       }
     })();
 
+  const isAdmin =
+    !!token &&
+    (() => {
+      try {
+        return decodeJwt(token).role === 'admin';
+      } catch {
+        return false;
+      }
+    })();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [setPasswordOpen, setSetPasswordOpen] = useState(false);
+  const [addUserOpen, setAddUserOpen] = useState(false);
   const [themeAccordionOpen, setThemeAccordionOpen] = useState(false);
 
   const menuOpen = Boolean(anchorEl);
@@ -124,6 +137,26 @@ export const UserMenu = () => {
     closeMenu();
     setLoginOpen(true);
   };
+
+  const handleAddUser = () => {
+    closeMenu();
+    setAddUserOpen(true);
+  };
+
+  const adminMenuItems = isAdmin
+    ? [
+        <MenuItem key="add-user" onClick={handleAddUser}>
+          <ListItemIcon>
+            <PersonAddIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primary="Add user"
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>,
+        <Divider key="admin-divider" />,
+      ]
+    : [];
 
   const passwordMenuItems = token
     ? [
@@ -199,6 +232,8 @@ export const UserMenu = () => {
 
         {passwordMenuItems}
 
+        {adminMenuItems}
+
         <MenuItem
           data-highlight-tone={token ? 'danger' : 'primary'}
           onClick={token ? handleLogout : handleLogin}
@@ -242,6 +277,7 @@ export const UserMenu = () => {
         open={setPasswordOpen}
         onClose={() => setSetPasswordOpen(false)}
       />
+      <AddUserModal open={addUserOpen} onClose={() => setAddUserOpen(false)} />
     </>
   );
 };

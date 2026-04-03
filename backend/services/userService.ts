@@ -1,6 +1,9 @@
 import { userRepository } from '@backend/repositories/userRepository';
+import { logger, withSpan } from '@backend/telemetry';
+import { errorOr } from '@backend/types/errorOr';
 
 import type { userRepository as UserRepositoryType } from '@backend/repositories/userRepository';
+import type { ErrorOr } from '@backend/types/errorOr';
 import type { User } from '@backend/types/user';
 
 /**
@@ -8,32 +11,47 @@ import type { User } from '@backend/types/user';
  * Accepts repository as dependency for testability
  */
 export const createUserService = (repo: typeof UserRepositoryType) => ({
-  /**
-   * Get all users with safe data (password omitted)
-   * @returns Promise<User[]> - Array of users without password field
-   */
   async getAllUsers(): Promise<User[]> {
     const users = await repo.getAll();
-
-    // Transform User[] to SafeUser[] by omitting password
     return users.map(({ password: _password, ...safeUser }) => safeUser);
   },
 
-  /**
-   * Get a single user by ID
-   * @param id - User ID (UUID)
-   * @returns Promise<User | undefined> - User if found, undefined otherwise
-   */
   async getUserById(id: string): Promise<User | undefined> {
     const user = await repo.getById(id);
-
     if (!user) {
       return undefined;
     }
-
-    // Omit password from response
     const { password: _password, ...safeUser } = user;
     return safeUser;
+  },
+
+  async createUser(
+    email: string,
+    name: string,
+    password: string,
+    role: 'admin' | 'user',
+  ): Promise<ErrorOr<User>> {
+    return withSpan('user.create', { 'user.role': role }, async (span) => {
+      const existing = await repo.getByEmail(email);
+      if (existing) {
+        return errorOr<User>(null, [
+          {
+            type: 'conflict',
+            message: 'A user with this email already exists',
+            field: 'email',
+          },
+        ]);
+      }
+
+      const hashedPassword = await Bun.password.hash(password);
+      const user = await repo.create(email, name, hashedPassword, role);
+      const { password: _password, ...safeUser } = user;
+
+      span.setAttribute('user.id', safeUser.id ?? '');
+      logger.info('User created', { userId: safeUser.id ?? '', role });
+
+      return errorOr(safeUser);
+    });
   },
 });
 

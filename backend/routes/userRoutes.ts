@@ -1,6 +1,7 @@
 import { userController } from '@backend/controllers/userController';
 import { withMiddleware } from '@backend/middleware';
 import { authMiddleware } from '@backend/middleware/authMiddleware';
+import { requireRole } from '@backend/middleware/requireRole';
 
 /**
  * User Routes
@@ -10,6 +11,10 @@ import { authMiddleware } from '@backend/middleware/authMiddleware';
 export const userRoutes = {
   '/api/user': {
     GET: withMiddleware(authMiddleware)(() => userController.getUsers()),
+    POST: withMiddleware(
+      authMiddleware,
+      requireRole('admin'),
+    )((req) => userController.createUser(req)),
   },
 
   '/api/user/:id': {
