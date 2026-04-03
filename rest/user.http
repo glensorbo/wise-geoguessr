@@ -7,6 +7,22 @@ Authorization: Bearer {{JWT_TOKEN}}
 
 ###
 
+### Create User (Admin only)
+# Creates a new user with an auto-generated passphrase and sends a signup email.
+# Returns the user and a signupLink the new user can use to set their password.
+# Requires an admin Bearer JWT in Authorization header.
+POST {{BASE_URL}}/api/user
+Content-Type: application/json
+Authorization: Bearer {{JWT_TOKEN}}
+
+{
+  "email": "newuser@example.com",
+  "name": "New User",
+  "role": "user"
+}
+
+###
+
 ### Get User By ID
 # Returns a single user by their UUID (passwords excluded).
 # Requires a valid Bearer JWT in Authorization header.

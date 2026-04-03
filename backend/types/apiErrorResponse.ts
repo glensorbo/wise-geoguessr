@@ -5,7 +5,8 @@ export type ErrorType =
   | 'notFound'
   | 'unauthorized'
   | 'forbidden'
-  | 'rateLimit';
+  | 'rateLimit'
+  | 'conflict';
 
 export type ApiErrorResponse = {
   message: string;

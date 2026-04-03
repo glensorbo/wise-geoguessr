@@ -1,33 +1,26 @@
 import { userService } from '@backend/services/userService';
 import {
   notFoundError,
+  serviceErrorResponse,
   successResponse,
   validationErrorResponse,
 } from '@backend/utils/response';
-import { uuidSchema } from '@backend/validation/schemas/user';
+import {
+  createUserAdminSchema,
+  uuidSchema,
+} from '@backend/validation/schemas/user';
 import { validateParam } from '@backend/validation/utils/validateParam';
+import { validateRequest } from '@backend/validation/utils/validateRequest';
 
+import type { BunRequest } from '@backend/middleware';
 import type { userService as UserServiceType } from '@backend/services/userService';
 
-/**
- * User Controller Factory
- * Accepts service as dependency for testability
- */
 export const createUserController = (service: typeof UserServiceType) => ({
-  /**
-   * Handle GET /api/user - Get all users
-   * @returns Response with array of safe users (no passwords)
-   */
   async getUsers(): Promise<Response> {
     const users = await service.getAllUsers();
     return successResponse(users);
   },
 
-  /**
-   * Handle GET /api/user/:id - Get user by ID
-   * @param id - User ID from route params
-   * @returns Response with safe user data or 404 if not found
-   */
   async getUserById(id: string): Promise<Response> {
     const validation = validateParam(uuidSchema, id);
     if (validation.errors) {
@@ -41,6 +34,25 @@ export const createUserController = (service: typeof UserServiceType) => ({
     }
 
     return successResponse(user);
+  },
+
+  async createUser(req: BunRequest): Promise<Response> {
+    const validation = await validateRequest(createUserAdminSchema, req);
+    if (validation.errors) {
+      return validationErrorResponse('Validation failed', validation.errors);
+    }
+
+    const result = await service.createUser(
+      validation.data.email,
+      validation.data.name,
+      validation.data.role,
+    );
+
+    if (result.error) {
+      return serviceErrorResponse(result.error);
+    }
+
+    return successResponse(result.data, 201);
   },
 });
 

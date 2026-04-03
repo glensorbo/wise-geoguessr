@@ -179,17 +179,34 @@ logger.debug('Cache hit', { key: 'user:42' });
 
 ## Adding Custom Spans
 
-Span creation helpers must live in `backend/telemetry/index.ts` and be exported from `@backend/telemetry`.
+Use the `withSpan` helper exported from `@backend/telemetry`. It wraps `tracer.startActiveSpan` with built-in error handling — sets `SpanStatusCode.ERROR` and calls `recordException` on uncaught throws, then always ends the span. When OTel is disabled the no-op tracer makes the whole call zero-overhead.
 
-Service-layer code **must not** import from `@opentelemetry/*` directly. Add a helper to `backend/telemetry/index.ts` and import it from `@backend/telemetry` instead.
-
-Inside `backend/telemetry/index.ts` only, the tracer is obtained via:
+**Add spans to service-layer methods that do meaningful I/O** — repository calls, password hashing, external HTTP. Never add them to controllers (the HTTP span from `withMiddleware` already covers that layer) or pure utility functions.
 
 ```ts
-import { trace, SpanStatusCode } from '@opentelemetry/api';
+import { logger, withSpan } from '@backend/telemetry';
 
-const tracer = trace.getTracer('wise-geoguessr');
+async createUser(email: string, name: string, password: string, role: 'admin' | 'user') {
+  return withSpan('user.create', { 'user.role': role }, async (span) => {
+    // ... do I/O work ...
+    const user = await repo.create(email, name, hashedPassword, role);
+
+    // Set attributes AFTER you have the values; never pass PII (emails, passwords, tokens).
+    span.setAttribute('user.id', user.id ?? '');
+    logger.info('User created', { userId: user.id ?? '', role });
+
+    return user;
+  });
+}
 ```
+
+**Rules:**
+
+- All `@opentelemetry/*` imports stay inside `backend/telemetry/index.ts` — never import them elsewhere.
+- Never pass PII (email, password, tokens) as span attributes or log fields.
+- Never let telemetry crash the server — `withSpan` only re-throws errors that came from your own `fn`; the span lifecycle is always safe.
+
+If you need a span type in the callback, it is passed as the first argument (`span: Span`) — the concrete `Span` interface lives in `@opentelemetry/api` but you do not need to import it; TypeScript infers it from the callback parameter.
 
 ---
 

@@ -28,6 +28,7 @@ import {
   ATTR_URL_PATH,
 } from '@opentelemetry/semantic-conventions';
 
+import type { Span } from '@opentelemetry/api';
 import type { Counter, Histogram } from '@opentelemetry/api';
 import type {
   AnyValueMap,
@@ -265,4 +266,59 @@ export const logger = {
     }
     emit(SeverityNumber.DEBUG, 'DEBUG', message, attrs);
   },
+};
+
+// ---------------------------------------------------------------------------
+// Service span helper
+// ---------------------------------------------------------------------------
+
+/**
+ * Runs `fn` inside an active OTel span named `name`.
+ *
+ * Use this in **service-layer** methods that perform meaningful I/O (repository
+ * calls, password hashing, external HTTP). Do **not** use in controllers —
+ * those are already covered by the automatic HTTP span from `withMiddleware`.
+ *
+ * - Sets `SpanStatusCode.OK` on success and `SpanStatusCode.ERROR` +
+ *   `recordException` on an uncaught throw.
+ * - Always calls `span.end()` in a `finally` block.
+ * - When OTel is disabled, `trace.getTracer()` returns the no-op tracer so
+ *   every span is a true zero-cost no-op — no `_enabled` guard is needed.
+ *
+ * **Never** pass PII (emails, passwords, tokens) as attributes.
+ *
+ * @example
+ * ```ts
+ * import { withSpan } from '@backend/telemetry';
+ *
+ * return withSpan('user.create', { 'user.role': role }, async (span) => {
+ *   const user = await repo.create(email, name, hashedPassword, role);
+ *   span.setAttribute('user.id', user.id ?? '');
+ *   return user;
+ * });
+ * ```
+ */
+export const withSpan = <T>(
+  name: string,
+  initialAttrs: Record<string, string | number | boolean>,
+  fn: (span: Span) => Promise<T>,
+): Promise<T> => {
+  const tracer = trace.getTracer(SERVICE_NAME);
+  return tracer.startActiveSpan(
+    name,
+    { attributes: initialAttrs },
+    async (span) => {
+      try {
+        const result = await fn(span);
+        span.setStatus({ code: SpanStatusCode.OK });
+        return result;
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR });
+        throw err;
+      } finally {
+        span.end();
+      }
+    },
+  );
 };

@@ -6,7 +6,7 @@ The service layer contains all business logic. Services sit between controllers 
 
 ```
 services/
-├── userService.ts          # User read operations
+├── userService.ts          # User read and admin-create operations
 ├── authService.ts          # User creation, password onboarding, welcome email via mail module
 ├── gameResultService.ts    # Game result queries, transformations, and creation
 ├── hallOfFameService.ts    # All-time record retrieval (highest score, streak, season total)
