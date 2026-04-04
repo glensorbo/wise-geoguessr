@@ -1,12 +1,8 @@
-import rybbit from '@rybbit/js';
-
-import { config } from '@frontend/config';
-
-const isEnabled = Boolean(config.rybbit.host && config.rybbit.siteId);
+import { isEnabled, op } from '@frontend/features/analytics/analyticsProvider';
 
 /**
  * Hook for tracking custom analytics events.
- * Always safe to call — no-op when Rybbit is not configured.
+ * Always safe to call — no-op when OpenPanel is not configured.
  */
 export const useAnalytics = () => ({
   trackEvent: (
@@ -14,12 +10,20 @@ export const useAnalytics = () => ({
     props?: Record<string, string | number | boolean>,
   ) => {
     if (isEnabled) {
-      rybbit.event(name, props);
+      op?.track(name, props);
     }
   },
-  trackPageview: () => {
+  identify: (
+    profileId: string,
+    traits?: Record<string, string | number | boolean>,
+  ) => {
     if (isEnabled) {
-      rybbit.pageview();
+      op?.identify({ profileId, ...traits });
+    }
+  },
+  clearIdentity: () => {
+    if (isEnabled) {
+      op?.clear();
     }
   },
 });

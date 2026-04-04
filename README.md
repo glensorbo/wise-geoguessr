@@ -7,7 +7,7 @@
 | A small full-stack starter that stays typed end to end | Bun, React 19, Drizzle, PostgreSQL, and shared TypeScript from UI to DB           |
 | CI that proves the app actually works                  | Unit checks plus a dedicated Docker E2E job that runs `bun run e2e:docker` in PRs |
 | E2E tests without local browser setup pain             | A self-contained Docker flow that boots Postgres, app, and Playwright for you     |
-| Optional extras without permanent complexity           | SMTP, OpenTelemetry, and Rybbit stay off until you set env vars                   |
+| Optional extras without permanent complexity           | SMTP, OpenTelemetry, and OpenPanel stay off until you set env vars                |
 
 ## 🛠️ Tech stack
 
@@ -44,7 +44,7 @@ bun dev
 - 📧 Send invite emails when SMTP is configured and stay quiet when it is not
 - 🔭 Emit telemetry only when OpenTelemetry is configured
 - 🌟 Recap the season Wrapped-style — champion, sharpshooter, most improved, closest rivalry, longest streak — in an animated slide deck at `/recap/:year`
-- 📊 Track analytics only when Rybbit is configured
+- 📊 Track analytics and record session replays only when OpenPanel is configured
 - 🐶 Block bad pushes with lint, format, test, and knip checks
 
 ## 🔑 Key commands
@@ -61,15 +61,15 @@ bun run e2e:docker
 
 ## ⚙️ Optional integrations
 
-| Integration   | Enable it with                                      | Notes                                                                     |
-| ------------- | --------------------------------------------------- | ------------------------------------------------------------------------- |
-| OpenTelemetry | `docker compose -f docker-compose.signoz.yml up -d` | Set `OTEL_ENDPOINT=http://localhost:4318`                                 |
-| Rybbit        | `docker compose -f docker-compose.rybbit.yml up -d` | Set `BUN_PUBLIC_RYBBIT_HOST` and `BUN_PUBLIC_RYBBIT_SITE_ID`              |
-| SMTP email    | `.env` only                                         | Set `SMTP_HOST`, `SMTP_PORT`, and `SMTP_FROM`; Mailpit works well locally |
+| Integration   | Enable it with                                         | Notes                                                                              |
+| ------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| OpenTelemetry | `docker compose -f docker-compose.signoz.yml up -d`    | Set `OTEL_ENDPOINT=http://localhost:4318`                                          |
+| OpenPanel     | `docker compose -f docker-compose.openpanel.yml up -d` | Set `BUN_PUBLIC_OPENPANEL_CLIENT_ID` and optionally `BUN_PUBLIC_OPENPANEL_API_URL` |
+| SMTP email    | `.env` only                                            | Set `SMTP_HOST`, `SMTP_PORT`, and `SMTP_FROM`; Mailpit works well locally          |
 
 ## 📚 Docs
 
 - `e2e/README.md` — Playwright commands, Docker E2E flow, and test rules
 - `backend/README.md` — backend structure and conventions
 - `backend/mail/README.md` — SMTP opt-in behavior
-- `frontend/features/analytics/README.md` — Rybbit setup
+- `frontend/features/analytics/README.md` — OpenPanel setup

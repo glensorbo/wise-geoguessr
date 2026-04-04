@@ -1,39 +1,53 @@
 # 📊 Analytics
 
-Rybbit analytics integration for the frontend. Opt-in via environment variables — fully inactive for developers who don't set them.
+OpenPanel analytics integration for the frontend. Opt-in via environment variables — fully inactive for developers who don't set them.
 
 ## Enabling Analytics
 
-1. Start the local Rybbit stack:
-   ```sh
-   docker compose -f docker-compose.rybbit.yml up -d
-   ```
-2. Open the dashboard at `http://localhost:8090`, create an account, and add a new site.
-3. Lock registration — set `RYBBIT_DISABLE_SIGNUP=true` in `.env` and restart the backend:
-   ```sh
-   docker compose -f docker-compose.rybbit.yml restart rybbit-backend
-   ```
-4. Note the **Site ID** assigned to your site.
-5. Add to your `.env`:
+### Cloud (openpanel.dev)
+
+1. Create an account at [openpanel.dev](https://openpanel.dev) and add a new project.
+2. Copy the **Client ID** from the project settings.
+3. Add to your `.env`:
 
    ```env
-   BUN_PUBLIC_RYBBIT_HOST=http://localhost:3001
-   BUN_PUBLIC_RYBBIT_SITE_ID=<your-site-id>
+   BUN_PUBLIC_OPENPANEL_CLIENT_ID=your-client-id
    ```
 
-   **Use port `3001` (the backend directly), not `8090` (the Caddy proxy).**
-   The Caddy proxy only forwards `/api/*` paths to the backend; the SDK’s
-   tracking endpoints (`/track`, `/site/tracking-config/…`) have no `/api/`
-   prefix and would be routed to the dashboard UI instead. The dashboard
-   remains accessible at `http://localhost:8090`.
+4. Restart `bun dev`.
 
-   These vars are surfaced to frontend code via `frontend/config.ts` — see [Environment Variables](../../README.md#-environment-variables).
+### Self-Hosted
 
-6. Restart `bun dev`.
+1. Start the local OpenPanel stack:
+   ```sh
+   docker compose -f docker-compose.openpanel.yml up -d
+   ```
+2. Open the dashboard at `http://localhost:7780`, create an account, and add a new project.
+3. Note the **Client ID** assigned to your project.
+4. Add to your `.env`:
+
+   ```env
+   BUN_PUBLIC_OPENPANEL_CLIENT_ID=your-client-id
+   BUN_PUBLIC_OPENPANEL_API_URL=http://localhost:3001
+   ```
+
+5. Restart `bun dev`.
+
+## Session Replay (optional)
+
+Enable session replay by adding to your `.env`:
+
+```env
+BUN_PUBLIC_OPENPANEL_SESSION_REPLAY=true
+```
+
+All text content and inputs are **masked by default** (`maskAllText: true`, `maskAllInputs: true`) — sensitive content is replaced with `***` before leaving the browser. This is the safe default for GDPR compliance.
+
+The replay module is loaded asynchronously as a separate script — zero bundle cost when disabled.
 
 ## Tracking Custom Events
 
-Use the `useAnalytics` hook — never import `@rybbit/js` directly in components:
+Use the `useAnalytics` hook — never import `@openpanel/web` directly in components:
 
 ```tsx
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
@@ -44,10 +58,26 @@ const { trackEvent } = useAnalytics();
 trackEvent('button_clicked', { label: 'Save' });
 ```
 
+## Identifying Users
+
+Call `identify` after login to link future events to a user profile. Call `clearIdentity` on logout:
+
+```tsx
+import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
+
+const { identify, clearIdentity } = useAnalytics();
+
+// After successful login:
+identify(user.id, { name: user.name });
+
+// After logout:
+clearIdentity();
+```
+
 ## Files
 
-| File                    | Purpose                                                             |
-| ----------------------- | ------------------------------------------------------------------- |
-| `analyticsProvider.tsx` | Initialises Rybbit; tracks route changes automatically              |
-| `useAnalytics.ts`       | Hook exposing `trackEvent` and `trackPageview`                      |
-| `../../config.ts`       | Shared env-var wrapper — `config.rybbit.host/siteId` read from here |
+| File                    | Purpose                                                          |
+| ----------------------- | ---------------------------------------------------------------- |
+| `analyticsProvider.tsx` | Initialises OpenPanel; tracks SPA route changes as `screen_view` |
+| `useAnalytics.ts`       | Hook exposing `trackEvent`, `identify`, and `clearIdentity`      |
+| `../../config.ts`       | Shared env-var wrapper — `config.openpanel.*` read from here     |
