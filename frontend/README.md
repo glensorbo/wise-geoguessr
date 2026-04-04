@@ -68,19 +68,26 @@ The build pipeline includes the React Compiler (`babel-plugin-react-compiler`), 
 
 ## 🌍 Environment Variables
 
-Client-side env vars must be prefixed with `BUN_PUBLIC_` to be exposed to the browser (configured in `bunfig.toml`):
+Client-side env vars must be prefixed `BUN_PUBLIC_`.
 
-```toml
-[serve.static]
-env = "BUN_PUBLIC_*"
-```
+- **Development** — Bun exposes them to the browser via the bundler (configured in `bunfig.toml`):
+
+  ```toml
+  [serve.static]
+  env = "BUN_PUBLIC_*"
+  ```
+
+- **Production** — they are **not baked in at build time**. `backend/serveProdBuild.ts` reads `Bun.env` at request time and injects `<script>window.__BUN_PUBLIC_ENV={...}</script>` into `index.html` before serving it. Set `BUN_PUBLIC_*` vars on the running container and they are picked up without rebuilding the image.
 
 ### Config pattern
 
-`frontend/config.ts` is the **single source of truth** for all `BUN_PUBLIC_*` vars. It wraps `import.meta.env` with optional chaining so missing vars fall back to `null` rather than throwing at runtime:
+`frontend/config.ts` is the **single source of truth** for all `BUN_PUBLIC_*` vars. In production it reads from `window.__BUN_PUBLIC_ENV` (runtime injection); in development it falls back to `import.meta.env`:
 
 ```ts
-const env = import.meta.env as ImportMetaEnv | undefined;
+const env: ImportMetaEnv | undefined =
+  typeof window !== 'undefined' && window.__BUN_PUBLIC_ENV
+    ? window.__BUN_PUBLIC_ENV
+    : (import.meta.env as ImportMetaEnv | undefined);
 
 export const config = {
   openpanel: {
@@ -92,5 +99,5 @@ export const config = {
 ```
 
 - **Must** add new `BUN_PUBLIC_*` vars to `config.ts` — never read them elsewhere
-- **Must not** access `import.meta.env` directly outside `config.ts`
+- **Must not** access `import.meta.env` or `window.__BUN_PUBLIC_ENV` directly outside `config.ts`
 - Import via `@frontend/config`: `import { config } from '@frontend/config'`
