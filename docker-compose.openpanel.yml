@@ -1,0 +1,155 @@
+x-common: &common
+  networks:
+    - openpanel-net
+  restart: unless-stopped
+  logging:
+    options:
+      max-size: 50m
+      max-file: '3'
+
+services:
+  op-db:
+    <<: *common
+    image: postgres:14-alpine
+    container_name: op-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${OP_POSTGRES_PASSWORD:-openpanel_pass}
+      - POSTGRES_DB=openpanel
+    volumes:
+      - op-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  op-kv:
+    <<: *common
+    image: redis:7.2.5-alpine
+    container_name: op-kv
+    command: ['redis-server', '--maxmemory-policy', 'noeviction']
+    volumes:
+      - op-kv-data:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  op-ch:
+    <<: *common
+    image: clickhouse/clickhouse-server:25.10.2.65
+    container_name: op-ch
+    volumes:
+      - op-ch-data:/var/lib/clickhouse
+      - op-ch-logs:/var/log/clickhouse-server
+      - ./docker/openpanel/clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/op-config.xml:ro
+      - ./docker/openpanel/clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/op-user-config.xml:ro
+      - ./docker/openpanel/clickhouse/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    environment:
+      - CLICKHOUSE_SKIP_USER_SETUP=1
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ['CMD-SHELL', 'clickhouse-client --query "SELECT 1"']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  op-api:
+    <<: *common
+    image: lindesvard/openpanel-api:2
+    container_name: op-api
+    ports:
+      - '3001:3000'
+    command: >
+      sh -c "
+        echo 'Running migrations...'
+        CI=true pnpm -r run migrate:deploy
+        pnpm start
+      "
+    environment:
+      - NODE_ENV=production
+      - SELF_HOSTED=true
+      - DATABASE_URL=postgresql://postgres:${OP_POSTGRES_PASSWORD:-openpanel_pass}@op-db:5432/openpanel
+      - DATABASE_URL_DIRECT=postgresql://postgres:${OP_POSTGRES_PASSWORD:-openpanel_pass}@op-db:5432/openpanel
+      - REDIS_URL=redis://op-kv:6379
+      - CLICKHOUSE_URL=http://op-ch:8123
+      - COOKIE_SECRET=${OP_COOKIE_SECRET:-change-me-openpanel-secret-32chars!}
+      - DASHBOARD_URL=${OP_DASHBOARD_URL:-http://localhost:7780}
+      - API_URL=${OP_API_URL:-http://localhost:3001}
+      - ALLOW_REGISTRATION=true
+      - ALLOW_INVITATION=true
+    depends_on:
+      op-db:
+        condition: service_healthy
+      op-ch:
+        condition: service_healthy
+      op-kv:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/healthcheck || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  op-worker:
+    <<: *common
+    image: lindesvard/openpanel-worker:2
+    container_name: op-worker
+    environment:
+      - NODE_ENV=production
+      - SELF_HOSTED=true
+      - DATABASE_URL=postgresql://postgres:${OP_POSTGRES_PASSWORD:-openpanel_pass}@op-db:5432/openpanel
+      - DATABASE_URL_DIRECT=postgresql://postgres:${OP_POSTGRES_PASSWORD:-openpanel_pass}@op-db:5432/openpanel
+      - REDIS_URL=redis://op-kv:6379
+      - CLICKHOUSE_URL=http://op-ch:8123
+      - COOKIE_SECRET=${OP_COOKIE_SECRET:-change-me-openpanel-secret-32chars!}
+      - DASHBOARD_URL=${OP_DASHBOARD_URL:-http://localhost:7780}
+      - API_URL=${OP_API_URL:-http://localhost:3001}
+    depends_on:
+      op-api:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/healthcheck || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  op-dashboard:
+    <<: *common
+    image: lindesvard/openpanel-dashboard:2
+    container_name: op-dashboard
+    ports:
+      - '7780:3000'
+    environment:
+      - NODE_ENV=production
+      - API_URL=${OP_API_URL:-http://localhost:3001}
+      - NEXT_PUBLIC_API_URL=${OP_API_URL:-http://localhost:3001}
+    depends_on:
+      op-api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        ['CMD-SHELL', 'curl -f http://localhost:3000/api/healthcheck || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  openpanel-net:
+    name: openpanel-net
+
+volumes:
+  op-db-data:
+    name: op-db-data
+  op-kv-data:
+    name: op-kv-data
+  op-ch-data:
+    name: op-ch-data
+  op-ch-logs:
+    name: op-ch-logs

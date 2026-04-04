@@ -56,13 +56,14 @@ Set these in Coolify's **Environment Variables** panel before the first deploy:
 
 Optional variables (uncomment in app as needed):
 
-| Variable                      | Notes                       |
-| ----------------------------- | --------------------------- |
-| `OTEL_ENDPOINT`               | OpenTelemetry collector URL |
-| `OTEL_SERVICE_NAME`           | service name for traces     |
-| `BUN_PUBLIC_RYBBIT_HOST`      | Rybbit analytics host       |
-| `BUN_PUBLIC_RYBBIT_SITE_ID`   | Rybbit site ID              |
-| `SMTP_HOST` / `SMTP_PORT` / … | SMTP for invite emails      |
+| Variable                              | Notes                                |
+| ------------------------------------- | ------------------------------------ |
+| `OTEL_ENDPOINT`                       | OpenTelemetry collector URL          |
+| `OTEL_SERVICE_NAME`                   | service name for traces              |
+| `BUN_PUBLIC_OPENPANEL_CLIENT_ID`      | OpenPanel project client ID          |
+| `BUN_PUBLIC_OPENPANEL_API_URL`        | OpenPanel API URL (self-hosted only) |
+| `BUN_PUBLIC_OPENPANEL_SESSION_REPLAY` | `true` to enable session replay      |
+| `SMTP_HOST` / `SMTP_PORT` / …         | SMTP for invite emails               |
 
 ### 4 — Deploy
 

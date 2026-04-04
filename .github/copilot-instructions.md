@@ -71,7 +71,7 @@ Run the `docs` agent to review and update any READMEs affected by your changes.
 
 | Changed files   | Run agent                                                                |
 | --------------- | ------------------------------------------------------------------------ |
-| `frontend/**`   | `rybbit` — verify analytics integration is documented and correct        |
+| `frontend/**`   | `openpanel` — verify analytics integration is documented and correct     |
 | `backend/**`    | `otel` — verify telemetry instrumentation and docs are up to date        |
 | `backend/db/**` | `backend-feature` — verify schema, migration, and repository conventions |
 | `e2e/**`        | `e2e-playwright` — verify tests follow project Playwright conventions    |

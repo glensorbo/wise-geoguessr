@@ -11,9 +11,10 @@
 const env = import.meta.env as ImportMetaEnv | undefined;
 
 export const config = {
-  rybbit: {
-    host: env?.BUN_PUBLIC_RYBBIT_HOST ?? null,
-    siteId: env?.BUN_PUBLIC_RYBBIT_SITE_ID ?? null,
+  openpanel: {
+    clientId: env?.BUN_PUBLIC_OPENPANEL_CLIENT_ID ?? null,
+    apiUrl: env?.BUN_PUBLIC_OPENPANEL_API_URL ?? null,
+    sessionReplay: env?.BUN_PUBLIC_OPENPANEL_SESSION_REPLAY === 'true',
   },
   otel: {
     /**
