@@ -8,7 +8,10 @@
  *
  * Never access import.meta.env directly outside this file.
  */
-const env = import.meta.env as ImportMetaEnv | undefined;
+const env: ImportMetaEnv | undefined =
+  typeof window !== 'undefined' && window.__BUN_PUBLIC_ENV
+    ? window.__BUN_PUBLIC_ENV
+    : (import.meta.env as ImportMetaEnv | undefined);
 
 export const config = {
   openpanel: {

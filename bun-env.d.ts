@@ -94,3 +94,8 @@ interface ImportMetaEnv {
   // Frontend OpenTelemetry — mirrors the Bun.env declarations above
   BUN_PUBLIC_OTEL_SERVICE_NAME?: string;
 }
+
+interface Window {
+  /** Runtime-injected public env vars (see backend/serveProdBuild.ts). */
+  __BUN_PUBLIC_ENV?: ImportMetaEnv;
+}
