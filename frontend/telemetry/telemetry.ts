@@ -46,6 +46,7 @@ import { config } from '@frontend/config';
 export const initFrontendTelemetry = async (): Promise<void> => {
   const serviceName = config.otel.serviceName;
   if (!serviceName) {
+    console.log('🔭 Frontend OTel disabled');
     return;
   }
 
