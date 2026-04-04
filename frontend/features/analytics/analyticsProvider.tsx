@@ -8,6 +8,12 @@ const { clientId, apiUrl, sessionReplay } = config.openpanel;
 
 export const isEnabled = Boolean(clientId);
 
+if (isEnabled) {
+  console.log('📊 Analytics enabled (OpenPanel)');
+} else {
+  console.log('📊 Analytics disabled');
+}
+
 export const op = isEnabled
   ? new OpenPanel({
       clientId: clientId!,
