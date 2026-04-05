@@ -29,7 +29,8 @@
     "e2e:debug": "playwright test --debug",
     "e2e:docker": "./scripts/e2e-ci.sh",
     "e2e:report": "npx playwright show-report",
-    "tag": "bun scripts/tag.ts"
+    "tag": "bun scripts/tag.ts",
+    "release": "bun scripts/release.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
