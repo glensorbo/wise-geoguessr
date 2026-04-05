@@ -55,7 +55,7 @@ declare module 'bun' {
 
     // OpenTelemetry — optional, only active when OTEL_ENDPOINT is set
     OTEL_ENDPOINT?: string; // e.g. http://localhost:4318
-    OTEL_SERVICE_NAME?: string; // defaults to "bun-boiler"
+    OTEL_SERVICE_NAME?: string; // defaults to "wise-geoguessr"
 
     // OpenPanel Analytics — optional, only active when BUN_PUBLIC_OPENPANEL_CLIENT_ID is set
     // BUN_PUBLIC_ prefix is required for Bun to expose these to the frontend bundle
@@ -65,7 +65,7 @@ declare module 'bun' {
 
     // Frontend OpenTelemetry — optional, only active when BUN_PUBLIC_OTEL_SERVICE_NAME is set
     // BUN_PUBLIC_ prefix exposes this to frontend code at build time
-    BUN_PUBLIC_OTEL_SERVICE_NAME?: string; // e.g. "bun-boiler-frontend"
+    BUN_PUBLIC_OTEL_SERVICE_NAME?: string; // e.g. "wise-geoguessr-frontend"
 
     // SMTP Mail — optional, only active when SMTP_HOST is set
     SMTP_HOST?: string; // e.g. smtp.example.com
@@ -96,6 +96,15 @@ interface ImportMetaEnv {
 }
 
 interface Window {
-  /** Runtime-injected public env vars (see backend/serveProdBuild.ts). */
-  __BUN_PUBLIC_ENV?: ImportMetaEnv;
+  /**
+   * Runtime config injected into HTML by the server (backend/serveProdBuild.ts).
+   * Allows deployments that supply env vars at runtime (e.g. Coolify) to work
+   * correctly even when the Docker image was built without those vars.
+   */
+  __APP_CONFIG__?: {
+    BUN_PUBLIC_OPENPANEL_CLIENT_ID?: string;
+    BUN_PUBLIC_OPENPANEL_API_URL?: string;
+    BUN_PUBLIC_OPENPANEL_SESSION_REPLAY?: string;
+    BUN_PUBLIC_OTEL_SERVICE_NAME?: string;
+  };
 }

@@ -1,19 +1,26 @@
 import { join } from 'path';
 
-// Collect all BUN_PUBLIC_* vars from the server's runtime environment and
-// inject them into the HTML so the browser can read them via window.__BUN_PUBLIC_ENV.
-// This allows env vars to be set on the running container rather than at
-// image build time (where they would be baked in as undefined).
-const buildPublicEnvScript = (): string => {
-  const publicEnv = Object.fromEntries(
-    Object.entries(Bun.env).filter(([key]) => key.startsWith('BUN_PUBLIC_')),
-  );
-  return `<script>window.__BUN_PUBLIC_ENV=${JSON.stringify(publicEnv)};</script>`;
-};
+// BUN_PUBLIC_* vars are inlined by Bun's bundler at build time, which means
+// they're empty when the image is built without them (e.g. Coolify supplies
+// env vars at runtime, not build time).  To fix this, we inject a small
+// <script> block into every HTML response that writes the live values from
+// Bun.env into window.__APP_CONFIG__.  frontend/config.ts prefers this object
+// over import.meta.env, so runtime values always win.
+const runtimeConfigScript = (() => {
+  const cfg = {
+    BUN_PUBLIC_OPENPANEL_CLIENT_ID:
+      Bun.env.BUN_PUBLIC_OPENPANEL_CLIENT_ID ?? '',
+    BUN_PUBLIC_OPENPANEL_API_URL: Bun.env.BUN_PUBLIC_OPENPANEL_API_URL ?? '',
+    BUN_PUBLIC_OPENPANEL_SESSION_REPLAY:
+      Bun.env.BUN_PUBLIC_OPENPANEL_SESSION_REPLAY ?? '',
+    BUN_PUBLIC_OTEL_SERVICE_NAME: Bun.env.BUN_PUBLIC_OTEL_SERVICE_NAME ?? '',
+  };
+  return `<script>window.__APP_CONFIG__=${JSON.stringify(cfg)};</script>`;
+})();
 
 const serveHtml = async (htmlPath: string): Promise<Response> => {
   const html = await Bun.file(htmlPath).text();
-  const injected = html.replace('</head>', `${buildPublicEnvScript()}</head>`);
+  const injected = html.replace('</head>', `${runtimeConfigScript}</head>`);
   return new Response(injected, { headers: { 'Content-Type': 'text/html' } });
 };
 
