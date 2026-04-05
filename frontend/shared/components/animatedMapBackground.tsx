@@ -63,11 +63,10 @@ const MapPin = ({ x, y, index, pinFill }: MapPinProps) => {
       <motion.circle
         cx={x}
         cy={y - 12}
-        r={6}
         fill="none"
         stroke={pinFill}
         strokeWidth={1.5}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, r: 6 }}
         animate={{ r: [6, 20], opacity: [0.8, 0] }}
         transition={{
           duration: 0.9,
