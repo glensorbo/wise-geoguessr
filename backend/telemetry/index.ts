@@ -46,7 +46,7 @@ type SpanHandle = {
 // ---------------------------------------------------------------------------
 // Internal state — set by initTelemetry()
 // ---------------------------------------------------------------------------
-const SERVICE_NAME = 'bun-boiler';
+const SERVICE_NAME = 'wise-geoguessr';
 
 /** True once initTelemetry() has registered providers. */
 let _enabled = false;

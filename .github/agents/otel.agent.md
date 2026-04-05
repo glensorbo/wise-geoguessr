@@ -13,10 +13,10 @@ Telemetry is **opt-in and zero-overhead** when disabled. The entire system activ
 
 ### Env Vars
 
-| Variable            | Example                 | Description                                                  |
-| ------------------- | ----------------------- | ------------------------------------------------------------ |
-| `OTEL_ENDPOINT`     | `http://localhost:4318` | OTLP HTTP endpoint. Unset = telemetry fully disabled.        |
-| `OTEL_SERVICE_NAME` | `bun-boiler`            | Identifies this service in SigNoz. Defaults to `bun-boiler`. |
+| Variable            | Example                 | Description                                                      |
+| ------------------- | ----------------------- | ---------------------------------------------------------------- |
+| `OTEL_ENDPOINT`     | `http://localhost:4318` | OTLP HTTP endpoint. Unset = telemetry fully disabled.            |
+| `OTEL_SERVICE_NAME` | `wise-geoguessr`        | Identifies this service in SigNoz. Defaults to `wise-geoguessr`. |
 
 ### Local Stack
 
@@ -68,24 +68,17 @@ Never use `console.log/warn/error` directly in backend code — use `logger`.
 ## ➕ Adding Traces (Spans)
 
 ```ts
-import { trace } from '@opentelemetry/api';
+import { withSpan } from '@backend/telemetry';
 
-const tracer = trace.getTracer('bun-boiler');
-
-const result = await tracer.startActiveSpan('user.create', async (span) => {
-  try {
-    span.setAttribute('user.email', email);
+const result = await withSpan(
+  'user.create',
+  { 'user.role': role },
+  async (span) => {
     const user = await repo.create(email, name);
     span.setAttribute('user.id', user.id);
     return user;
-  } catch (err) {
-    span.recordException(err as Error);
-    span.setStatus({ code: SpanStatusCode.ERROR });
-    throw err;
-  } finally {
-    span.end();
-  }
-});
+  },
+);
 ```
 
 **When to add spans:**
