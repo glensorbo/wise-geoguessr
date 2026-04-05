@@ -9,7 +9,9 @@ const rcTags = allTags.filter((t) => /^v\d+\.\d+\.\d+-rc\d+$/.test(t));
 const latestRc = rcTags[0];
 
 if (!latestRc) {
-  console.error('❌ No RC tags found. Run `bun tag <patch|minor|major>` first.');
+  console.error(
+    '❌ No RC tags found. Run `bun tag <patch|minor|major>` first.',
+  );
   process.exit(1);
 }
 

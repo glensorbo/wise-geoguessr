@@ -2,11 +2,11 @@
 
 Standalone utility scripts — run directly, not imported by the app.
 
-| File         | Purpose                                                    |
-| ------------ | ---------------------------------------------------------- |
-| `tag.ts`     | Bump version, push a release-candidate tag → test deploys  |
-| `release.ts` | Promote latest RC to a GitHub Release → prod deploys       |
-| `e2e-ci.sh`  | Run the full Playwright suite in an isolated Docker stack  |
+| File         | Purpose                                                   |
+| ------------ | --------------------------------------------------------- |
+| `tag.ts`     | Bump version, push a release-candidate tag → test deploys |
+| `release.ts` | Promote latest RC to a GitHub Release → prod deploys      |
+| `e2e-ci.sh`  | Run the full Playwright suite in an isolated Docker stack |
 
 ---
 
