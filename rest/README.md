@@ -13,6 +13,16 @@ HTTP request files for testing the API with [kulala.nvim](https://github.com/mis
 | `results.http`      | `GET /api/results/years`, `GET /api/results?year=YYYY`, `GET /api/results/:roundId`, `POST /api/results`                                                                 |
 | `hall-of-fame.http` | `GET /api/hall-of-fame`                                                                                                                                                  |
 
+## 📝 Request bodies
+
+### `POST /api/results`
+
+| Field      | Type     | Required | Description                                             |
+| ---------- | -------- | -------- | ------------------------------------------------------- |
+| `date`     | `string` | ✅       | `YYYY-MM-DD` format                                     |
+| `scores`   | `object` | ✅       | `{ playerName: score }` — at least one entry            |
+| `gameLink` | `string` | —        | Valid URL linking to the GeoGuessr challenge (optional) |
+
 ## ⚙️ Environment
 
 Kulala uses `http-client.env.json` for environment variables. This file is **gitignored** (it may contain real tokens). Copy the example to get started:

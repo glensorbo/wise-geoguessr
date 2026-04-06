@@ -3,6 +3,7 @@ export type Player = string;
 export type GameResult = {
   id: string;
   date: string;
+  gameLink: string | null;
   scores: Record<Player, number>;
 };
 
@@ -45,5 +46,6 @@ export type RoundDetailEntry = {
 export type RoundDetailData = {
   id: string;
   date: string;
+  gameLink: string | null;
   entries: RoundDetailEntry[];
 };

@@ -10,6 +10,7 @@ const makeResult = (
 ): GameResult => ({
   id: date,
   date,
+  gameLink: null,
   scores,
 });
 

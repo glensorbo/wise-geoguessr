@@ -10,4 +10,5 @@ export const addGameResultSchema = z.object({
       z.number().int().min(0),
     )
     .refine((s) => Object.keys(s).length > 0, 'At least one score is required'),
+  gameLink: z.string().url('Must be a valid URL').optional(),
 });

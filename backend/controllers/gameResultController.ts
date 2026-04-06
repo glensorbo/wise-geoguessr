@@ -59,8 +59,8 @@ export const createGameResultController = (
       return validationErrorResponse('Validation failed', validation.errors);
     }
 
-    const { date, scores } = validation.data;
-    const result = await service.addResult(date, scores);
+    const { date, scores, gameLink } = validation.data;
+    const result = await service.addResult(date, scores, gameLink);
 
     if (result.error) {
       return serviceErrorResponse(result.error);
