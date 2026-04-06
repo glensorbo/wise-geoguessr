@@ -26,6 +26,7 @@ All GeoGuessr scoreboard logic, components, and hooks.
 | `logic/playerSparkline.ts`             | `getPlayerSparklineData(results, player, limit=5)` — last N scores for a player (played rounds only, sorted date ascending)                                                                  |
 | `logic/rivalries.ts`                   | `getRivalries(results, year?, topN?)` — top N closest rivalries by avg score gap (min 3 shared rounds); exports `Rivalry`, `RivalryPlayer`                                                   |
 | `logic/headToHead.ts`                  | `getHeadToHead(results, playerA, playerB, year?)` — shared round count, wins per player (ties count for both), and per-round score entries for rounds where both players have a played score |
+| `logic/championship-standings.ts`      | `getChampionshipStandings(results, year?)` — cumulative rank position per round for all active players; returns `{ date, [player]: rank \| null }[]` (null before a player's first round)    |
 | `logic/`                               | Other pure data-transformation helpers (results, scores, players, etc.)                                                                                                                      |
 
 ## Rules
