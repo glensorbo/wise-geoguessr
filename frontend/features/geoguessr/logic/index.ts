@@ -1,4 +1,5 @@
 export { getActivePlayers } from './players';
+export { getChampionshipStandings } from './championship-standings';
 export { getPlayerSparklineData } from './playerSparkline';
 export { getPlayerDetails } from './player-details';
 export { getPerPlayedRoundDetails } from './per-played-round-details';

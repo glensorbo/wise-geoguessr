@@ -19,6 +19,7 @@ import {
 import { useResults } from '@frontend/features/geoguessr/hooks/useResults';
 import {
   getActivePlayers,
+  getChampionshipStandings,
   getPerPlayedRoundDetails,
   getPlayerDetails,
 } from '@frontend/features/geoguessr/logic';
@@ -46,6 +47,10 @@ export const StatsPage = () => {
   );
   const perPlayedDetails = useMemo(
     () => getPerPlayedRoundDetails(results, year),
+    [results, year],
+  );
+  const championship = useMemo(
+    () => getChampionshipStandings(results, year),
     [results, year],
   );
   const playedDetails = useMemo(
@@ -236,6 +241,63 @@ export const StatsPage = () => {
                       label: 'Total points',
                       width: 84,
                       valueFormatter: (v: unknown) => formatAxisNumber(v),
+                    },
+                  ]}
+                  grid={{ horizontal: true, vertical: true }}
+                  margin={{
+                    top: 16,
+                    right: isPhone ? 12 : 24,
+                    bottom: 28,
+                    left: isPhone ? 12 : 24,
+                  }}
+                  height={isPhone ? 300 : 340}
+                  sx={{ width: '100%' }}
+                />
+              </Box>
+            </Box>
+          )}
+        </DashboardSection>
+
+        <DashboardSection title="Championship standings">
+          {isLoading ? (
+            <Skeleton variant="rounded" height={340} sx={{ borderRadius: 2 }} />
+          ) : noResults || hasError ? null : (
+            <Box sx={{ width: '100%', overflowX: 'auto' }}>
+              <Box sx={{ minWidth: { xs: 560, md: '100%' } }}>
+                <LineChart
+                  dataset={championship}
+                  series={chartSeries.map((s) => ({
+                    dataKey: s.name,
+                    label: s.name,
+                    color: s.color,
+                    curve: 'monotoneX',
+                    connectNulls: true,
+                    showMark: false,
+                  }))}
+                  xAxis={[
+                    {
+                      scaleType: 'point',
+                      dataKey: 'date',
+                      height: 88,
+                      valueFormatter: (v) => String(v),
+                      tickLabelStyle: {
+                        angle: -45,
+                        textAnchor: 'end',
+                        dominantBaseline: 'central',
+                        fontSize: 11,
+                      },
+                    },
+                  ]}
+                  yAxis={[
+                    {
+                      label: 'Position',
+                      width: 72,
+                      reverse: true,
+                      tickMinStep: 1,
+                      valueFormatter: (v: unknown) =>
+                        typeof v === 'number' && Number.isInteger(v)
+                          ? String(v)
+                          : '',
                     },
                   ]}
                   grid={{ horizontal: true, vertical: true }}
