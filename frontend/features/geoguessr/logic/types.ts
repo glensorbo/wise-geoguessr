@@ -49,3 +49,8 @@ export type RoundDetailData = {
   gameLink: string | null;
   entries: RoundDetailEntry[];
 };
+
+export type ScoreDistributionBucket = {
+  label: string;
+  [player: string]: number | string;
+};

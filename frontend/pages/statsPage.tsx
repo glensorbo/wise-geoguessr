@@ -11,6 +11,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
+import { ScoreDistributionChart } from '@frontend/features/geoguessr/components/scoreDistributionChart';
 import { YearSelector } from '@frontend/features/geoguessr/components/yearSelector';
 import {
   getChartSeries,
@@ -205,6 +206,16 @@ export const StatsPage = () => {
             </Box>
           )}
         </DashboardSection>
+
+        {!noResults && !hasError && (
+          <ScoreDistributionChart
+            results={results}
+            year={year}
+            players={players}
+            isLoading={isLoading}
+            isPhone={isPhone}
+          />
+        )}
 
         <DashboardSection title="Accumulated points over time">
           {isLoading ? (
