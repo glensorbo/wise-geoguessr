@@ -30,7 +30,7 @@ const gameResultApi = baseApi.injectEndpoints({
 
     addResult: build.mutation<
       GameResult,
-      { date: string; scores: Record<string, number> }
+      { date: string; scores: Record<string, number>; gameLink?: string }
     >({
       query: (body) => ({ url: '/results', method: 'POST', body }),
       transformResponse: (res: ApiSuccessResponse<GameResult>) => res.data,

@@ -10,7 +10,7 @@ backend/db/
 ├── seed.ts          # Seed script — creates the initial admin user
 ├── schemas/         # Table definitions (source of truth for all types)
 │   ├── users.ts        # users table with user_role enum (admin | user)
-│   ├── gameRounds.ts   # game_rounds table (id, date unique, timestamps)
+│   ├── gameRounds.ts   # game_rounds table (id, date unique, game_link optional URL VARCHAR(500), timestamps)
 │   └── gameScores.ts   # game_scores table (id, round_id FK → game_rounds cascade, player_name, score, created_at)
 └── migrations/      # Auto-generated SQL migration files
 ```

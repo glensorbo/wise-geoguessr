@@ -40,6 +40,8 @@ type Props = {
 
 export const AddScoreModal = ({ open, onClose }: Props) => {
   const [date, setDate] = useState(todayIso);
+  const [gameLink, setGameLink] = useState('');
+  const [gameLinkError, setGameLinkError] = useState('');
   const [rows, setRows] = useState<ScoreRow[]>(() =>
     KNOWN_PLAYERS.map((p) => ({ player: p, score: '' })),
   );
@@ -48,7 +50,22 @@ export const AddScoreModal = ({ open, onClose }: Props) => {
   const handleClose = () => {
     onClose();
     setDate(todayIso());
+    setGameLink('');
+    setGameLinkError('');
     setRows(KNOWN_PLAYERS.map((p) => ({ player: p, score: '' })));
+  };
+
+  const validateGameLink = (value: string) => {
+    if (!value) {
+      return '';
+    }
+    try {
+      const url = new URL(value);
+      void url;
+      return '';
+    } catch {
+      return 'Must be a valid URL';
+    }
   };
 
   const updateRow = (index: number, field: keyof ScoreRow, value: string) => {
@@ -83,8 +100,18 @@ export const AddScoreModal = ({ open, onClose }: Props) => {
       return;
     }
 
+    const linkError = validateGameLink(gameLink);
+    if (linkError) {
+      setGameLinkError(linkError);
+      return;
+    }
+
     try {
-      await addResult({ date, scores }).unwrap();
+      await addResult({
+        date,
+        scores,
+        ...(gameLink ? { gameLink } : {}),
+      }).unwrap();
       toast.success(`✅ Results for ${date} saved!`);
       handleClose();
     } catch {
@@ -105,6 +132,20 @@ export const AddScoreModal = ({ open, onClose }: Props) => {
               onChange={(e) => setDate(e.target.value)}
               required
               slotProps={{ inputLabel: { shrink: true } }}
+              fullWidth
+            />
+
+            <TextField
+              label="GeoGuessr game link (optional)"
+              type="url"
+              value={gameLink}
+              onChange={(e) => {
+                setGameLink(e.target.value);
+                setGameLinkError(validateGameLink(e.target.value));
+              }}
+              error={!!gameLinkError}
+              helperText={gameLinkError}
+              placeholder="https://www.geoguessr.com/challenge/..."
               fullWidth
             />
 

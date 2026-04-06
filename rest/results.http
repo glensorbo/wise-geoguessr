@@ -31,5 +31,6 @@ Authorization: Bearer {{JWT_TOKEN}}
     "Thorjan": 18000,
     "Tor Arve": 14500,
     "Sigurd": 9800
-  }
+  },
+  "gameLink": "https://www.geoguessr.com/challenge/abc123"
 }

@@ -2,14 +2,17 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import MuiLink from '@mui/material/Link';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LineChart } from '@mui/x-charts/LineChart';
 import {
   DataGrid,
   type GridColDef,
+  type GridRenderCellParams,
   type GridRowParams,
 } from '@mui/x-data-grid';
 import { useMemo } from 'react';
@@ -31,10 +34,12 @@ import {
 } from '@frontend/features/geoguessr/logic';
 import { TableSkeleton } from '@frontend/shared/components/skeleton';
 
-type PointsGridRow = { id: string; roundId: string; date: string } & Record<
-  string,
-  string | number
->;
+type PointsGridRow = {
+  id: string;
+  roundId: string;
+  date: string;
+  gameLink: string | null;
+} & Record<string, string | number | null>;
 
 export const ResultsPage = () => {
   const isPhone = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -73,6 +78,7 @@ export const ResultsPage = () => {
           id: entry.date,
           roundId: round?.id ?? '',
           date: entry.date,
+          gameLink: round?.gameLink ?? null,
           ...Object.fromEntries(
             players.map((p) => [
               p,
@@ -98,7 +104,35 @@ export const ResultsPage = () => {
   );
   const gridColumns = useMemo<GridColDef<PointsGridRow>[]>(
     () => [
-      { field: 'date', headerName: 'Date', minWidth: 140, flex: 1 },
+      {
+        field: 'date',
+        headerName: 'Date',
+        minWidth: 160,
+        flex: 1,
+        renderCell: (params: GridRenderCellParams<PointsGridRow>) => (
+          <Stack direction="row" spacing={0.5} alignItems="center">
+            <span>{params.value as string}</span>
+            {params.row.gameLink && (
+              <Tooltip title="Play this map again">
+                <MuiLink
+                  href={params.row.gameLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.secondary',
+                  }}
+                  aria-label="Open GeoGuessr challenge"
+                >
+                  🔗
+                </MuiLink>
+              </Tooltip>
+            )}
+          </Stack>
+        ),
+      },
       ...players.map((p) => ({
         field: p,
         headerName: p,

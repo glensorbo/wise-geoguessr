@@ -1,4 +1,5 @@
 import { gameResultRepository } from '@backend/repositories/gameResultRepository';
+import { logger, withSpan } from '@backend/telemetry';
 
 import type { ErrorOr } from '@backend/types/errorOr';
 import type { GameResult } from '@backend/types/gameResult';
@@ -29,19 +30,38 @@ export const createGameResultService = (repo: typeof gameResultRepository) => ({
   async addResult(
     date: string,
     scores: Record<string, number>,
+    gameLink?: string,
   ): Promise<ErrorOr<GameResult>> {
-    const existing = await repo.getByDate(date);
-    if (existing) {
-      return {
-        data: null,
-        error: [
-          { type: 'conflict', message: `A result for ${date} already exists` },
-        ],
-      };
-    }
+    return withSpan(
+      'game_result.create',
+      { 'game_result.has_game_link': !!gameLink },
+      async (span) => {
+        const existing = await repo.getByDate(date);
+        if (existing) {
+          logger.warn('Round already exists for date', { date });
+          return {
+            data: null,
+            error: [
+              {
+                type: 'conflict',
+                message: `A result for ${date} already exists`,
+              },
+            ],
+          };
+        }
 
-    const result = await repo.create(date, scores);
-    return { data: result, error: null };
+        const result = await repo.create(date, scores, gameLink);
+
+        span.setAttribute('game_result.id', result.id);
+        logger.info('Round created', {
+          roundId: result.id,
+          date,
+          hasGameLink: !!gameLink,
+        });
+
+        return { data: result, error: null };
+      },
+    );
   },
 });
 

@@ -1,6 +1,8 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
@@ -81,7 +83,7 @@ export const RoundDetailPage = () => {
           >
             <ArrowBackIcon />
           </IconButton>
-          <Stack spacing={0.5}>
+          <Stack spacing={0.5} sx={{ flex: 1 }}>
             {isLoading ? (
               <Skeleton width={200} height={40} />
             ) : (
@@ -91,6 +93,18 @@ export const RoundDetailPage = () => {
             )}
             <Typography color="text.secondary">Round results</Typography>
           </Stack>
+          {detail?.gameLink && (
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<PlayArrowIcon />}
+              href={detail.gameLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Play this map again
+            </Button>
+          )}
         </Stack>
 
         {!isLoading && !detail && (

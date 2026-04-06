@@ -7,6 +7,7 @@ import type { GameResult } from '../types';
 const make = (date: string, scores: Record<string, number>): GameResult => ({
   id: date,
   date,
+  gameLink: null,
   scores,
 });
 

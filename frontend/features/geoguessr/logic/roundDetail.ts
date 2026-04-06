@@ -46,7 +46,12 @@ export const getRoundDetail = (
     sorted[i]!.isWinner = sorted[i]!.score === maxScore;
   }
 
-  return { id: round.id, date: round.date, entries: sorted };
+  return {
+    id: round.id,
+    date: round.date,
+    gameLink: round.gameLink,
+    entries: sorted,
+  };
 };
 
 export const getRoundPodium = (detail: RoundDetailData): PodiumEntry[] =>
