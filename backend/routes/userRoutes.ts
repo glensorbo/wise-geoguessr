@@ -41,6 +41,13 @@ export const userRoutes = {
     }),
   },
 
+  '/api/user/:id/name': {
+    PATCH: withMiddleware(authMiddleware)((req, ctx) => {
+      const id = req.params['id'] ?? '';
+      return userController.updateUserName(id, req, ctx);
+    }),
+  },
+
   '/api/user/:id/reset-password': {
     POST: withMiddleware(
       authMiddleware,

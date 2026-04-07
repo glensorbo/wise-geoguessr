@@ -99,4 +99,14 @@ export const userRepository = {
       .returning({ id: users.id });
     return result.length > 0;
   },
+
+  async updateName(id: string, name: string): Promise<NewUser | undefined> {
+    const db = getDb();
+    const result = await db
+      .update(users)
+      .set({ name, updatedAt: dayjs().toISOString() })
+      .where(eq(users.id, id))
+      .returning();
+    return result[0];
+  },
 };

@@ -55,4 +55,15 @@ export const mockUserRepository = {
   deleteById: async (id: string): Promise<boolean> => {
     return mockUsers.some((u) => u.id === id);
   },
+
+  updateName: async (
+    id: string,
+    name: string,
+  ): Promise<NewUser | undefined> => {
+    const user = mockUsers.find((u) => u.id === id);
+    if (!user) {
+      return undefined;
+    }
+    return { ...user, name };
+  },
 };

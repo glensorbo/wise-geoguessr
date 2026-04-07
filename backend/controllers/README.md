@@ -6,7 +6,7 @@ The controller layer is the HTTP boundary of the application. Controllers receiv
 
 ```
 controllers/
-├── userController.ts           # GET /api/user, POST /api/user, GET /api/user/:id, DELETE /api/user/:id, PATCH /api/user/:id/role, POST /api/user/:id/reset-password
+├── userController.ts           # GET /api/user, POST /api/user, GET /api/user/:id, DELETE /api/user/:id, PATCH /api/user/:id/role, POST /api/user/:id/reset-password, PATCH /api/user/:id/name
 ├── authController.ts           # POST /api/auth/login, /create-user, /set-password, /refresh, /logout
 ├── gameResultController.ts     # GET /api/results/years, GET /api/results, POST /api/results
 ├── hallOfFameController.ts     # GET /api/hall-of-fame

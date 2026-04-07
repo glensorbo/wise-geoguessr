@@ -247,4 +247,79 @@ describe('UserController', () => {
       expect(typeof body.data.signupLink).toBe('string');
     });
   });
+
+  describe('updateUserName', () => {
+    const makeNameReq = (name: string) =>
+      new Request('http://localhost', {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ name }),
+      }) as Request & { params: Record<string, string> };
+
+    const ownerCtx = {
+      user: {
+        sub: mockUsers[0]!.id,
+        email: mockUsers[0]!.email,
+        name: mockUsers[0]!.name,
+        role: 'user',
+        tokenType: 'auth',
+      },
+    };
+
+    test('should return 400 for invalid UUID', async () => {
+      const response = await userController.updateUserName(
+        'not-a-uuid',
+        makeNameReq('New Name'),
+        ownerCtx,
+      );
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 400 for missing name in body', async () => {
+      const req = new Request('http://localhost', {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({}),
+      }) as Request & { params: Record<string, string> };
+      const response = await userController.updateUserName(
+        mockUsers[0]!.id!,
+        req,
+        ownerCtx,
+      );
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 403 when changing another user name', async () => {
+      const otherCtx = {
+        user: {
+          sub: mockUsers[1]!.id,
+          email: '',
+          name: '',
+          role: 'user',
+          tokenType: 'auth',
+        },
+      };
+      const response = await userController.updateUserName(
+        mockUsers[0]!.id!,
+        makeNameReq('New Name'),
+        otherCtx,
+      );
+      expect(response.status).toBe(403);
+    });
+
+    test('should return 200 with token and updated user', async () => {
+      const response = await userController.updateUserName(
+        mockUsers[0]!.id!,
+        makeNameReq('Updated Name'),
+        ownerCtx,
+      );
+      expect(response.status).toBe(200);
+      const body = (await response.json()) as {
+        data: { token: string; user: User };
+      };
+      expect(body.data.user.name).toBe('Updated Name');
+      expect(body.data.user).not.toHaveProperty('password');
+      expect(typeof body.data.token).toBe('string');
+    });
+  });
 });

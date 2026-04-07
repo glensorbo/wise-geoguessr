@@ -220,6 +220,7 @@ The following service-layer methods are currently wrapped with `withSpan`. Use t
 | `user.delete`         | `userService.deleteUser`        | `user.id`, `actor.user.id`              | —                     |
 | `user.update_role`    | `userService.updateUserRole`    | `user.id`, `user.role`, `actor.user.id` | —                     |
 | `user.reset_password` | `userService.resetUserPassword` | `user.id`                               | `mail.sent`           |
+| `user.update_name`    | `userService.updateUserName`    | `user.id`, `actor.user.id`              | —                     |
 | `game_result.create`  | `gameResultService.addResult`   | `game_result.has_game_link`             | `game_result.id`      |
 
 **Attribute conventions:**

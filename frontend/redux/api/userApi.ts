@@ -18,6 +18,13 @@ type UpdateRoleRequest = {
 
 type ResetPasswordResponse = { signupLink: string; mailSent: boolean };
 
+type UpdateNameRequest = {
+  id: string;
+  name: string;
+};
+
+type UpdateNameResponse = { token: string; user: User };
+
 const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getUsers: build.query<User[], void>({
@@ -53,6 +60,17 @@ const userApi = baseApi.injectEndpoints({
       transformResponse: (res: ApiSuccessResponse<ResetPasswordResponse>) =>
         res.data,
     }),
+
+    updateUserName: build.mutation<UpdateNameResponse, UpdateNameRequest>({
+      query: ({ id, name }) => ({
+        url: `/user/${id}/name`,
+        method: 'PATCH',
+        body: { name },
+      }),
+      transformResponse: (res: ApiSuccessResponse<UpdateNameResponse>) =>
+        res.data,
+      invalidatesTags: ['Users'],
+    }),
   }),
 });
 
@@ -62,4 +80,5 @@ export const {
   useDeleteUserMutation,
   useUpdateUserRoleMutation,
   useResetUserPasswordMutation,
+  useUpdateUserNameMutation,
 } = userApi;

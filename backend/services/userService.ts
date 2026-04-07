@@ -2,7 +2,11 @@ import { isMailEnabled, sendMail } from '@backend/mail';
 import { userRepository } from '@backend/repositories/userRepository';
 import { logger, withSpan } from '@backend/telemetry';
 import { errorOr } from '@backend/types/errorOr';
-import { generatePassphrase, signSignupToken } from '@backend/utils/auth';
+import {
+  generatePassphrase,
+  signAuthToken,
+  signSignupToken,
+} from '@backend/utils/auth';
 
 import type { userRepository as UserRepositoryType } from '@backend/repositories/userRepository';
 import type { ErrorOr } from '@backend/types/errorOr';
@@ -178,6 +182,42 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       logger.info('User password reset by admin', { userId: id });
       return errorOr({ signupLink, mailSent });
     });
+  },
+
+  async updateUserName(
+    id: string,
+    name: string,
+    requestingUserId: string,
+  ): Promise<ErrorOr<{ token: string; user: User }>> {
+    return withSpan(
+      'user.update_name',
+      { 'user.id': id, 'actor.user.id': requestingUserId },
+      async (_span) => {
+        if (id !== requestingUserId) {
+          return errorOr<{ token: string; user: User }>(null, [
+            { type: 'forbidden', message: 'You can only change your own name' },
+          ]);
+        }
+
+        const updated = await repo.updateName(id, name);
+        if (!updated) {
+          return errorOr<{ token: string; user: User }>(null, [
+            { type: 'not_found', message: 'User not found' },
+          ]);
+        }
+
+        const { password: _password, ...safeUser } = updated;
+        const token = await signAuthToken(
+          safeUser.id!,
+          safeUser.email,
+          safeUser.role,
+          safeUser.name,
+        );
+
+        logger.info('User name updated', { userId: id });
+        return errorOr({ token, user: safeUser });
+      },
+    );
   },
 });
 

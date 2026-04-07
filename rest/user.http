@@ -60,3 +60,18 @@ Authorization: Bearer {{JWT_TOKEN}}
 # Requires an admin Bearer JWT in Authorization header.
 POST {{BASE_URL}}/api/user/{{USER_ID}}/reset-password
 Authorization: Bearer {{JWT_TOKEN}}
+
+###
+
+### Update User Name
+# Changes the authenticated user's display name.
+# Users can only update their own name.
+# Returns a new JWT (reflecting the updated name) and the updated user.
+# Requires a valid Bearer JWT in Authorization header.
+PATCH {{BASE_URL}}/api/user/{{USER_ID}}/name
+Content-Type: application/json
+Authorization: Bearer {{JWT_TOKEN}}
+
+{
+  "name": "New Display Name"
+}

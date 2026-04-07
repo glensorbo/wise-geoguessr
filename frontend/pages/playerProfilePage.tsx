@@ -1,4 +1,5 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Box from '@mui/material/Box';
@@ -25,6 +26,7 @@ import {
   getPlayerColor,
 } from '@frontend/features/geoguessr/constants';
 import { usePlayerProfile } from '@frontend/features/geoguessr/hooks/usePlayerProfile';
+import { ChangeNameModal } from '@frontend/features/topNav/components/changeNameModal';
 import { ChangePasswordModal } from '@frontend/features/topNav/components/changePasswordModal';
 import { SetPasswordModal } from '@frontend/features/topNav/components/setPasswordModal';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
@@ -119,10 +121,12 @@ export const PlayerProfilePage = () => {
 
   const isSignupToken = decoded?.tokenType === 'signup';
   const ownName = decoded?.name as string | undefined;
+  const ownId = decoded?.sub as string | undefined;
   const isOwnProfile = !!ownName && ownName === playerName;
 
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [setPasswordOpen, setSetPasswordOpen] = useState(false);
+  const [changeNameOpen, setChangeNameOpen] = useState(false);
 
   const playerColor = getPlayerColor(playerName);
 
@@ -144,18 +148,30 @@ export const PlayerProfilePage = () => {
             <Typography color="text.secondary">Player profile</Typography>
           </Stack>
           {isOwnProfile && !isLoading && (
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={isSignupToken ? <LockOpenIcon /> : <LockIcon />}
-              onClick={() =>
-                isSignupToken
-                  ? setSetPasswordOpen(true)
-                  : setChangePasswordOpen(true)
-              }
-            >
-              {isSignupToken ? 'Set password' : 'Change password'}
-            </Button>
+            <Stack direction="row" spacing={1}>
+              {!isSignupToken && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  startIcon={<DriveFileRenameOutlineIcon />}
+                  onClick={() => setChangeNameOpen(true)}
+                >
+                  Change name
+                </Button>
+              )}
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={isSignupToken ? <LockOpenIcon /> : <LockIcon />}
+                onClick={() =>
+                  isSignupToken
+                    ? setSetPasswordOpen(true)
+                    : setChangePasswordOpen(true)
+                }
+              >
+                {isSignupToken ? 'Set password' : 'Change password'}
+              </Button>
+            </Stack>
           )}
         </Stack>
 
@@ -385,6 +401,14 @@ export const PlayerProfilePage = () => {
         open={setPasswordOpen}
         onClose={() => setSetPasswordOpen(false)}
       />
+      {isOwnProfile && ownId && (
+        <ChangeNameModal
+          open={changeNameOpen}
+          onClose={() => setChangeNameOpen(false)}
+          userId={ownId}
+          currentName={playerName}
+        />
+      )}
     </Container>
   );
 };

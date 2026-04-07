@@ -7,6 +7,7 @@ import {
 } from '@backend/utils/response';
 import {
   createUserAdminSchema,
+  updateNameSchema,
   updateRoleSchema,
   uuidSchema,
 } from '@backend/validation/schemas/user';
@@ -115,6 +116,38 @@ export const createUserController = (service: typeof UserServiceType) => ({
     }
 
     const result = await service.resetUserPassword(validation.data);
+
+    if (result.error) {
+      return serviceErrorResponse(result.error);
+    }
+
+    return successResponse(result.data);
+  },
+
+  async updateUserName(
+    id: string,
+    req: BunRequest,
+    ctx: Ctx,
+  ): Promise<Response> {
+    const idValidation = validateParam(uuidSchema, id);
+    if (idValidation.errors) {
+      return validationErrorResponse('Validation failed', idValidation.errors);
+    }
+
+    const bodyValidation = await validateRequest(updateNameSchema, req);
+    if (bodyValidation.errors) {
+      return validationErrorResponse(
+        'Validation failed',
+        bodyValidation.errors,
+      );
+    }
+
+    const requestingUser = ctx.user as AppJwtPayload;
+    const result = await service.updateUserName(
+      idValidation.data,
+      bodyValidation.data.name,
+      requestingUser.sub,
+    );
 
     if (result.error) {
       return serviceErrorResponse(result.error);
