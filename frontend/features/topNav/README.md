@@ -20,7 +20,7 @@ Top app bar, user menu, and account modals rendered on every page.
 - `TopNav` must always render `UserMenu`, even when the user is not authenticated.
 - `TopNav` must not render a separate Login button; guest auth entry lives in `UserMenu`.
 - `UserMenu` must show Login as the last standout action for guests.
-- `UserMenu` must show Logout as the last standout action for authenticated users.
+- `UserMenu` must show Sign out as the last standout action for authenticated users.
 - Change password and Set password must not appear unless the user is authenticated.
 - "Add user" must only appear when the authenticated user's JWT contains `role: 'admin'`.
 - The menu button must collapse the desktop sidebar and open the mobile drawer with the same control.

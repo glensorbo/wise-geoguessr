@@ -21,9 +21,27 @@ const stableVersion = latestRc.replace(/-rc\d+$/, '');
 console.log(`🏷️  Latest RC      : ${latestRc}`);
 console.log(`🚀 Releasing      : ${stableVersion}`);
 
+// Unset placeholder env vars so gh reads the real token from its config
+const { stdout: tokenRaw } =
+  await Bun.$`bash -c 'unset GH_TOKEN GITHUB_TOKEN; gh auth token'`.quiet();
+const ghToken = tokenRaw.toString().trim();
+
+// Inject the real token into a scoped shell for all gh calls
+const $ = Bun.$.env({ ...process.env, GH_TOKEN: ghToken });
+
+// Detect repo from git remote to avoid gh CLI auto-detection failures
+const { stdout: remoteRaw } = await $`git remote get-url origin`.quiet();
+const remote = remoteRaw.toString().trim();
+const repoMatch = remote.match(/github\.com[:/](.+?)(?:\.git)?$/);
+if (!repoMatch) {
+  console.error('❌ Could not detect GitHub repo from git remote.');
+  process.exit(1);
+}
+const repo = repoMatch[1];
+
 // Check if a release already exists for this version
 const existingRelease =
-  await Bun.$`gh release view ${stableVersion} --json tagName`
+  await $`gh release view ${stableVersion} --repo ${repo} --json tagName`
     .quiet()
     .nothrow();
 if (existingRelease.exitCode === 0) {
@@ -31,6 +49,6 @@ if (existingRelease.exitCode === 0) {
   process.exit(1);
 }
 
-await Bun.$`gh release create ${stableVersion} --generate-notes --latest --title ${stableVersion}`;
+await $`gh release create ${stableVersion} --repo ${repo} --generate-notes --latest --title ${stableVersion}`;
 
 console.log(`✅ Released ${stableVersion} — prod deploy triggered!`);
