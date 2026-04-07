@@ -272,10 +272,7 @@ export const UserMenu = () => {
         <Divider />
 
         {token && (
-          <MenuItem
-            sx={{ display: 'flex', alignItems: 'center' }}
-            onClick={handlePasswordAction}
-          >
+          <MenuItem onClick={handlePasswordAction}>
             <ListItemIcon>
               {isSignupToken ? (
                 <LockOpenIcon fontSize="small" />
