@@ -26,7 +26,12 @@ describe('verifyToken', () => {
   });
 
   test('returns typed payload for a valid auth token', async () => {
-    const token = await signAuthToken('user-1', 'test@example.com', 'user');
+    const token = await signAuthToken(
+      'user-1',
+      'test@example.com',
+      'user',
+      'Test User',
+    );
     const result = await verifyToken(token);
     expect(result.data).not.toBeNull();
   });
@@ -44,6 +49,7 @@ describe('verifyToken', () => {
       'user-8',
       'auth-verify@example.com',
       'admin',
+      'Admin Tester',
     );
     const result = await verifyToken(token);
     expect(result.data?.sub).toBe('user-8');

@@ -116,10 +116,10 @@ describe('TopNav', () => {
 
     await click(menuButton!);
 
-    expect(document.body.textContent).toContain('Change theme');
+    expect(document.body.textContent).toContain('Theme');
     expect(document.body.textContent).toContain('Login');
     expect(document.body.textContent).not.toContain('Change password');
-    expect(document.body.textContent).not.toContain('Logout');
+    expect(document.body.textContent).not.toContain('Sign out');
 
     const loginItem = findMenuItemByText('Login');
     expect(loginItem).toBeDefined();
@@ -154,10 +154,10 @@ describe('TopNav', () => {
     await click(menuButton!);
 
     expect(document.body.textContent).toContain('Change password');
-    expect(document.body.textContent).toContain('Logout');
+    expect(document.body.textContent).toContain('Sign out');
     expect(document.body.textContent).not.toContain('Login');
 
-    const logoutItem = findMenuItemByText('Logout');
+    const logoutItem = findMenuItemByText('Sign out');
     expect(logoutItem).toBeDefined();
     expect(logoutItem?.getAttribute('data-highlight-tone')).toBe('danger');
   });

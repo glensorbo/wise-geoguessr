@@ -7,15 +7,17 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { decodeJwt } from 'jose';
 import React, { useState } from 'react';
@@ -33,20 +35,6 @@ import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
 import type { AppDispatch, RootState } from '@frontend/redux/store';
 
 type ThemeMode = 'system' | 'light' | 'dark';
-
-const THEME_OPTIONS: {
-  value: ThemeMode;
-  label: string;
-  icon: React.ReactElement;
-}[] = [
-  {
-    value: 'system',
-    label: 'System',
-    icon: <SettingsBrightnessIcon fontSize="small" />,
-  },
-  { value: 'light', label: 'Light', icon: <LightModeIcon fontSize="small" /> },
-  { value: 'dark', label: 'Dark', icon: <DarkModeIcon fontSize="small" /> },
-];
 
 export const UserMenu = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -66,55 +54,46 @@ export const UserMenu = () => {
     return seed;
   });
 
-  const avatarSeed = (() => {
+  const decoded = (() => {
     if (!token) {
-      return guestSeed;
+      return null;
     }
     try {
-      return (decodeJwt(token).email as string | undefined) ?? guestSeed;
+      return decodeJwt(token);
     } catch {
-      return guestSeed;
+      return null;
     }
   })();
 
-  const isSignupToken =
-    !!token &&
-    (() => {
-      try {
-        return decodeJwt(token).tokenType === 'signup';
-      } catch {
-        return false;
-      }
-    })();
+  const email = (decoded?.email as string | undefined) ?? '';
+  const displayName =
+    (decoded?.name as string | undefined) || email.split('@')[0] || 'Guest';
+  const role = (decoded?.role as string | undefined) ?? '';
+  const avatarSeed = email || guestSeed;
 
-  const isAdmin =
-    !!token &&
-    (() => {
-      try {
-        return decodeJwt(token).role === 'admin';
-      } catch {
-        return false;
-      }
-    })();
+  const isSignupToken = decoded?.tokenType === 'signup';
+  const isAdmin = decoded?.role === 'admin';
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [setPasswordOpen, setSetPasswordOpen] = useState(false);
   const [addUserOpen, setAddUserOpen] = useState(false);
-  const [themeAccordionOpen, setThemeAccordionOpen] = useState(false);
 
   const menuOpen = Boolean(anchorEl);
 
   const openMenu = (e: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(e.currentTarget);
 
-  const closeMenu = () => {
-    setAnchorEl(null);
-    setThemeAccordionOpen(false);
-  };
+  const closeMenu = () => setAnchorEl(null);
 
-  const handleThemeModeSelect = (mode: ThemeMode) => {
+  const handleThemeModeSelect = (
+    _: React.MouseEvent<HTMLElement>,
+    mode: ThemeMode | null,
+  ) => {
+    if (!mode) {
+      return;
+    }
     trackEvent('theme_changed', { mode });
     dispatch(setThemeMode(mode));
   };
@@ -179,9 +158,61 @@ export const UserMenu = () => {
 
   return (
     <>
-      <IconButton onClick={openMenu} aria-label="Open user menu" size="small">
-        <PlayerAvatar name={avatarSeed} size={34} />
-      </IconButton>
+      {/* ── Glassmorphic pill trigger ── */}
+      <Button
+        onClick={openMenu}
+        aria-label="Open user menu"
+        size="small"
+        sx={(theme) => ({
+          borderRadius: 99,
+          backdropFilter: 'blur(8px)',
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          color: 'inherit',
+          gap: 0.75,
+          px: 1.25,
+          py: 0.5,
+          textTransform: 'none',
+          minWidth: 0,
+          '&:hover': {
+            backgroundColor: 'rgba(255,255,255,0.18)',
+          },
+          [theme.breakpoints.down('sm')]: {
+            px: 0.75,
+          },
+        })}
+      >
+        <PlayerAvatar name={avatarSeed} size={28} />
+        {token && (
+          <Typography
+            variant="body2"
+            noWrap
+            sx={{ fontWeight: 500, maxWidth: 120 }}
+          >
+            {displayName}
+          </Typography>
+        )}
+        {token && role && (
+          <Typography
+            variant="caption"
+            noWrap
+            sx={{
+              opacity: 0.75,
+              display: { xs: 'none', sm: 'block' },
+              textTransform: 'capitalize',
+            }}
+          >
+            {role}
+          </Typography>
+        )}
+        <ExpandMoreIcon
+          fontSize="small"
+          sx={{
+            transition: 'transform 0.2s',
+            transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        />
+      </Button>
 
       <Menu
         anchorEl={anchorEl}
@@ -189,46 +220,92 @@ export const UserMenu = () => {
         onClose={closeMenu}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        slotProps={{ paper: { sx: { minWidth: 230, mt: 0.5 } } }}
+        slotProps={{ paper: { sx: { minWidth: 240, mt: 0.5 } } }}
       >
-        {/* ── Theme accordion ── */}
-        <Accordion
-          disableGutters
-          elevation={0}
-          expanded={themeAccordionOpen}
-          onChange={(_, expanded) => setThemeAccordionOpen(expanded)}
+        {/* ── Profile header ── */}
+        {token && (
+          <>
+            <Box
+              sx={{
+                px: 2,
+                py: 1.5,
+                display: 'flex',
+                gap: 1.5,
+                alignItems: 'center',
+              }}
+            >
+              <PlayerAvatar name={avatarSeed} size={44} />
+              <Box sx={{ minWidth: 0 }}>
+                <Typography variant="body2" fontWeight={700} noWrap>
+                  {displayName}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  noWrap
+                  display="block"
+                >
+                  {email}
+                </Typography>
+                {role && (
+                  <Chip
+                    label={role}
+                    size="small"
+                    color={isAdmin ? 'warning' : 'default'}
+                    sx={{
+                      mt: 0.5,
+                      height: 18,
+                      fontSize: '0.65rem',
+                      textTransform: 'capitalize',
+                    }}
+                  />
+                )}
+              </Box>
+            </Box>
+            <Divider />
+          </>
+        )}
+
+        {/* ── Inline theme toggle ── */}
+        <Box
           sx={{
-            '&::before': { display: 'none' },
-            background: 'transparent',
+            px: 2,
+            py: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 1,
           }}
         >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            sx={{
-              px: 2,
-              minHeight: 42,
-              '& .MuiAccordionSummary-content': { my: 0 },
-            }}
+          <Typography variant="body2" color="text.secondary">
+            Theme
+          </Typography>
+          <ToggleButtonGroup
+            value={themeMode}
+            exclusive
+            onChange={handleThemeModeSelect}
+            size="small"
+            aria-label="Theme"
           >
-            <Typography variant="body2">Change theme</Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ p: 0 }}>
-            {THEME_OPTIONS.map(({ value, label, icon }) => (
-              <MenuItem
-                key={value}
-                selected={themeMode === value}
-                onClick={() => handleThemeModeSelect(value)}
-                sx={{ pl: 3 }}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText
-                  primary={label}
-                  primaryTypographyProps={{ variant: 'body2' }}
-                />
-              </MenuItem>
-            ))}
-          </AccordionDetails>
-        </Accordion>
+            <Tooltip title="System">
+              <ToggleButton value="system" aria-label="System theme">
+                <SettingsBrightnessIcon fontSize="small" />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip title="Light">
+              <ToggleButton value="light" aria-label="Light theme">
+                <LightModeIcon fontSize="small" />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip title="Dark">
+              <ToggleButton value="dark" aria-label="Dark theme">
+                <DarkModeIcon fontSize="small" />
+              </ToggleButton>
+            </Tooltip>
+          </ToggleButtonGroup>
+        </Box>
+
+        <Divider />
 
         {passwordMenuItems}
 
@@ -262,7 +339,7 @@ export const UserMenu = () => {
             )}
           </ListItemIcon>
           <ListItemText
-            primary={token ? 'Logout' : 'Login'}
+            primary={token ? 'Sign out' : 'Login'}
             primaryTypographyProps={{ variant: 'body2', fontWeight: 600 }}
           />
         </MenuItem>
