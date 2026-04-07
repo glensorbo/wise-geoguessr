@@ -8,8 +8,9 @@ export const signAuthToken = (
   userId: string,
   email: string,
   role: UserRole,
+  name: string,
 ): Promise<string> =>
-  new SignJWT({ email, tokenType: 'auth', role })
+  new SignJWT({ email, name, tokenType: 'auth', role })
     .setProtectedHeader({ alg: 'HS256' })
     .setSubject(userId)
     .setIssuedAt()
