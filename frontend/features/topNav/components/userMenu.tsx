@@ -190,47 +190,45 @@ export const UserMenu = () => {
       >
         {/* ── Profile header ── */}
         {token && (
-          <>
-            <Box
-              sx={{
-                px: 2,
-                py: 1.5,
-                display: 'flex',
-                gap: 1.5,
-                alignItems: 'center',
-              }}
-            >
-              <PlayerAvatar name={avatarSeed} size={44} />
-              <Box sx={{ minWidth: 0 }}>
-                <Typography variant="body2" fontWeight={700} noWrap>
-                  {displayName}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  noWrap
-                  display="block"
-                >
-                  {email}
-                </Typography>
-                {role && (
-                  <Chip
-                    label={role}
-                    size="small"
-                    color={isAdmin ? 'warning' : 'default'}
-                    sx={{
-                      mt: 0.5,
-                      height: 18,
-                      fontSize: '0.65rem',
-                      textTransform: 'capitalize',
-                    }}
-                  />
-                )}
-              </Box>
+          <Box
+            sx={{
+              px: 2,
+              py: 1.5,
+              display: 'flex',
+              gap: 1.5,
+              alignItems: 'center',
+            }}
+          >
+            <PlayerAvatar name={avatarSeed} size={44} />
+            <Box sx={{ minWidth: 0 }}>
+              <Typography variant="body2" fontWeight={700} noWrap>
+                {displayName}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                noWrap
+                display="block"
+              >
+                {email}
+              </Typography>
+              {role && (
+                <Chip
+                  label={role}
+                  size="small"
+                  color={isAdmin ? 'warning' : 'default'}
+                  sx={{
+                    mt: 0.5,
+                    height: 18,
+                    fontSize: '0.65rem',
+                    textTransform: 'capitalize',
+                  }}
+                />
+              )}
             </Box>
-            <Divider />
-          </>
+          </Box>
         )}
+        {token && <Divider />}
 
         {/* ── Inline theme toggle ── */}
         <Box
@@ -275,7 +273,7 @@ export const UserMenu = () => {
 
         {token && (
           <MenuItem
-            sx={{ alignItems: 'center' }}
+            sx={{ display: 'flex', alignItems: 'center' }}
             onClick={handlePasswordAction}
           >
             <ListItemIcon>
