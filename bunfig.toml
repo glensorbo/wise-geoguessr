@@ -3,3 +3,4 @@ env = "BUN_PUBLIC_*"
 
 [test]
 preload = ["./frontend/test-setup.ts"]
+pathIgnorePatterns = ["e2e/**"]

@@ -11,14 +11,74 @@ type CreateUserRequest = {
 
 type CreateUserResponse = User & { signupLink: string; mailSent: boolean };
 
+type UpdateRoleRequest = {
+  id: string;
+  role: 'admin' | 'user';
+};
+
+type ResetPasswordResponse = { signupLink: string; mailSent: boolean };
+
+type UpdateNameRequest = {
+  id: string;
+  name: string;
+};
+
+type UpdateNameResponse = { token: string; user: User };
+
 const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    getUsers: build.query<User[], void>({
+      query: () => '/user',
+      transformResponse: (res: ApiSuccessResponse<User[]>) => res.data,
+      providesTags: ['Users'],
+    }),
+
     createUser: build.mutation<CreateUserResponse, CreateUserRequest>({
       query: (body) => ({ url: '/user', method: 'POST', body }),
       transformResponse: (res: ApiSuccessResponse<CreateUserResponse>) =>
         res.data,
+      invalidatesTags: ['Users'],
+    }),
+
+    deleteUser: build.mutation<null, string>({
+      query: (id) => ({ url: `/user/${id}`, method: 'DELETE' }),
+      invalidatesTags: ['Users'],
+    }),
+
+    updateUserRole: build.mutation<User, UpdateRoleRequest>({
+      query: ({ id, role }) => ({
+        url: `/user/${id}/role`,
+        method: 'PATCH',
+        body: { role },
+      }),
+      transformResponse: (res: ApiSuccessResponse<User>) => res.data,
+      invalidatesTags: ['Users'],
+    }),
+
+    resetUserPassword: build.mutation<ResetPasswordResponse, string>({
+      query: (id) => ({ url: `/user/${id}/reset-password`, method: 'POST' }),
+      transformResponse: (res: ApiSuccessResponse<ResetPasswordResponse>) =>
+        res.data,
+    }),
+
+    updateUserName: build.mutation<UpdateNameResponse, UpdateNameRequest>({
+      query: ({ id, name }) => ({
+        url: `/user/${id}/name`,
+        method: 'PATCH',
+        body: { name },
+      }),
+      transformResponse: (res: ApiSuccessResponse<UpdateNameResponse>) =>
+        res.data,
+      invalidatesTags: ['Users'],
     }),
   }),
 });
 
-export const { useCreateUserMutation } = userApi;
+export const {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+  useUpdateUserRoleMutation,
+  useResetUserPasswordMutation,
+  useUpdateUserNameMutation,
+} = userApi;

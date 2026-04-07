@@ -77,4 +77,36 @@ export const userRepository = {
       .set({ password: hashedPassword, updatedAt: dayjs().toISOString() })
       .where(eq(users.id, id));
   },
+
+  async updateRole(
+    id: string,
+    role: 'admin' | 'user',
+  ): Promise<NewUser | undefined> {
+    const db = getDb();
+    const result = await db
+      .update(users)
+      .set({ role, updatedAt: dayjs().toISOString() })
+      .where(eq(users.id, id))
+      .returning();
+    return result[0];
+  },
+
+  async deleteById(id: string): Promise<boolean> {
+    const db = getDb();
+    const result = await db
+      .delete(users)
+      .where(eq(users.id, id))
+      .returning({ id: users.id });
+    return result.length > 0;
+  },
+
+  async updateName(id: string, name: string): Promise<NewUser | undefined> {
+    const db = getDb();
+    const result = await db
+      .update(users)
+      .set({ name, updatedAt: dayjs().toISOString() })
+      .where(eq(users.id, id))
+      .returning();
+    return result[0];
+  },
 };

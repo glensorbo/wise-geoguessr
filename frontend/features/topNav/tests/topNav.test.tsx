@@ -153,7 +153,7 @@ describe('TopNav', () => {
 
     await click(menuButton!);
 
-    expect(document.body.textContent).toContain('Change password');
+    expect(document.body.textContent).toContain('My profile');
     expect(document.body.textContent).toContain('Sign out');
     expect(document.body.textContent).not.toContain('Login');
 

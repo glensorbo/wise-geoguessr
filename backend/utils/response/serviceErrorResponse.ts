@@ -1,3 +1,4 @@
+import { forbiddenError } from './forbiddenError';
 import { notFoundError } from './notFoundError';
 import { unauthorizedError } from './unauthorizedError';
 import { validationErrorResponse } from './validationErrorResponse';
@@ -47,6 +48,9 @@ export const serviceErrorResponse = (errors: AppError[]): Response => {
 
     case 'unauthorized':
       return unauthorizedError(first.message);
+
+    case 'forbidden':
+      return forbiddenError(first.message);
 
     default:
       return new Response('Internal Server Error', { status: 500 });

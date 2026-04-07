@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { AnalyticsProvider } from './features/analytics/analyticsProvider';
 import { PageLayout } from './layout/pageLayout';
+import { AdminPage } from './pages/adminPage';
 import { HallOfFamePage } from './pages/hallOfFamePage';
 import { HeadToHeadPage } from './pages/headToHeadPage';
 import { HomePage } from './pages/homePage';
@@ -37,6 +38,7 @@ export const AppRouter = () => (
         <Route path="head-to-head" element={<HeadToHeadPage />} />
         <Route path="players/:name" element={<PlayerProfilePage />} />
         <Route path="recap/:year" element={<RecapPage />} />
+        <Route path="admin" element={<AdminPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

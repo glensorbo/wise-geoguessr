@@ -1,11 +1,10 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,11 +21,10 @@ import Typography from '@mui/material/Typography';
 import { decodeJwt } from 'jose';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
 import { useLogout } from '../hooks/useLogout';
 import { AddUserModal } from './addUserModal';
-import { ChangePasswordModal } from './changePasswordModal';
-import { SetPasswordModal } from './setPasswordModal';
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
 import { LoginModal } from '@frontend/features/login/components/loginModal';
 import { setThemeMode } from '@frontend/redux/slices/themeSlice';
@@ -75,9 +73,7 @@ export const UserMenu = () => {
   const isAdmin = decoded?.role === 'admin';
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [setPasswordOpen, setSetPasswordOpen] = useState(false);
   const [addUserOpen, setAddUserOpen] = useState(false);
 
   const menuOpen = Boolean(anchorEl);
@@ -98,15 +94,6 @@ export const UserMenu = () => {
     dispatch(setThemeMode(mode));
   };
 
-  const handlePasswordAction = () => {
-    closeMenu();
-    if (isSignupToken) {
-      setSetPasswordOpen(true);
-    } else {
-      setChangePasswordOpen(true);
-    }
-  };
-
   const handleLogout = () => {
     closeMenu();
     logout();
@@ -121,40 +108,6 @@ export const UserMenu = () => {
     closeMenu();
     setAddUserOpen(true);
   };
-
-  const adminMenuItems = isAdmin
-    ? [
-        <MenuItem key="add-user" onClick={handleAddUser}>
-          <ListItemIcon>
-            <PersonAddIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText
-            primary="Add user"
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>,
-        <Divider key="admin-divider" />,
-      ]
-    : [];
-
-  const passwordMenuItems = token
-    ? [
-        <MenuItem key="password-action" onClick={handlePasswordAction}>
-          <ListItemIcon>
-            {isSignupToken ? (
-              <LockOpenIcon fontSize="small" />
-            ) : (
-              <LockIcon fontSize="small" />
-            )}
-          </ListItemIcon>
-          <ListItemText
-            primary={isSignupToken ? 'Set password' : 'Change password'}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>,
-        <Divider key="password-divider" />,
-      ]
-    : [];
 
   return (
     <>
@@ -224,47 +177,45 @@ export const UserMenu = () => {
       >
         {/* ── Profile header ── */}
         {token && (
-          <>
-            <Box
-              sx={{
-                px: 2,
-                py: 1.5,
-                display: 'flex',
-                gap: 1.5,
-                alignItems: 'center',
-              }}
-            >
-              <PlayerAvatar name={avatarSeed} size={44} />
-              <Box sx={{ minWidth: 0 }}>
-                <Typography variant="body2" fontWeight={700} noWrap>
-                  {displayName}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  noWrap
-                  display="block"
-                >
-                  {email}
-                </Typography>
-                {role && (
-                  <Chip
-                    label={role}
-                    size="small"
-                    color={isAdmin ? 'warning' : 'default'}
-                    sx={{
-                      mt: 0.5,
-                      height: 18,
-                      fontSize: '0.65rem',
-                      textTransform: 'capitalize',
-                    }}
-                  />
-                )}
-              </Box>
+          <Box
+            sx={{
+              px: 2,
+              py: 1.5,
+              display: 'flex',
+              gap: 1.5,
+              alignItems: 'center',
+            }}
+          >
+            <PlayerAvatar name={avatarSeed} size={44} />
+            <Box sx={{ minWidth: 0 }}>
+              <Typography variant="body2" fontWeight={700} noWrap>
+                {displayName}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                noWrap
+                display="block"
+              >
+                {email}
+              </Typography>
+              {role && (
+                <Chip
+                  label={role}
+                  size="small"
+                  color={isAdmin ? 'warning' : 'default'}
+                  sx={{
+                    mt: 0.5,
+                    height: 18,
+                    fontSize: '0.65rem',
+                    textTransform: 'capitalize',
+                  }}
+                />
+              )}
             </Box>
-            <Divider />
-          </>
+          </Box>
         )}
+        {token && <Divider />}
 
         {/* ── Inline theme toggle ── */}
         <Box
@@ -307,9 +258,35 @@ export const UserMenu = () => {
 
         <Divider />
 
-        {passwordMenuItems}
+        {token && !isSignupToken && (
+          <MenuItem
+            component={Link}
+            to={`/players/${encodeURIComponent(displayName)}`}
+            onClick={closeMenu}
+          >
+            <ListItemIcon>
+              <PersonRoundedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary="My profile"
+              primaryTypographyProps={{ variant: 'body2' }}
+            />
+          </MenuItem>
+        )}
+        {token && !isSignupToken && <Divider />}
 
-        {adminMenuItems}
+        {isAdmin && (
+          <MenuItem onClick={handleAddUser}>
+            <ListItemIcon>
+              <PersonAddIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary="Add user"
+              primaryTypographyProps={{ variant: 'body2' }}
+            />
+          </MenuItem>
+        )}
+        {isAdmin && <Divider />}
 
         <MenuItem
           data-highlight-tone={token ? 'danger' : 'primary'}
@@ -345,15 +322,7 @@ export const UserMenu = () => {
         </MenuItem>
       </Menu>
 
-      <ChangePasswordModal
-        open={changePasswordOpen}
-        onClose={() => setChangePasswordOpen(false)}
-      />
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
-      <SetPasswordModal
-        open={setPasswordOpen}
-        onClose={() => setSetPasswordOpen(false)}
-      />
       <AddUserModal open={addUserOpen} onClose={() => setAddUserOpen(false)} />
     </>
   );

@@ -2,7 +2,11 @@ import { isMailEnabled, sendMail } from '@backend/mail';
 import { userRepository } from '@backend/repositories/userRepository';
 import { logger, withSpan } from '@backend/telemetry';
 import { errorOr } from '@backend/types/errorOr';
-import { generatePassphrase, signSignupToken } from '@backend/utils/auth';
+import {
+  generatePassphrase,
+  signAuthToken,
+  signSignupToken,
+} from '@backend/utils/auth';
 
 import type { userRepository as UserRepositoryType } from '@backend/repositories/userRepository';
 import type { ErrorOr } from '@backend/types/errorOr';
@@ -70,6 +74,150 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
 
       return errorOr({ ...safeUser, signupLink, mailSent });
     });
+  },
+
+  async deleteUser(
+    id: string,
+    requestingUserId: string,
+  ): Promise<ErrorOr<null>> {
+    return withSpan(
+      'user.delete',
+      { 'user.id': id, 'actor.user.id': requestingUserId },
+      async (_span) => {
+        if (id === requestingUserId) {
+          return errorOr<null>(null, [
+            {
+              type: 'forbidden',
+              message: 'You cannot delete your own account',
+            },
+          ]);
+        }
+
+        const user = await repo.getById(id);
+        if (!user) {
+          return errorOr<null>(null, [
+            { type: 'not_found', message: 'User not found' },
+          ]);
+        }
+
+        await repo.deleteById(id);
+        logger.info('User deleted', {
+          userId: id,
+          deletedBy: requestingUserId,
+        });
+        return errorOr(null);
+      },
+    );
+  },
+
+  async updateUserRole(
+    id: string,
+    role: 'admin' | 'user',
+    requestingUserId: string,
+  ): Promise<ErrorOr<User>> {
+    return withSpan(
+      'user.update_role',
+      { 'user.id': id, 'user.role': role, 'actor.user.id': requestingUserId },
+      async (_span) => {
+        if (id === requestingUserId) {
+          return errorOr<User>(null, [
+            { type: 'forbidden', message: 'You cannot change your own role' },
+          ]);
+        }
+
+        const updated = await repo.updateRole(id, role);
+        if (!updated) {
+          return errorOr<User>(null, [
+            { type: 'not_found', message: 'User not found' },
+          ]);
+        }
+
+        const { password: _password, ...safeUser } = updated;
+        logger.info('User role updated', {
+          userId: id,
+          role,
+          updatedBy: requestingUserId,
+        });
+        return errorOr(safeUser);
+      },
+    );
+  },
+
+  async resetUserPassword(
+    id: string,
+  ): Promise<ErrorOr<{ signupLink: string; mailSent: boolean }>> {
+    return withSpan('user.reset_password', { 'user.id': id }, async (span) => {
+      const user = await repo.getById(id);
+      if (!user) {
+        return errorOr<{ signupLink: string; mailSent: boolean }>(null, [
+          { type: 'not_found', message: 'User not found' },
+        ]);
+      }
+
+      const passphrase = generatePassphrase();
+      const hashedPassword = await Bun.password.hash(passphrase);
+      await repo.updatePassword(id, hashedPassword);
+
+      const token = await signSignupToken(user.id!, user.email);
+      const appUrl = Bun.env.APP_URL ?? 'http://localhost:3000';
+      const signupLink = `${appUrl}/set-password?token=${token}`;
+
+      let mailSent = false;
+      try {
+        await sendMail({
+          to: user.email,
+          subject: 'Your password has been reset',
+          html: `<p>Hi ${user.name},</p><p>An admin has reset your password. Click the link below to set a new one:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 1 hour.</p>`,
+          text: `Hi ${user.name},\n\nAn admin has reset your password. Set a new one at:\n${signupLink}\n\nThis link expires in 1 hour.`,
+        });
+        mailSent = isMailEnabled();
+      } catch (err) {
+        logger.warn('📧 Failed to send password reset email', {
+          userId: id,
+          error: String(err),
+        });
+      }
+
+      span.setAttribute('mail.sent', mailSent);
+      logger.info('User password reset by admin', { userId: id });
+      return errorOr({ signupLink, mailSent });
+    });
+  },
+
+  async updateUserName(
+    id: string,
+    name: string,
+    requestingUserId: string,
+  ): Promise<ErrorOr<{ token: string; user: User }>> {
+    return withSpan(
+      'user.update_name',
+      { 'user.id': id, 'actor.user.id': requestingUserId },
+      async (_span) => {
+        if (id !== requestingUserId) {
+          return errorOr<{ token: string; user: User }>(null, [
+            { type: 'forbidden', message: 'You can only change your own name' },
+          ]);
+        }
+
+        const updated = await repo.updateName(id, name);
+        if (!updated) {
+          return errorOr<{ token: string; user: User }>(null, [
+            { type: 'not_found', message: 'User not found' },
+          ]);
+        }
+
+        const { password: _password, ...safeUser } = updated;
+        const token = await signAuthToken(
+          safeUser.id!,
+          safeUser.email,
+          safeUser.role,
+          safeUser.name,
+        );
+
+        logger.info('User name updated', { userId: id });
+        return errorOr({ token, user: safeUser });
+      },
+    );
   },
 });
 

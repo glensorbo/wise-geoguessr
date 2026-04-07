@@ -118,6 +118,6 @@ const baseQueryWithReauth: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['GameResults', 'GameResultYears', 'HallOfFame'],
+  tagTypes: ['GameResults', 'GameResultYears', 'HallOfFame', 'Users'],
   endpoints: () => ({}),
 });

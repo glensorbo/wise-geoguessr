@@ -7,3 +7,11 @@ export const createUserAdminSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   role: z.enum(['admin', 'user']).default('user'),
 });
+
+export const updateRoleSchema = z.object({
+  role: z.enum(['admin', 'user']),
+});
+
+export const updateNameSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(255, 'Name is too long'),
+});

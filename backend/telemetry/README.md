@@ -210,6 +210,28 @@ If you need a span type in the callback, it is passed as the first argument (`sp
 
 ---
 
+## Instrumented Service Spans
+
+The following service-layer methods are currently wrapped with `withSpan`. Use this as a reference when browsing traces in SigNoz or when adding new spans.
+
+| Span name             | Service method                  | Initial attributes                      | Inside `setAttribute` |
+| --------------------- | ------------------------------- | --------------------------------------- | --------------------- |
+| `user.create`         | `userService.createUser`        | `user.role`                             | `user.id`             |
+| `user.delete`         | `userService.deleteUser`        | `user.id`, `actor.user.id`              | —                     |
+| `user.update_role`    | `userService.updateUserRole`    | `user.id`, `user.role`, `actor.user.id` | —                     |
+| `user.reset_password` | `userService.resetUserPassword` | `user.id`                               | `mail.sent`           |
+| `user.update_name`    | `userService.updateUserName`    | `user.id`, `actor.user.id`              | —                     |
+| `game_result.create`  | `gameResultService.addResult`   | `game_result.has_game_link`             | `game_result.id`      |
+
+**Attribute conventions:**
+
+- `user.id` — the target user being operated on (never an email or token)
+- `actor.user.id` — the authenticated admin performing a privileged write
+- `mail.sent` — boolean; whether the outbound email was actually dispatched
+- `user.role` — `"admin"` or `"user"`, used to categorise the operation
+
+---
+
 ## Initialisation Order
 
 `initTelemetry()` **must be called before any module that logs**, so it is invoked at the very top of `backend/server.ts` before `validateEnv()` and `pingDb()`.

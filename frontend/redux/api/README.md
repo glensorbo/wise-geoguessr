@@ -4,14 +4,13 @@ RTK Query API definitions. One file per backend controller.
 
 ## Structure
 
-| File               | Endpoints                                                                   | Exported hooks                                                   |
-| ------------------ | --------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `baseApi.ts`       | —                                                                           | —                                                                |
-| `authApi.ts`       | `POST /api/auth/create-user`, `POST /api/auth/set-password`                 | `useCreateUserMutation`, `useSetPasswordMutation`                |
-| `userApi.ts`       | `POST /api/user`                                                            | `useCreateUserMutation`                                          |
-| `usersApi.ts`      | `GET /api/user`, `GET /api/user/:id`                                        | `useGetUsersQuery`, `useGetUserByIdQuery`                        |
-| `gameResultApi.ts` | `GET /api/results/years`, `GET /api/results?year=YYYY`, `POST /api/results` | `useGetYearsQuery`, `useGetResultsQuery`, `useAddResultMutation` |
-| `hallOfFameApi.ts` | `GET /api/hall-of-fame`                                                     | `useGetHallOfFameQuery`                                          |
+| File               | Endpoints                                                                                                                                                                   | Exported hooks                                                                                                                                                                        |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseApi.ts`       | —                                                                                                                                                                           | —                                                                                                                                                                                     |
+| `authApi.ts`       | `POST /api/auth/create-user`, `POST /api/auth/set-password`                                                                                                                 | `useCreateUserMutation`, `useSetPasswordMutation`                                                                                                                                     |
+| `userApi.ts`       | `GET /api/user`, `GET /api/user/:id`, `POST /api/user`, `DELETE /api/user/:id`, `PATCH /api/user/:id/role`, `POST /api/user/:id/reset-password`, `PATCH /api/user/:id/name` | `useGetUsersQuery`, `useGetUserByIdQuery`, `useCreateUserMutation`, `useDeleteUserMutation`, `useUpdateUserRoleMutation`, `useResetUserPasswordMutation`, `useUpdateUserNameMutation` |
+| `gameResultApi.ts` | `GET /api/results/years`, `GET /api/results?year=YYYY`, `POST /api/results`                                                                                                 | `useGetYearsQuery`, `useGetResultsQuery`, `useAddResultMutation`                                                                                                                      |
+| `hallOfFameApi.ts` | `GET /api/hall-of-fame`                                                                                                                                                     | `useGetHallOfFameQuery`                                                                                                                                                               |
 
 ## Architecture
 
