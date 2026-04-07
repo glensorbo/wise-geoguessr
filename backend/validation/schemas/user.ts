@@ -7,3 +7,7 @@ export const createUserAdminSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   role: z.enum(['admin', 'user']).default('user'),
 });
+
+export const updateRoleSchema = z.object({
+  role: z.enum(['admin', 'user']),
+});

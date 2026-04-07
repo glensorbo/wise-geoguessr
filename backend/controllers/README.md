@@ -6,7 +6,7 @@ The controller layer is the HTTP boundary of the application. Controllers receiv
 
 ```
 controllers/
-├── userController.ts           # GET /api/user, POST /api/user, GET /api/user/:id
+├── userController.ts           # GET /api/user, POST /api/user, GET /api/user/:id, DELETE /api/user/:id, PATCH /api/user/:id/role, POST /api/user/:id/reset-password
 ├── authController.ts           # POST /api/auth/login, /create-user, /set-password, /refresh, /logout
 ├── gameResultController.ts     # GET /api/results/years, GET /api/results, POST /api/results
 ├── hallOfFameController.ts     # GET /api/hall-of-fame
@@ -77,6 +77,7 @@ Always use the helpers from `@backend/utils/response/` — never construct `Resp
 | `validationErrorResponse(msg, errors[])` | 400    | Input validation failed                 |
 | `serviceErrorResponse(errors[])`         | varies | Maps service-layer `AppError[]` to HTTP |
 | `unauthorizedError(msg, details?)`       | 401    | Auth check failed                       |
+| `forbiddenError(msg, details?)`          | 403    | Action not permitted for this role      |
 
 ## 🧪 Testing
 

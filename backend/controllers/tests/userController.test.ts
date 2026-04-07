@@ -104,4 +104,147 @@ describe('UserController', () => {
       expect(body.data).not.toHaveProperty('password');
     });
   });
+
+  describe('deleteUser', () => {
+    const adminCtx = {
+      user: {
+        sub: 'admin-id-000',
+        email: 'admin@example.com',
+        name: 'Admin',
+        role: 'admin',
+        tokenType: 'auth',
+      },
+    };
+
+    test('should return 400 for invalid UUID', async () => {
+      const response = await userController.deleteUser('not-a-uuid', adminCtx);
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 404 for non-existent user', async () => {
+      const response = await userController.deleteUser(
+        '00000000-0000-0000-0000-000000000000',
+        adminCtx,
+      );
+      expect(response.status).toBe(404);
+    });
+
+    test('should return 403 when trying to delete self', async () => {
+      const selfCtx = {
+        user: {
+          sub: mockUsers[0]!.id,
+          email: '',
+          name: '',
+          role: 'admin',
+          tokenType: 'auth',
+        },
+      };
+      const response = await userController.deleteUser(
+        mockUsers[0]!.id!,
+        selfCtx,
+      );
+      expect(response.status).toBe(403);
+    });
+
+    test('should return 204 for a valid delete', async () => {
+      const response = await userController.deleteUser(
+        mockUsers[0]!.id!,
+        adminCtx,
+      );
+      expect(response.status).toBe(204);
+    });
+  });
+
+  describe('updateUserRole', () => {
+    const adminCtx = {
+      user: {
+        sub: 'admin-id-000',
+        email: 'admin@example.com',
+        name: 'Admin',
+        role: 'admin',
+        tokenType: 'auth',
+      },
+    };
+
+    const makeRoleReq = (role: string) =>
+      new Request('http://localhost/api/user/id/role', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role }),
+      }) as Request & { params: Record<string, string> };
+
+    test('should return 400 for invalid UUID', async () => {
+      const response = await userController.updateUserRole(
+        'not-a-uuid',
+        makeRoleReq('admin'),
+        adminCtx,
+      );
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 400 for invalid role value', async () => {
+      const response = await userController.updateUserRole(
+        mockUsers[0]!.id!,
+        makeRoleReq('superadmin'),
+        adminCtx,
+      );
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 403 when trying to change own role', async () => {
+      const selfCtx = {
+        user: {
+          sub: mockUsers[0]!.id,
+          email: '',
+          name: '',
+          role: 'admin',
+          tokenType: 'auth',
+        },
+      };
+      const response = await userController.updateUserRole(
+        mockUsers[0]!.id!,
+        makeRoleReq('user'),
+        selfCtx,
+      );
+      expect(response.status).toBe(403);
+    });
+
+    test('should return 200 with updated user', async () => {
+      const response = await userController.updateUserRole(
+        mockUsers[0]!.id!,
+        makeRoleReq('admin'),
+        adminCtx,
+      );
+      expect(response.status).toBe(200);
+      const body = (await response.json()) as { data: User };
+      expect(body.data.role).toBe('admin');
+      expect(body.data).not.toHaveProperty('password');
+    });
+  });
+
+  describe('resetUserPassword', () => {
+    test('should return 400 for invalid UUID', async () => {
+      const response = await userController.resetUserPassword('not-a-uuid');
+      expect(response.status).toBe(400);
+    });
+
+    test('should return 404 for non-existent user', async () => {
+      const response = await userController.resetUserPassword(
+        '00000000-0000-0000-0000-000000000000',
+      );
+      expect(response.status).toBe(404);
+    });
+
+    test('should return 200 with signupLink for valid user', async () => {
+      const response = await userController.resetUserPassword(
+        mockUsers[0]!.id!,
+      );
+      expect(response.status).toBe(200);
+      const body = (await response.json()) as {
+        data: { signupLink: string; mailSent: boolean };
+      };
+      expect(body.data).toHaveProperty('signupLink');
+      expect(typeof body.data.signupLink).toBe('string');
+    });
+  });
 });

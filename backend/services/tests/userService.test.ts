@@ -72,4 +72,85 @@ describe('UserService', () => {
       expect(user?.name).toBe(firstUser.name);
     });
   });
+
+  describe('deleteUser', () => {
+    const adminId = 'admin-id-000';
+
+    test('should return forbidden error when deleting self', async () => {
+      const result = await userService.deleteUser(
+        mockUsers[0]!.id!,
+        mockUsers[0]!.id!,
+      );
+      expect(result.error).not.toBeNull();
+      expect(result.error?.[0]?.type).toBe('forbidden');
+    });
+
+    test('should return not_found error for non-existent user', async () => {
+      const result = await userService.deleteUser(
+        '00000000-0000-0000-0000-000000000000',
+        adminId,
+      );
+      expect(result.error).not.toBeNull();
+      expect(result.error?.[0]?.type).toBe('not_found');
+    });
+
+    test('should return null data on success', async () => {
+      const result = await userService.deleteUser(mockUsers[0]!.id!, adminId);
+      expect(result.error).toBeNull();
+      expect(result.data).toBeNull();
+    });
+  });
+
+  describe('updateUserRole', () => {
+    const adminId = 'admin-id-000';
+
+    test('should return forbidden error when changing own role', async () => {
+      const result = await userService.updateUserRole(
+        mockUsers[0]!.id!,
+        'admin',
+        mockUsers[0]!.id!,
+      );
+      expect(result.error).not.toBeNull();
+      expect(result.error?.[0]?.type).toBe('forbidden');
+    });
+
+    test('should return not_found for non-existent user', async () => {
+      const result = await userService.updateUserRole(
+        '00000000-0000-0000-0000-000000000000',
+        'admin',
+        adminId,
+      );
+      expect(result.error).not.toBeNull();
+      expect(result.error?.[0]?.type).toBe('not_found');
+    });
+
+    test('should return updated user without password', async () => {
+      const result = await userService.updateUserRole(
+        mockUsers[0]!.id!,
+        'admin',
+        adminId,
+      );
+      expect(result.error).toBeNull();
+      expect(result.data?.role).toBe('admin');
+      expect(result.data).not.toHaveProperty('password');
+    });
+  });
+
+  describe('resetUserPassword', () => {
+    test('should return not_found for non-existent user', async () => {
+      const result = await userService.resetUserPassword(
+        '00000000-0000-0000-0000-000000000000',
+      );
+      expect(result.error).not.toBeNull();
+      expect(result.error?.[0]?.type).toBe('not_found');
+    });
+
+    test('should return signupLink and mailSent on success', async () => {
+      const result = await userService.resetUserPassword(mockUsers[0]!.id!);
+      expect(result.error).toBeNull();
+      expect(result.data).toHaveProperty('signupLink');
+      expect(result.data).toHaveProperty('mailSent');
+      expect(typeof result.data?.signupLink).toBe('string');
+    });
+  });
 });

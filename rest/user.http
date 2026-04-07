@@ -28,3 +28,35 @@ Authorization: Bearer {{JWT_TOKEN}}
 # Requires a valid Bearer JWT in Authorization header.
 GET {{BASE_URL}}/api/user/{{USER_ID}}
 Authorization: Bearer {{JWT_TOKEN}}
+
+###
+
+### Delete User (Admin only)
+# Permanently deletes a user by ID.
+# Admins cannot delete themselves.
+# Requires an admin Bearer JWT in Authorization header.
+DELETE {{BASE_URL}}/api/user/{{USER_ID}}
+Authorization: Bearer {{JWT_TOKEN}}
+
+###
+
+### Update User Role (Admin only)
+# Changes a user's role to 'admin' or 'user'.
+# Admins cannot change their own role.
+# Requires an admin Bearer JWT in Authorization header.
+PATCH {{BASE_URL}}/api/user/{{USER_ID}}/role
+Content-Type: application/json
+Authorization: Bearer {{JWT_TOKEN}}
+
+{
+  "role": "admin"
+}
+
+###
+
+### Reset User Password (Admin only)
+# Generates a new temporary passphrase and signup link for the user.
+# Returns signupLink (use directly if SMTP is not configured) and mailSent.
+# Requires an admin Bearer JWT in Authorization header.
+POST {{BASE_URL}}/api/user/{{USER_ID}}/reset-password
+Authorization: Bearer {{JWT_TOKEN}}

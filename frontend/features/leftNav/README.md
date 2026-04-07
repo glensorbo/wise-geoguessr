@@ -4,11 +4,12 @@ Sidebar navigation for the app shell on desktop and mobile.
 
 ## Nav items
 
-| Label      | Route      | Icon                |
-| ---------- | ---------- | ------------------- |
-| Dashboard  | `/`        | `HomeRounded`       |
-| Results    | `/results` | `TableChartRounded` |
-| Statistics | `/stats`   | `BarChartRounded`   |
+| Label      | Route      | Icon                 | Visibility  |
+| ---------- | ---------- | -------------------- | ----------- |
+| Dashboard  | `/`        | `HomeRounded`        | All users   |
+| Results    | `/results` | `TableChartRounded`  | All users   |
+| Statistics | `/stats`   | `BarChartRounded`    | All users   |
+| Admin      | `/admin`   | `AdminPanelSettings` | Admins only |
 
 ## Structure
 

@@ -7,7 +7,7 @@ HTTP request files for testing the API with [kulala.nvim](https://github.com/mis
 | File                | Routes                                                                                                                                                                   |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `health.http`       | `GET /healthcheck`                                                                                                                                                       |
-| `user.http`         | `GET /api/user`, `POST /api/user`, `GET /api/user/:id`                                                                                                                   |
+| `user.http`         | `GET /api/user`, `POST /api/user`, `GET /api/user/:id`, `DELETE /api/user/:id`, `PATCH /api/user/:id/role`, `POST /api/user/:id/reset-password`                          |
 | `auth.http`         | `POST /api/auth/login`, `POST /api/auth/create-user`, `POST /api/auth/set-password`, `POST /api/auth/change-password`, `POST /api/auth/refresh`, `POST /api/auth/logout` |
 | `telemetry.http`    | `POST /api/telemetry/traces`                                                                                                                                             |
 | `results.http`      | `GET /api/results/years`, `GET /api/results?year=YYYY`, `GET /api/results/:roundId`, `POST /api/results`                                                                 |

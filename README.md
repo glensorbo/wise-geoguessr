@@ -38,6 +38,7 @@ bun dev
 - 📊 Show a sortable leaderboard, weekly breakdowns, and season trends
 - 🔐 Handle login, refresh rotation, password changes, and invite-based signup
 - 🛡️ Enforce `admin` and `user` access rules in middleware
+- 🔧 Manage users from an admin panel — toggle roles, delete accounts, and trigger password resets with a copyable link fallback
 - 🧪 Run unit tests without a database and E2E tests against the real app
 - 🐳 Run the canonical self-contained E2E flow with `bun run e2e:docker`
 - 🚪 Treat logout as idempotent, including when no active session exists

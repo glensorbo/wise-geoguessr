@@ -14,6 +14,7 @@ One file per route. Pages are intentionally thin — they import and compose fea
 | `roundDetailPage.tsx`   | `/results/:roundId` | Podium + score breakdown table for a single round, with delta vs season average; shows "Play this map again" button when the round has a `gameLink`                                                                                                   |
 | `headToHeadPage.tsx`    | `/head-to-head`     | Two Autocomplete player pickers (pre-populated from `?a=X&b=Y` URL params) + year selector; shows shared-round count, wins-per-player stat cards, and a score comparison LineChart                                                                    |
 | `recapPage.tsx`         | `/recap/:year`      | Animated Wrapped-style slideshow of season stat highlights (champion, sharpshooter, most improved, closest rivalry, most inconsistent, longest streak); keyboard ← → and clickable dot navigation                                                     |
+| `adminPage.tsx`         | `/admin`            | Admin-only user management panel — lists all users, inline role toggle (admin ↔ user), delete user with confirmation, and trigger password reset with copyable link fallback when SMTP is off; restricted to users with `role: 'admin'`               |
 
 ## Rules
 
