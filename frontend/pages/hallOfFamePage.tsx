@@ -67,18 +67,22 @@ export const HallOfFamePage = () => {
       <Stack spacing={6}>
         {/* ── Page header ── */}
         <Stack spacing={0.75}>
-          <Stack direction="row" spacing={1.5} alignItems="center">
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
             <Box
               aria-hidden="true"
               sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}
             >
               🏆
             </Box>
-            <Typography variant="h3" component="h1" fontWeight={800}>
+            <Typography variant="h3" component="h1" sx={{ fontWeight: 800 }}>
               Hall of Fame
             </Typography>
           </Stack>
-          <Typography color="text.secondary" variant="h6" fontWeight={400}>
+          <Typography
+            color="text.secondary"
+            variant="h6"
+            sx={{ fontWeight: 400 }}
+          >
             All-time records across every season.
           </Typography>
         </Stack>
@@ -99,7 +103,7 @@ export const HallOfFamePage = () => {
         {!hasError && (
           <>
             {/* ── Top 3 records ── */}
-            <Grid container spacing={3} alignItems="stretch">
+            <Grid container spacing={3} sx={{ alignItems: 'stretch' }}>
               <Grid size={{ xs: 12, md: 4 }}>
                 {isLoading ? (
                   <RecordSkeleton />
@@ -168,14 +172,13 @@ export const HallOfFamePage = () => {
                   <Typography
                     variant="overline"
                     color="text.secondary"
-                    fontWeight={700}
-                    letterSpacing={2}
+                    sx={{ fontWeight: 700, letterSpacing: 2 }}
                   >
                     Honorable Mentions
                   </Typography>
                 </Divider>
 
-                <Grid container spacing={2.5} alignItems="stretch">
+                <Grid container spacing={2.5} sx={{ alignItems: 'stretch' }}>
                   <Grid size={{ xs: 12, sm: 4 }}>
                     {isLoading ? (
                       <MentionSkeleton />

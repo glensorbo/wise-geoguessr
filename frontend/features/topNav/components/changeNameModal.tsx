@@ -73,7 +73,7 @@ export const ChangeNameModal = ({
       <DialogTitle>Change Name</DialogTitle>
       <Stack component="form" onSubmit={handleSubmit}>
         <DialogContent>
-          <Stack gap={1}>
+          <Stack sx={{ gap: 1 }}>
             <Typography variant="body2" color="text.secondary">
               Current name: <strong>{currentName}</strong>
             </Typography>
@@ -88,7 +88,7 @@ export const ChangeNameModal = ({
               helperText={error}
               autoFocus
               fullWidth
-              inputProps={{ maxLength: 255 }}
+              slotProps={{ htmlInput: { maxLength: 255 } }}
             />
           </Stack>
         </DialogContent>

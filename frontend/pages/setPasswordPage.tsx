@@ -77,7 +77,7 @@ export const SetPasswordPage = () => {
       >
         <Card sx={{ width: '100%', maxWidth: 440, p: 1 }}>
           <CardContent>
-            <Stack gap={2} alignItems="center" textAlign="center">
+            <Stack sx={{ gap: 2, alignItems: 'center', textAlign: 'center' }}>
               <Typography variant="h6">Invalid invite link</Typography>
               <Typography variant="body2" color="text.secondary">
                 This link is missing a token. Please use the invite link you
@@ -105,9 +105,9 @@ export const SetPasswordPage = () => {
     >
       <Card sx={{ width: '100%', maxWidth: 440, p: 1 }}>
         <CardContent>
-          <Stack component="form" onSubmit={handleSubmit} gap={3}>
-            <Stack gap={0.5}>
-              <Typography variant="h5" fontWeight={600}>
+          <Stack component="form" onSubmit={handleSubmit} sx={{ gap: 3 }}>
+            <Stack sx={{ gap: 0.5 }}>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
                 Set your password
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -116,7 +116,7 @@ export const SetPasswordPage = () => {
               </Typography>
             </Stack>
 
-            <Stack gap={2.5}>
+            <Stack sx={{ gap: 2.5 }}>
               <TextField
                 label="Password"
                 type={showPassword ? 'text' : 'password'}

@@ -53,7 +53,7 @@ const StatCard = ({
       <Typography sx={{ fontSize: '1.5rem', lineHeight: 1, mb: 0.5 }}>
         {emoji}
       </Typography>
-      <Typography variant="h5" fontWeight={700} color={color}>
+      <Typography variant="h5" color={color} sx={{ fontWeight: 700 }}>
         {value}
       </Typography>
       <Typography variant="caption" color="text.secondary">
@@ -99,13 +99,14 @@ const PlayerPicker = ({
         size="small"
         slotProps={{
           input: {
-            ...params.InputProps,
+            ...params.slotProps.input,
             startAdornment: value ? (
               <Box sx={{ ml: 0.5, mr: -0.5, display: 'flex' }}>
                 <PlayerAvatar name={value} size={24} />
               </Box>
             ) : null,
           },
+          htmlInput: params.slotProps.htmlInput,
         }}
       />
     )}
@@ -189,8 +190,10 @@ export const HeadToHeadPage = () => {
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           spacing={2}
-          justifyContent="space-between"
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+          }}
         >
           <Stack spacing={0.5}>
             <Typography variant="h4" component="h1">
@@ -214,7 +217,7 @@ export const HeadToHeadPage = () => {
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
-            alignItems="center"
+            sx={{ alignItems: 'center' }}
           >
             {isLoading ? (
               <>
@@ -275,7 +278,7 @@ export const HeadToHeadPage = () => {
 
         {/* Prompt when nothing selected */}
         {!canCompare && !samePlayer && (
-          <Stack alignItems="center" sx={{ py: 6 }}>
+          <Stack sx={{ alignItems: 'center', py: 6 }}>
             <Typography variant="h5" color="text.secondary">
               ⚔️
             </Typography>
@@ -289,7 +292,7 @@ export const HeadToHeadPage = () => {
         {canCompare && headToHead && (
           <>
             {headToHead.sharedRounds === 0 ? (
-              <Stack alignItems="center" sx={{ py: 6 }}>
+              <Stack sx={{ alignItems: 'center', py: 6 }}>
                 <Typography variant="h5">No shared rounds</Typography>
                 <Typography
                   color="text.secondary"

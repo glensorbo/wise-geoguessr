@@ -74,7 +74,7 @@ export const ChangePasswordModal = ({ open, onClose }: Props) => {
       <DialogTitle>Change Password</DialogTitle>
       <Stack component="form" onSubmit={handleSubmit}>
         <DialogContent>
-          <Stack gap={2.5}>
+          <Stack sx={{ gap: 2.5 }}>
             <TextField
               label="Current Password"
               type={showCurrent ? 'text' : 'password'}

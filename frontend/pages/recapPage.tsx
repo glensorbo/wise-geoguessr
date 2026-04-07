@@ -182,8 +182,7 @@ export const RecapPage = () => {
       <Stack spacing={3}>
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
+          sx={{ alignItems: 'center', justifyContent: 'space-between' }}
         >
           <Typography
             component={Link}
@@ -238,9 +237,8 @@ export const RecapPage = () => {
         {!isLoading && hasData && (
           <Stack
             direction="row"
-            alignItems="center"
-            justifyContent="center"
             spacing={2}
+            sx={{ alignItems: 'center', justifyContent: 'center' }}
           >
             <IconButton
               onClick={goPrev}
@@ -251,7 +249,7 @@ export const RecapPage = () => {
               <ArrowBackRoundedIcon />
             </IconButton>
 
-            <Stack direction="row" spacing={0.75} alignItems="center">
+            <Stack direction="row" spacing={0.75} sx={{ alignItems: 'center' }}>
               {slides.map((slide, i) => (
                 <Box
                   key={slide.key}

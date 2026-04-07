@@ -37,12 +37,12 @@ const createTestStore = (token: string | null) =>
   });
 
 const findButtonByName = (name: string) =>
-  [...document.querySelectorAll('button')].find(
+  Array.from(document.querySelectorAll('button')).find(
     (element) => element.getAttribute('aria-label') === name,
   ) as HTMLButtonElement | undefined;
 
 const findMenuItemByText = (text: string) =>
-  [...document.querySelectorAll('[role="menuitem"]')].find((element) =>
+  Array.from(document.querySelectorAll('[role="menuitem"]')).find((element) =>
     element.textContent?.includes(text),
   ) as HTMLElement | undefined;
 

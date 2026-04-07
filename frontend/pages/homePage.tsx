@@ -41,8 +41,10 @@ export const HomePage = () => {
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
-            justifyContent="space-between"
-            alignItems={{ xs: 'flex-start', sm: 'center' }}
+            sx={{
+              justifyContent: 'space-between',
+              alignItems: { xs: 'flex-start', sm: 'center' },
+            }}
           >
             <Stack spacing={0.5}>
               <Typography variant="h4" component="h1">
@@ -71,7 +73,7 @@ export const HomePage = () => {
           </Stack>
 
           {noResults ? (
-            <Stack spacing={2} alignItems="center" sx={{ py: 6 }}>
+            <Stack spacing={2} sx={{ alignItems: 'center', py: 6 }}>
               <Typography variant="h5">No results for {year}</Typography>
               <Typography color="text.secondary" align="center">
                 Log in and use the &ldquo;+ Add results&rdquo; button to get

@@ -68,7 +68,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
       onSubmit={onSubmitHandler}
       sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
     >
-      <Typography variant="h5" component="h1" fontWeight={600}>
+      <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
         Sign in
       </Typography>
 

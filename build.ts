@@ -90,7 +90,7 @@ function parseArgs(): Partial<Bun.BuildConfig> {
 
     if (arg.startsWith('--no-')) {
       const key = toCamelCase(arg.slice(5));
-      config[key] = false;
+      (config as Record<string, unknown>)[key] = false;
       continue;
     }
 
@@ -99,7 +99,7 @@ function parseArgs(): Partial<Bun.BuildConfig> {
       (i === args.length - 1 || args[i + 1]?.startsWith('--'))
     ) {
       const key = toCamelCase(arg.slice(2));
-      config[key] = true;
+      (config as Record<string, unknown>)[key] = true;
       continue;
     }
 
@@ -117,10 +117,17 @@ function parseArgs(): Partial<Bun.BuildConfig> {
 
     if (key.includes('.')) {
       const [parentKey, childKey] = key.split('.');
-      config[parentKey] = config[parentKey] || {};
-      config[parentKey][childKey] = parseValue(value);
+      if (!parentKey || !childKey) continue;
+      (config as Record<string, unknown>)[parentKey] =
+        (config as Record<string, unknown>)[parentKey] || {};
+      (
+        (config as Record<string, unknown>)[parentKey] as Record<
+          string,
+          unknown
+        >
+      )[childKey] = parseValue(value);
     } else {
-      config[key] = parseValue(value);
+      (config as Record<string, unknown>)[key] = parseValue(value);
     }
   }
 

@@ -19,10 +19,10 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
       textAlign: 'center',
     }}
   >
-    <Typography variant="h5" fontWeight="bold">
+    <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
       Something went wrong 😕
     </Typography>
-    <Typography variant="body2" color="text.secondary" maxWidth={480}>
+    <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 480 }}>
       {(error as Error).message}
     </Typography>
     <Button variant="contained" onClick={resetErrorBoundary}>

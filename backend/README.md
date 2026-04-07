@@ -37,7 +37,7 @@ Bun.serve() route
 `server.ts` handles startup and infrastructure concerns. On boot it:
 
 1. Calls `initTelemetry()` — must be first; starts OTel SDK and makes the logger available (no-op when `OTEL_ENDPOINT` is unset)
-2. Calls `initMail()` — creates the Nodemailer transporter (no-op when `SMTP_HOST` is unset)
+2. Calls `initMail()` — creates the Nodemailer transporter and verifies the SMTP connection (no-op when `SMTP_HOST` is unset)
 3. Calls `validateEnv()` — exits immediately if any required env vars are missing
 4. Calls `await pingDb()` — verifies database connectivity with exponential backoff (5 attempts)
 5. Starts `Bun.serve()` with all routes and static file handling
@@ -52,7 +52,9 @@ await pingDb();
 
 Bun.serve({
   routes: {
-    '/healthcheck': { GET: () => new Response('OK') },
+    '/healthcheck': {
+      GET: () => Response.json({ status: 'ok', mail: boolean }),
+    },
     ...userRoutes,
     ...authRoutes,
     ...gameResultRoutes,
