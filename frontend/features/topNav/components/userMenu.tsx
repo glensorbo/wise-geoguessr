@@ -122,40 +122,6 @@ export const UserMenu = () => {
     setAddUserOpen(true);
   };
 
-  const adminMenuItems = isAdmin
-    ? [
-        <MenuItem key="add-user" onClick={handleAddUser}>
-          <ListItemIcon>
-            <PersonAddIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText
-            primary="Add user"
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>,
-        <Divider key="admin-divider" />,
-      ]
-    : [];
-
-  const passwordMenuItems = token
-    ? [
-        <MenuItem key="password-action" onClick={handlePasswordAction}>
-          <ListItemIcon>
-            {isSignupToken ? (
-              <LockOpenIcon fontSize="small" />
-            ) : (
-              <LockIcon fontSize="small" />
-            )}
-          </ListItemIcon>
-          <ListItemText
-            primary={isSignupToken ? 'Set password' : 'Change password'}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>,
-        <Divider key="password-divider" />,
-      ]
-    : [];
-
   return (
     <>
       {/* ── Glassmorphic pill trigger ── */}
@@ -307,9 +273,38 @@ export const UserMenu = () => {
 
         <Divider />
 
-        {passwordMenuItems}
+        {token && (
+          <MenuItem
+            sx={{ alignItems: 'center' }}
+            onClick={handlePasswordAction}
+          >
+            <ListItemIcon>
+              {isSignupToken ? (
+                <LockOpenIcon fontSize="small" />
+              ) : (
+                <LockIcon fontSize="small" />
+              )}
+            </ListItemIcon>
+            <ListItemText
+              primary={isSignupToken ? 'Set password' : 'Change password'}
+              primaryTypographyProps={{ variant: 'body2' }}
+            />
+          </MenuItem>
+        )}
+        {token && <Divider />}
 
-        {adminMenuItems}
+        {isAdmin && (
+          <MenuItem onClick={handleAddUser}>
+            <ListItemIcon>
+              <PersonAddIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary="Add user"
+              primaryTypographyProps={{ variant: 'body2' }}
+            />
+          </MenuItem>
+        )}
+        {isAdmin && <Divider />}
 
         <MenuItem
           data-highlight-tone={token ? 'danger' : 'primary'}
