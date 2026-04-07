@@ -11,6 +11,7 @@ shared/
 │   └── skeleton.tsx               # Skeleton loaders: TableSkeleton, ListSkeleton, CardSkeleton
 ├── hooks/        # Generic hooks (e.g. useDebounce, useLocalStorage)
 ├── utils/        # Pure utility functions (e.g. formatDate, cn)
+│   └── formatDate.ts              # `formatDate(value)` → `YYYY-MM-DD` or `YYYY-MM-DD HH:mm` depending on whether a time component is present
 └── types/        # Shared TypeScript types & utility types
 ```
 

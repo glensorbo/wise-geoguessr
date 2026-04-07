@@ -25,6 +25,7 @@ import {
   useUpdateUserRoleMutation,
 } from '@frontend/redux/api/userApi';
 import { TableSkeleton } from '@frontend/shared/components/skeleton';
+import { formatDate } from '@frontend/shared/utils/formatDate';
 
 import type { User } from '@backend/types/user';
 import type { RootState } from '@frontend/redux/store';
@@ -108,9 +109,7 @@ export const UserTable = () => {
                       </span>
                     </Tooltip>
                   </TableCell>
-                  <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
+                  <TableCell>{formatDate(user.createdAt)}</TableCell>
                   <TableCell align="right">
                     <Tooltip title="Reset password">
                       <IconButton
