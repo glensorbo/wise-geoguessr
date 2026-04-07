@@ -50,8 +50,11 @@ export const RecordCard = ({
       },
     }}
   >
-    <Stack spacing={2.5} height="100%" position="relative" zIndex={1}>
-      <Stack direction="row" spacing={1.5} alignItems="center">
+    <Stack
+      spacing={2.5}
+      sx={{ height: '100%', position: 'relative', zIndex: 1 }}
+    >
+      <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
         <Box
           aria-hidden="true"
           sx={{
@@ -64,8 +67,7 @@ export const RecordCard = ({
         </Box>
         <Typography
           variant="subtitle1"
-          fontWeight={600}
-          sx={{ opacity: 0.9, letterSpacing: 0.3 }}
+          sx={{ opacity: 0.9, letterSpacing: 0.3, fontWeight: 600 }}
         >
           {title}
         </Typography>
@@ -74,20 +76,18 @@ export const RecordCard = ({
       <Typography
         variant="h3"
         component="p"
-        fontWeight={800}
-        sx={{ letterSpacing: -1, lineHeight: 1 }}
+        sx={{ letterSpacing: -1, lineHeight: 1, fontWeight: 800 }}
       >
         {value}
       </Typography>
 
-      <Stack spacing={0.75} flexWrap="wrap">
+      <Stack spacing={0.75} sx={{ flexWrap: 'wrap' }}>
         {holders.map(({ label, sublabel }) => (
           <Stack
             key={`${label}-${sublabel ?? ''}`}
             direction="row"
             spacing={1}
-            alignItems="center"
-            flexWrap="wrap"
+            sx={{ alignItems: 'center', flexWrap: 'wrap' }}
           >
             <PlayerAvatar name={label} size={24} />
             <Chip
@@ -141,12 +141,16 @@ export const HonorableMentionCard = ({
       ),
     })}
   >
-    <Stack spacing={1.5} height="100%">
-      <Stack direction="row" spacing={1} alignItems="center">
+    <Stack spacing={1.5} sx={{ height: '100%' }}>
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         <Box aria-hidden="true" sx={{ fontSize: '1.4rem', lineHeight: 1 }}>
           {emoji}
         </Box>
-        <Typography variant="body2" fontWeight={600} color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontWeight: 600 }}
+        >
           {title}
         </Typography>
       </Stack>
@@ -154,15 +158,24 @@ export const HonorableMentionCard = ({
       <Typography
         variant="h5"
         component="p"
-        fontWeight={800}
         color="text.primary"
+        sx={{ fontWeight: 800 }}
       >
         {value}
       </Typography>
 
-      <Stack direction="row" spacing={0.75} flexWrap="wrap" alignItems="center">
+      <Stack
+        direction="row"
+        spacing={0.75}
+        sx={{ flexWrap: 'wrap', alignItems: 'center' }}
+      >
         {holders.map(({ label }) => (
-          <Stack key={label} direction="row" spacing={0.5} alignItems="center">
+          <Stack
+            key={label}
+            direction="row"
+            spacing={0.5}
+            sx={{ alignItems: 'center' }}
+          >
             <PlayerAvatar name={label} size={24} />
             <Chip
               label={label}

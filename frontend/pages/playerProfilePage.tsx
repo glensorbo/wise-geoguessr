@@ -45,7 +45,7 @@ const StatCard = ({ emoji, label, value }: StatCardProps) => (
       <Typography sx={{ fontSize: '1.5rem', lineHeight: 1, mb: 0.5 }}>
         {emoji}
       </Typography>
-      <Typography variant="h5" fontWeight={700}>
+      <Typography variant="h5" sx={{ fontWeight: 700 }}>
         {value}
       </Typography>
       <Typography variant="caption" color="text.secondary">
@@ -133,11 +133,11 @@ export const PlayerProfilePage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
       <Stack spacing={4}>
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
           <IconButton component={Link} to="/" aria-label="Back to dashboard">
             <ArrowBackIcon />
           </IconButton>
-          <Stack spacing={0.5} flex={1}>
+          <Stack spacing={0.5} sx={{ flex: 1 }}>
             {isLoading ? (
               <Skeleton width={200} height={40} />
             ) : (
@@ -195,12 +195,12 @@ export const PlayerProfilePage = () => {
             {isLoading ? (
               <Skeleton width={180} height={40} />
             ) : (
-              <Typography variant="h4" fontWeight={700}>
+              <Typography variant="h4" sx={{ fontWeight: 700 }}>
                 {playerName}
               </Typography>
             )}
             {!isLoading && (stats?.currentStreak ?? 0) > 0 && (
-              <Typography variant="body1" fontWeight={600}>
+              <Typography variant="body1" sx={{ fontWeight: 600 }}>
                 🔥 {stats!.currentStreak} win streak
               </Typography>
             )}
@@ -208,7 +208,7 @@ export const PlayerProfilePage = () => {
         </Paper>
 
         {noData ? (
-          <Stack spacing={2} alignItems="center" sx={{ py: 6 }}>
+          <Stack spacing={2} sx={{ alignItems: 'center', py: 6 }}>
             <Typography variant="h5">No rounds played yet</Typography>
             <Typography color="text.secondary">
               {playerName} hasn&apos;t participated in any rounds yet.

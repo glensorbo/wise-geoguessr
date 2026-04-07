@@ -79,10 +79,12 @@ await sendMail({
 });
 ```
 
-`sendMail` is always safe to call — if `SMTP_HOST` is not configured it returns immediately without error.
+- `sendMail` is a no-op when `SMTP_HOST` is not configured — returns immediately, never throws.
+- `sendMail` **throws** if `subject` or `html`/`text` content is missing — this is a caller error, not a runtime condition.
+- `checkMailHealth` returns `true` when mail is enabled and the SMTP connection is reachable, `false` otherwise. Used by the `/healthcheck` route.
 
 ---
 
 ## Initialisation Order
 
-`initMail()` **must be called after `initTelemetry()`**, so the logger is available when it logs the startup message. It is called in `backend/server.ts` immediately after `initTelemetry()`.
+`initMail()` **must be called after `initTelemetry()`**, so the logger is available when it logs the startup message. On startup it creates the Nodemailer transporter **and** calls `transporter.verify()` to confirm the SMTP connection is reachable. It is called in `backend/server.ts` immediately after `initTelemetry()`.

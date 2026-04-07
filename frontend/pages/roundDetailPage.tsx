@@ -52,8 +52,8 @@ export const RoundDetailPage = () => {
   if (notFound) {
     return (
       <Container maxWidth="sm" sx={{ py: 8 }}>
-        <Stack spacing={3} alignItems="center" textAlign="center">
-          <Typography variant="h4" fontWeight={700}>
+        <Stack spacing={3} sx={{ alignItems: 'center', textAlign: 'center' }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Round not found
           </Typography>
           <Typography color="text.secondary">
@@ -75,7 +75,7 @@ export const RoundDetailPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
       <Stack spacing={4}>
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
           <IconButton
             component={Link}
             to="/results"
@@ -177,10 +177,10 @@ export const RoundDetailPage = () => {
                       <TableCell>
                         <Typography
                           variant="body2"
-                          fontWeight={entry.isWinner ? 700 : 400}
                           color={
                             entry.isWinner ? 'warning.dark' : 'text.primary'
                           }
+                          sx={{ fontWeight: entry.isWinner ? 700 : 400 }}
                         >
                           {entry.rank === 1
                             ? '🥇'
@@ -192,7 +192,11 @@ export const RoundDetailPage = () => {
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Stack direction="row" spacing={1} alignItems="center">
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          sx={{ alignItems: 'center' }}
+                        >
                           <PlayerAvatar name={entry.name} size={28} />
                           <MuiLink
                             component={Link}
@@ -208,10 +212,10 @@ export const RoundDetailPage = () => {
                       <TableCell align="right">
                         <Typography
                           variant="body2"
-                          fontWeight={entry.isWinner ? 700 : 400}
                           color={
                             entry.isWinner ? 'warning.dark' : 'text.primary'
                           }
+                          sx={{ fontWeight: entry.isWinner ? 700 : 400 }}
                         >
                           {formatAxisNumber(entry.score)}
                         </Typography>

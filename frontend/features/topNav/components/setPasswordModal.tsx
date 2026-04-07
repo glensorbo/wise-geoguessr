@@ -66,7 +66,7 @@ export const SetPasswordModal = ({ open, onClose }: Props) => {
       <DialogTitle>Set Password</DialogTitle>
       <Stack component="form" onSubmit={handleSubmit}>
         <DialogContent>
-          <Stack gap={2.5}>
+          <Stack sx={{ gap: 2.5 }}>
             <TextField
               label="Password"
               type={showPassword ? 'text' : 'password'}

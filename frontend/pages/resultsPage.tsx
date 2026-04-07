@@ -110,7 +110,7 @@ export const ResultsPage = () => {
         minWidth: 160,
         flex: 1,
         renderCell: (params: GridRenderCellParams<PointsGridRow>) => (
-          <Stack direction="row" spacing={0.5} alignItems="center">
+          <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
             <span>{params.value as string}</span>
             {params.row.gameLink && (
               <Tooltip title="Play this map again">
@@ -163,8 +163,10 @@ export const ResultsPage = () => {
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           spacing={2}
-          justifyContent="space-between"
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+          }}
         >
           <Stack spacing={0.5}>
             <Typography variant="h4" component="h1">
@@ -192,7 +194,7 @@ export const ResultsPage = () => {
 
         {noResults && (
           <Container maxWidth="sm" sx={{ py: 6 }}>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <Typography variant="h5">No results for {year}</Typography>
               <Typography color="text.secondary" align="center">
                 Log in and use the &ldquo;+ Add results&rdquo; button to add the

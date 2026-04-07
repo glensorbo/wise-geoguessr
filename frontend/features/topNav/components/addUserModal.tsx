@@ -124,7 +124,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
       {signupLink ? (
         <>
           <DialogContent>
-            <Stack gap={2}>
+            <Stack sx={{ gap: 2 }}>
               <Typography variant="body2">
                 Mail is not configured — share this invite link with{' '}
                 <strong>{form.email}</strong>. It expires in{' '}
@@ -166,7 +166,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
       ) : (
         <Stack component="form" onSubmit={handleSubmit}>
           <DialogContent>
-            <Stack gap={2.5}>
+            <Stack sx={{ gap: 2.5 }}>
               <TextField
                 label="Email"
                 type="email"

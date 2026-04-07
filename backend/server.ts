@@ -9,7 +9,7 @@ import { telemetryRoutes } from './routes/telemetryRoutes';
 import { userRoutes } from './routes/userRoutes';
 import { serveProdBuild } from './serveProdBuild.ts';
 import { validateEnv } from './utils/env';
-import { initMail } from '@backend/mail';
+import { checkMailHealth, initMail } from '@backend/mail';
 import { initTelemetry, logger } from '@backend/telemetry';
 
 initTelemetry();
@@ -23,7 +23,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 const server = serve({
   routes: {
     '/healthcheck': {
-      GET: () => new Response('OK'),
+      GET: async () => {
+        const mail = await checkMailHealth();
+        return Response.json({ status: 'ok', mail });
+      },
     },
 
     ...userRoutes,

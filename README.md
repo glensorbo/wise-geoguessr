@@ -14,7 +14,7 @@
 | Layer    | Choice                                                   | Why this choice                                                          |
 | -------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
 | Runtime  | [Bun](https://bun.sh)                                    | Fast installs, native TypeScript, one toolchain for dev, build, and test |
-| Frontend | React 19 + Redux Toolkit + MUI v7                        | Mature UI pieces, typed state, and fast iteration                        |
+| Frontend | React 19 + Redux Toolkit + MUI v9                        | Mature UI pieces, typed state, and fast iteration                        |
 | Backend  | `Bun.serve()` with layered handlers                      | Minimal overhead without giving up structure                             |
 | Database | PostgreSQL + [Drizzle ORM](https://orm.drizzle.team)     | Migration-first schema changes and type-safe queries                     |
 | Auth     | JWT + HttpOnly refresh cookies                           | Stateless sessions with refresh rotation                                 |

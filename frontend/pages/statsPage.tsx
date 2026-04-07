@@ -72,8 +72,10 @@ export const StatsPage = () => {
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           spacing={2}
-          justifyContent="space-between"
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+          }}
         >
           <Stack spacing={0.5}>
             <Typography variant="h4" component="h1">
@@ -101,7 +103,7 @@ export const StatsPage = () => {
 
         {noResults && (
           <Container maxWidth="sm" sx={{ py: 6 }}>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <Typography variant="h5">No results for {year}</Typography>
               <Typography color="text.secondary" align="center">
                 No data available yet for this year.

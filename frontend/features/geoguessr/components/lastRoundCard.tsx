@@ -70,15 +70,18 @@ export const LastRoundCard = ({ lastRound }: { lastRound: LastRound }) => {
             <PlayerAvatar name={entry.name} size={32} />
             <Typography
               variant="body1"
-              fontWeight={entry.isWinner ? 'bold' : 'normal'}
-              sx={{ flex: 1, minWidth: 140 }}
+              sx={{
+                flex: 1,
+                minWidth: 140,
+                fontWeight: entry.isWinner ? 'bold' : 'normal',
+              }}
             >
               {entry.name}
             </Typography>
             <Typography
               variant="body1"
-              fontWeight={entry.isWinner ? 'bold' : 'normal'}
               color={entry.isWinner ? 'warning.dark' : 'text.secondary'}
+              sx={{ fontWeight: entry.isWinner ? 'bold' : 'normal' }}
             >
               {formatAxisNumber(entry.score)}
             </Typography>

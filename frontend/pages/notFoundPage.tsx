@@ -33,7 +33,7 @@ export const NotFoundPage = () => (
       404
     </Typography>
 
-    <Typography variant="h4" fontWeight={700} sx={{ mt: -1 }}>
+    <Typography variant="h4" sx={{ fontWeight: 700, mt: -1 }}>
       Page not found
     </Typography>
 

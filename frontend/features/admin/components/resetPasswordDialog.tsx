@@ -73,7 +73,7 @@ export const ResetPasswordDialog = ({ user, onClose }: Props) => {
       {signupLink ? (
         <>
           <DialogContent>
-            <Stack gap={2}>
+            <Stack sx={{ gap: 2 }}>
               <Typography variant="body2">
                 Mail is not configured — share this reset link with{' '}
                 <strong>{user?.name}</strong>. It expires in{' '}

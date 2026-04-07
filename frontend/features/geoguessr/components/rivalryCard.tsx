@@ -44,16 +44,15 @@ export const RivalryCard = ({ rivalries }: { rivalries: Rivalry[] }) => (
           },
         }}
       >
-        <Stack direction="row" alignItems="center" gap={1.5}>
+        <Stack direction="row" sx={{ alignItems: 'center', gap: 1.5 }}>
           {/* Player A */}
           <Stack
             direction="row"
-            alignItems="center"
             spacing={1}
-            sx={{ flex: 1, minWidth: 0 }}
+            sx={{ alignItems: 'center', flex: 1, minWidth: 0 }}
           >
             <PlayerAvatar name={rivalry.playerA.name} size={28} />
-            <Typography variant="body2" fontWeight="medium" noWrap>
+            <Typography variant="body2" noWrap sx={{ fontWeight: 'medium' }}>
               {rivalry.playerA.name}
             </Typography>
           </Stack>
@@ -69,18 +68,22 @@ export const RivalryCard = ({ rivalries }: { rivalries: Rivalry[] }) => (
           {/* Player B */}
           <Stack
             direction="row"
-            alignItems="center"
             spacing={1}
-            sx={{ flex: 1, minWidth: 0, justifyContent: 'flex-end' }}
+            sx={{
+              alignItems: 'center',
+              flex: 1,
+              minWidth: 0,
+              justifyContent: 'flex-end',
+            }}
           >
-            <Typography variant="body2" fontWeight="medium" noWrap>
+            <Typography variant="body2" noWrap sx={{ fontWeight: 'medium' }}>
               {rivalry.playerB.name}
             </Typography>
             <PlayerAvatar name={rivalry.playerB.name} size={28} />
           </Stack>
         </Stack>
 
-        <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
           <Typography variant="caption" color="text.secondary">
             {getLeadText(rivalry)}
           </Typography>

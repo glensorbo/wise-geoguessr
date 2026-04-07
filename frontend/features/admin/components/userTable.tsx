@@ -1,4 +1,4 @@
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';

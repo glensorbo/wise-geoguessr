@@ -188,14 +188,14 @@ export const UserMenu = () => {
           >
             <PlayerAvatar name={avatarSeed} size={44} />
             <Box sx={{ minWidth: 0 }}>
-              <Typography variant="body2" fontWeight={700} noWrap>
+              <Typography variant="body2" noWrap sx={{ fontWeight: 700 }}>
                 {displayName}
               </Typography>
               <Typography
                 variant="caption"
                 color="text.secondary"
                 noWrap
-                display="block"
+                sx={{ display: 'block' }}
               >
                 {email}
               </Typography>
@@ -269,7 +269,7 @@ export const UserMenu = () => {
             </ListItemIcon>
             <ListItemText
               primary="My profile"
-              primaryTypographyProps={{ variant: 'body2' }}
+              slotProps={{ primary: { variant: 'body2' } }}
             />
           </MenuItem>
         )}
@@ -282,7 +282,7 @@ export const UserMenu = () => {
             </ListItemIcon>
             <ListItemText
               primary="Add user"
-              primaryTypographyProps={{ variant: 'body2' }}
+              slotProps={{ primary: { variant: 'body2' } }}
             />
           </MenuItem>
         )}
@@ -317,7 +317,9 @@ export const UserMenu = () => {
           </ListItemIcon>
           <ListItemText
             primary={token ? 'Sign out' : 'Login'}
-            primaryTypographyProps={{ variant: 'body2', fontWeight: 600 }}
+            slotProps={{
+              primary: { variant: 'body2', sx: { fontWeight: 600 } },
+            }}
           />
         </MenuItem>
       </Menu>

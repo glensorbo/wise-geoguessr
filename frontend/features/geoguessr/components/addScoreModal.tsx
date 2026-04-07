@@ -154,7 +154,12 @@ export const AddScoreModal = ({ open, onClose }: Props) => {
             </Typography>
 
             {rows.map((row, i) => (
-              <Stack key={i} direction="row" spacing={1} alignItems="center">
+              <Stack
+                key={i}
+                direction="row"
+                spacing={1}
+                sx={{ alignItems: 'center' }}
+              >
                 <TextField
                   label="Player"
                   value={row.player}

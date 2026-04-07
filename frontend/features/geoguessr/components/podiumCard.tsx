@@ -73,7 +73,7 @@ const PodiumSlot = ({
             }),
           }}
         >
-          <Stack spacing={0.5} alignItems="center">
+          <Stack spacing={0.5} sx={{ alignItems: 'center' }}>
             {/* Avatar with medal overlapping from below */}
             <Box
               sx={{
@@ -103,8 +103,7 @@ const PodiumSlot = ({
             </Box>
             <Typography
               variant={entry.rank === 1 ? 'h6' : 'subtitle1'}
-              fontWeight="bold"
-              sx={{ wordBreak: 'break-word' }}
+              sx={{ wordBreak: 'break-word', fontWeight: 'bold' }}
             >
               {entry.name}
             </Typography>
@@ -115,8 +114,8 @@ const PodiumSlot = ({
             )}
             <Typography
               variant={entry.rank === 1 ? 'subtitle1' : 'body2'}
-              fontWeight={entry.rank === 1 ? 'bold' : 'normal'}
               color={entry.rank === 1 ? 'warning.dark' : 'text.primary'}
+              sx={{ fontWeight: entry.rank === 1 ? 'bold' : 'normal' }}
             >
               {formatAxisNumber(entry.totalPoints)} pts
             </Typography>
