@@ -1,5 +1,8 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
@@ -11,6 +14,9 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { decodeJwt } from 'jose';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
 import { DashboardSection } from '@frontend/features/geoguessr/components/dashboardSection';
@@ -19,7 +25,11 @@ import {
   getPlayerColor,
 } from '@frontend/features/geoguessr/constants';
 import { usePlayerProfile } from '@frontend/features/geoguessr/hooks/usePlayerProfile';
+import { ChangePasswordModal } from '@frontend/features/topNav/components/changePasswordModal';
+import { SetPasswordModal } from '@frontend/features/topNav/components/setPasswordModal';
 import { PlayerAvatar } from '@frontend/shared/components/playerAvatar';
+
+import type { RootState } from '@frontend/redux/store';
 
 type StatCardProps = {
   emoji: string;
@@ -96,6 +106,24 @@ export const PlayerProfilePage = () => {
     noData,
   } = usePlayerProfile();
 
+  const token = useSelector((state: RootState) => state.auth.token);
+  const decoded = token
+    ? (() => {
+        try {
+          return decodeJwt(token);
+        } catch {
+          return null;
+        }
+      })()
+    : null;
+
+  const isSignupToken = decoded?.tokenType === 'signup';
+  const ownName = decoded?.name as string | undefined;
+  const isOwnProfile = !!ownName && ownName === playerName;
+
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
+  const [setPasswordOpen, setSetPasswordOpen] = useState(false);
+
   const playerColor = getPlayerColor(playerName);
 
   return (
@@ -105,7 +133,7 @@ export const PlayerProfilePage = () => {
           <IconButton component={Link} to="/" aria-label="Back to dashboard">
             <ArrowBackIcon />
           </IconButton>
-          <Stack spacing={0.5}>
+          <Stack spacing={0.5} flex={1}>
             {isLoading ? (
               <Skeleton width={200} height={40} />
             ) : (
@@ -115,6 +143,20 @@ export const PlayerProfilePage = () => {
             )}
             <Typography color="text.secondary">Player profile</Typography>
           </Stack>
+          {isOwnProfile && !isLoading && (
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={isSignupToken ? <LockOpenIcon /> : <LockIcon />}
+              onClick={() =>
+                isSignupToken
+                  ? setSetPasswordOpen(true)
+                  : setChangePasswordOpen(true)
+              }
+            >
+              {isSignupToken ? 'Set password' : 'Change password'}
+            </Button>
+          )}
         </Stack>
 
         {/* Identity card */}
@@ -334,6 +376,15 @@ export const PlayerProfilePage = () => {
           </>
         )}
       </Stack>
+
+      <ChangePasswordModal
+        open={changePasswordOpen}
+        onClose={() => setChangePasswordOpen(false)}
+      />
+      <SetPasswordModal
+        open={setPasswordOpen}
+        onClose={() => setSetPasswordOpen(false)}
+      />
     </Container>
   );
 };

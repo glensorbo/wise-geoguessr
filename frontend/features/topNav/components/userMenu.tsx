@@ -1,11 +1,10 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,11 +21,10 @@ import Typography from '@mui/material/Typography';
 import { decodeJwt } from 'jose';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
 import { useLogout } from '../hooks/useLogout';
 import { AddUserModal } from './addUserModal';
-import { ChangePasswordModal } from './changePasswordModal';
-import { SetPasswordModal } from './setPasswordModal';
 import { useAnalytics } from '@frontend/features/analytics/useAnalytics';
 import { LoginModal } from '@frontend/features/login/components/loginModal';
 import { setThemeMode } from '@frontend/redux/slices/themeSlice';
@@ -75,9 +73,7 @@ export const UserMenu = () => {
   const isAdmin = decoded?.role === 'admin';
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [setPasswordOpen, setSetPasswordOpen] = useState(false);
   const [addUserOpen, setAddUserOpen] = useState(false);
 
   const menuOpen = Boolean(anchorEl);
@@ -96,15 +92,6 @@ export const UserMenu = () => {
     }
     trackEvent('theme_changed', { mode });
     dispatch(setThemeMode(mode));
-  };
-
-  const handlePasswordAction = () => {
-    closeMenu();
-    if (isSignupToken) {
-      setSetPasswordOpen(true);
-    } else {
-      setChangePasswordOpen(true);
-    }
   };
 
   const handleLogout = () => {
@@ -271,22 +258,22 @@ export const UserMenu = () => {
 
         <Divider />
 
-        {token && (
-          <MenuItem onClick={handlePasswordAction}>
+        {token && !isSignupToken && (
+          <MenuItem
+            component={Link}
+            to={`/players/${encodeURIComponent(displayName)}`}
+            onClick={closeMenu}
+          >
             <ListItemIcon>
-              {isSignupToken ? (
-                <LockOpenIcon fontSize="small" />
-              ) : (
-                <LockIcon fontSize="small" />
-              )}
+              <PersonRoundedIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText
-              primary={isSignupToken ? 'Set password' : 'Change password'}
+              primary="My profile"
               primaryTypographyProps={{ variant: 'body2' }}
             />
           </MenuItem>
         )}
-        {token && <Divider />}
+        {token && !isSignupToken && <Divider />}
 
         {isAdmin && (
           <MenuItem onClick={handleAddUser}>
@@ -335,15 +322,7 @@ export const UserMenu = () => {
         </MenuItem>
       </Menu>
 
-      <ChangePasswordModal
-        open={changePasswordOpen}
-        onClose={() => setChangePasswordOpen(false)}
-      />
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
-      <SetPasswordModal
-        open={setPasswordOpen}
-        onClose={() => setSetPasswordOpen(false)}
-      />
       <AddUserModal open={addUserOpen} onClose={() => setAddUserOpen(false)} />
     </>
   );
