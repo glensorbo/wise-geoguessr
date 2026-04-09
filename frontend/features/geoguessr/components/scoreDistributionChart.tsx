@@ -12,8 +12,11 @@ import { getScoreDistribution } from '@frontend/features/geoguessr/logic';
 
 import type { GameResult } from '@frontend/features/geoguessr/logic/types';
 import type { SeriesLegendItemContext } from '@mui/x-charts/ChartsLegend';
-import type { HighlightItemData } from '@mui/x-charts/context';
-import type { MouseEvent } from 'react';
+import type { ComponentProps, MouseEvent } from 'react';
+
+type HighlightItemData = NonNullable<
+  ComponentProps<typeof BarChart>['highlightedItem']
+>;
 
 type Props = {
   results: GameResult[];
