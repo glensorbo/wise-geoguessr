@@ -214,20 +214,21 @@ If you need a span type in the callback, it is passed as the first argument (`sp
 
 The following service-layer methods are currently wrapped with `withSpan`. Use this as a reference when browsing traces in SigNoz or when adding new spans.
 
-| Span name             | Service method                  | Initial attributes                      | Inside `setAttribute` |
-| --------------------- | ------------------------------- | --------------------------------------- | --------------------- |
-| `user.create`         | `userService.createUser`        | `user.role`                             | `user.id`             |
-| `user.delete`         | `userService.deleteUser`        | `user.id`, `actor.user.id`              | —                     |
-| `user.update_role`    | `userService.updateUserRole`    | `user.id`, `user.role`, `actor.user.id` | —                     |
-| `user.reset_password` | `userService.resetUserPassword` | `user.id`                               | `mail.sent`           |
-| `user.update_name`    | `userService.updateUserName`    | `user.id`, `actor.user.id`              | —                     |
-| `game_result.create`  | `gameResultService.addResult`   | `game_result.has_game_link`             | `game_result.id`      |
+| Span name             | Service method                  | Initial attributes                      | Inside `setAttribute`                     |
+| --------------------- | ------------------------------- | --------------------------------------- | ----------------------------------------- |
+| `user.create`         | `userService.createUser`        | `user.role`                             | `user.id`, `mail.configured`, `mail.sent` |
+| `user.delete`         | `userService.deleteUser`        | `user.id`, `actor.user.id`              | —                                         |
+| `user.update_role`    | `userService.updateUserRole`    | `user.id`, `user.role`, `actor.user.id` | —                                         |
+| `user.reset_password` | `userService.resetUserPassword` | `user.id`                               | `mail.configured`, `mail.sent`            |
+| `user.update_name`    | `userService.updateUserName`    | `user.id`, `actor.user.id`              | —                                         |
+| `game_result.create`  | `gameResultService.addResult`   | `game_result.has_game_link`             | `game_result.id`                          |
 
 **Attribute conventions:**
 
 - `user.id` — the target user being operated on (never an email or token)
 - `actor.user.id` — the authenticated admin performing a privileged write
-- `mail.sent` — boolean; whether the outbound email was actually dispatched
+- `mail.configured` — boolean; whether the mail system is enabled at all (derived from `isMailEnabled()`)
+- `mail.sent` — boolean; whether the outbound email was actually dispatched (only `true` when `sendMail()` resolves without throwing)
 - `user.role` — `"admin"` or `"user"`, used to categorise the operation
 
 ---

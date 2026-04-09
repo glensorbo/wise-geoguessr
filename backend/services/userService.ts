@@ -81,6 +81,8 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       }
 
       span.setAttribute('user.id', safeUser.id ?? '');
+      span.setAttribute('mail.configured', mailConfigured);
+      span.setAttribute('mail.sent', mailSent);
       logger.info('User created', { userId: safeUser.id ?? '', role });
 
       return errorOr({ ...safeUser, signupLink, mailSent, mailConfigured });
@@ -194,6 +196,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
         });
       }
 
+      span.setAttribute('mail.configured', mailConfigured);
       span.setAttribute('mail.sent', mailSent);
       logger.info('User password reset by admin', { userId: id });
       return errorOr({ signupLink, mailSent, mailConfigured });
