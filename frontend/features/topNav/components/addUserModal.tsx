@@ -38,6 +38,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
     Partial<Record<keyof typeof EMPTY_FORM, string>>
   >({});
   const [signupLink, setSignupLink] = useState<string | null>(null);
+  const [mailConfigured, setMailConfigured] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const [createUser, { isLoading }] = useCreateUserMutation();
@@ -55,6 +56,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
     setForm(EMPTY_FORM);
     setErrors({});
     setSignupLink(null);
+    setMailConfigured(false);
     setCopied(false);
     onClose();
   };
@@ -95,6 +97,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
         handleClose();
       } else {
         setSignupLink(result.signupLink);
+        setMailConfigured(result.mailConfigured);
       }
     } catch (err: unknown) {
       const apiErr = err as {
@@ -126,7 +129,9 @@ export const AddUserModal = ({ open, onClose }: Props) => {
           <DialogContent>
             <Stack sx={{ gap: 2 }}>
               <Typography variant="body2">
-                Mail is not configured — share this invite link with{' '}
+                {mailConfigured
+                  ? 'Failed to send invite email — share this link with '
+                  : 'Mail is not configured — share this invite link with '}
                 <strong>{form.email}</strong>. It expires in{' '}
                 <strong>1 hour</strong>.
               </Typography>

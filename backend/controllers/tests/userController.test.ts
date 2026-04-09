@@ -243,9 +243,14 @@ describe('UserController', () => {
       );
       expect(response.status).toBe(200);
       const body = (await response.json()) as {
-        data: { signupLink: string; mailSent: boolean };
+        data: {
+          signupLink: string;
+          mailSent: boolean;
+          mailConfigured: boolean;
+        };
       };
       expect(body.data).toHaveProperty('signupLink');
+      expect(body.data).toHaveProperty('mailConfigured');
       expect(typeof body.data.signupLink).toBe('string');
     });
   });

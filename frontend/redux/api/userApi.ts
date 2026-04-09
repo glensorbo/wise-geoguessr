@@ -9,14 +9,22 @@ type CreateUserRequest = {
   role: 'admin' | 'user';
 };
 
-type CreateUserResponse = User & { signupLink: string; mailSent: boolean };
+type CreateUserResponse = User & {
+  signupLink: string;
+  mailSent: boolean;
+  mailConfigured: boolean;
+};
 
 type UpdateRoleRequest = {
   id: string;
   role: 'admin' | 'user';
 };
 
-type ResetPasswordResponse = { signupLink: string; mailSent: boolean };
+type ResetPasswordResponse = {
+  signupLink: string;
+  mailSent: boolean;
+  mailConfigured: boolean;
+};
 
 type UpdateNameRequest = {
   id: string;
