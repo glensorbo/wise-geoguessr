@@ -152,6 +152,7 @@ describe('UserService', () => {
       expect(result.error).toBeNull();
       expect(result.data).toHaveProperty('signupLink');
       expect(result.data).toHaveProperty('mailSent');
+      expect(result.data).toHaveProperty('mailConfigured');
       expect(typeof result.data?.signupLink).toBe('string');
     });
   });

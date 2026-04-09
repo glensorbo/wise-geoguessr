@@ -31,11 +31,21 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
     email: string,
     name: string,
     role: 'admin' | 'user',
-  ): Promise<ErrorOr<User & { signupLink: string; mailSent: boolean }>> {
+  ): Promise<
+    ErrorOr<
+      User & { signupLink: string; mailSent: boolean; mailConfigured: boolean }
+    >
+  > {
     return withSpan('user.create', { 'user.role': role }, async (span) => {
       const existing = await repo.getByEmail(email);
       if (existing) {
-        return errorOr<User & { signupLink: string; mailSent: boolean }>(null, [
+        return errorOr<
+          User & {
+            signupLink: string;
+            mailSent: boolean;
+            mailConfigured: boolean;
+          }
+        >(null, [
           {
             type: 'conflict',
             message: 'A user with this email already exists',
@@ -53,6 +63,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       const appUrl = Bun.env.APP_URL ?? 'http://localhost:3000';
       const signupLink = `${appUrl}/set-password?token=${token}`;
 
+      const mailConfigured = isMailEnabled();
       let mailSent = false;
       try {
         await sendMail({
@@ -61,7 +72,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
           html: `<p>Hi ${name},</p><p>Your account has been created. Click the link below to set your password:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 1 hour.</p>`,
           text: `Hi ${name},\n\nYour account has been created. Set your password at:\n${signupLink}\n\nThis link expires in 1 hour.`,
         });
-        mailSent = isMailEnabled();
+        mailSent = true;
       } catch (err) {
         logger.warn('📧 Failed to send signup email', {
           email,
@@ -70,9 +81,11 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       }
 
       span.setAttribute('user.id', safeUser.id ?? '');
+      span.setAttribute('mail.configured', mailConfigured);
+      span.setAttribute('mail.sent', mailSent);
       logger.info('User created', { userId: safeUser.id ?? '', role });
 
-      return errorOr({ ...safeUser, signupLink, mailSent });
+      return errorOr({ ...safeUser, signupLink, mailSent, mailConfigured });
     });
   },
 
@@ -145,13 +158,17 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
 
   async resetUserPassword(
     id: string,
-  ): Promise<ErrorOr<{ signupLink: string; mailSent: boolean }>> {
+  ): Promise<
+    ErrorOr<{ signupLink: string; mailSent: boolean; mailConfigured: boolean }>
+  > {
     return withSpan('user.reset_password', { 'user.id': id }, async (span) => {
       const user = await repo.getById(id);
       if (!user) {
-        return errorOr<{ signupLink: string; mailSent: boolean }>(null, [
-          { type: 'not_found', message: 'User not found' },
-        ]);
+        return errorOr<{
+          signupLink: string;
+          mailSent: boolean;
+          mailConfigured: boolean;
+        }>(null, [{ type: 'not_found', message: 'User not found' }]);
       }
 
       const passphrase = generatePassphrase();
@@ -162,6 +179,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
       const appUrl = Bun.env.APP_URL ?? 'http://localhost:3000';
       const signupLink = `${appUrl}/set-password?token=${token}`;
 
+      const mailConfigured = isMailEnabled();
       let mailSent = false;
       try {
         await sendMail({
@@ -170,7 +188,7 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
           html: `<p>Hi ${user.name},</p><p>An admin has reset your password. Click the link below to set a new one:</p><p><a href="${signupLink}">${signupLink}</a></p><p>This link expires in 1 hour.</p>`,
           text: `Hi ${user.name},\n\nAn admin has reset your password. Set a new one at:\n${signupLink}\n\nThis link expires in 1 hour.`,
         });
-        mailSent = isMailEnabled();
+        mailSent = true;
       } catch (err) {
         logger.warn('📧 Failed to send password reset email', {
           userId: id,
@@ -178,9 +196,10 @@ export const createUserService = (repo: typeof UserRepositoryType) => ({
         });
       }
 
+      span.setAttribute('mail.configured', mailConfigured);
       span.setAttribute('mail.sent', mailSent);
       logger.info('User password reset by admin', { userId: id });
-      return errorOr({ signupLink, mailSent });
+      return errorOr({ signupLink, mailSent, mailConfigured });
     });
   },
 

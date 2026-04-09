@@ -28,6 +28,7 @@ type Props = {
 
 export const ResetPasswordDialog = ({ user, onClose }: Props) => {
   const [signupLink, setSignupLink] = useState<string | null>(null);
+  const [mailConfigured, setMailConfigured] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const [resetPassword, { isLoading }] = useResetUserPasswordMutation();
@@ -45,6 +46,7 @@ export const ResetPasswordDialog = ({ user, onClose }: Props) => {
         handleClose();
       } else {
         setSignupLink(result.signupLink);
+        setMailConfigured(result.mailConfigured);
         trackEvent('admin_password_reset', { method: 'link' });
       }
     } catch {
@@ -63,6 +65,7 @@ export const ResetPasswordDialog = ({ user, onClose }: Props) => {
 
   const handleClose = () => {
     setSignupLink(null);
+    setMailConfigured(false);
     setCopied(false);
     onClose();
   };
@@ -75,7 +78,9 @@ export const ResetPasswordDialog = ({ user, onClose }: Props) => {
           <DialogContent>
             <Stack sx={{ gap: 2 }}>
               <Typography variant="body2">
-                Mail is not configured — share this reset link with{' '}
+                {mailConfigured
+                  ? 'Failed to send reset email — share this link with '
+                  : 'Mail is not configured — share this reset link with '}
                 <strong>{user?.name}</strong>. It expires in{' '}
                 <strong>1 hour</strong>.
               </Typography>
