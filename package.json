@@ -64,8 +64,8 @@
     "nodemailer": "^8.0.5",
     "pg": "^8.20.0",
     "postgres": "^3.4.9",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "react-error-boundary": "^6.1.1",
     "react-redux": "^9.2.0",
     "react-router": "^7.14.0",
@@ -86,10 +86,10 @@
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
-    "knip": "^6.3.0",
+    "knip": "^6.3.1",
     "oxfmt": "^0.44.0",
     "oxlint": "^1.59.0",
     "oxlint-tsgolint": "^0.20.0",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.1"
   }
 }
