@@ -151,6 +151,7 @@ export const RecapPage = () => {
         return nextIndex;
       });
     },
+    // oxlint-disable-next-line react/memo-dependencies
     [slideCount],
   );
 
