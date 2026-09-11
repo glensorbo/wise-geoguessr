@@ -11,7 +11,7 @@ import {
 } from '@backend/utils/test';
 
 beforeEach(() => {
-  mockRefreshTokenRepository._reset();
+  mockRefreshTokenRepository.reset();
 });
 
 const authService = createAuthService(

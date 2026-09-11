@@ -50,7 +50,7 @@ export const mockGameResultRepository: typeof gameResultRepository = {
       scores,
     };
   },
-  async _fetchAndAssemble() {
+  async fetchAndAssemble() {
     return mockData;
   },
 };

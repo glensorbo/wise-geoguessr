@@ -83,7 +83,7 @@ Analytics env vars are picked up from **two sources**, with runtime winning:
 | `window.__APP_CONFIG__` | Page load — injected into HTML by the server | **Higher** |
 | `import.meta.env`       | Bundle build — inlined by Bun's bundler      | Lower      |
 
-`backend/serveProdBuild.ts` writes a `<script>window.__APP_CONFIG__={…}</script>` block into every HTML response before `</head>`, reading live values from `Bun.env` at server startup. `frontend/config.ts` prefers this object over `import.meta.env`, so runtime values always win.
+`backend/serveProdBuild.ts` writes a `<script>window.__APP_CONFIG__={…}</script>` block into every HTML response before `</head>`, reading live values from `Bun.env` when the response is served. `frontend/config.ts` prefers this object over `import.meta.env`, so runtime values always win.
 
 **Practical effect:** you can deploy a Docker image that was built without analytics configured and enable it later by setting the env vars on the running container — no image rebuild required. This is important for platforms like Coolify or Fly.io that supply secrets at deploy time rather than build time.
 
