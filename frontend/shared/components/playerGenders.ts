@@ -10,9 +10,9 @@ const PLAYER_PROFILES: Record<string, PlayerProfile> = {
   Glen: { gender: 'male', beard: true },
   Lotte: { gender: 'female' },
   Malin: { gender: 'female' },
+  Emilie: { gender: 'female' },
   Sigurd: { gender: 'male' },
   Thomas: { gender: 'male', beard: true },
-  Thorjan: { gender: 'male', bald: true },
   'Tor Arve': { gender: 'male', bald: true },
 };
 

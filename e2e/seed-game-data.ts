@@ -27,7 +27,6 @@ const HISTORICAL_RESULTS = [
       Sigurd: 11300,
       Malin: 11926,
       'Tor Arve': 11400,
-      Thorjan: 12814,
     },
   },
   {
@@ -38,7 +37,6 @@ const HISTORICAL_RESULTS = [
       Sigurd: 15254,
       Malin: 20323,
       'Tor Arve': 18325,
-      Thorjan: 16079,
     },
   },
   {
@@ -49,7 +47,6 @@ const HISTORICAL_RESULTS = [
       Sigurd: 5833,
       Malin: 6101,
       'Tor Arve': 9127,
-      Thorjan: 17845,
     },
   },
   {
@@ -61,7 +58,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 12592,
       Glen: 11054,
-      Thorjan: 7236,
       Sigurd: 4397,
       'Tor Arve': 8696,
       Malin: 13716,
@@ -73,7 +69,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 17892,
       Glen: 9617,
-      Thorjan: 14578,
       Sigurd: 14498,
       'Tor Arve': 19156,
     },
@@ -83,7 +78,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 10963,
       Glen: 11757,
-      Thorjan: 15597,
       Sigurd: 9157,
       'Tor Arve': 13386,
       Lotte: 4854,
@@ -95,7 +89,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 9470,
       Glen: 14049,
-      Thorjan: 15848,
       Sigurd: 9857,
       'Tor Arve': 11341,
       Lotte: 10166,
@@ -106,7 +99,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 11792,
       Glen: 12474,
-      Thorjan: 16566,
       Sigurd: 8432,
       'Tor Arve': 17761,
     },
@@ -116,7 +108,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 14491,
       Glen: 16423,
-      Thorjan: 13327,
       Sigurd: 9950,
       Lotte: 10383,
       'Tor Arve': 15589,
@@ -128,7 +119,6 @@ const HISTORICAL_RESULTS = [
       Thomas: 19075,
       Malin: 16642,
       Glen: 14050,
-      Thorjan: 16865,
       Sigurd: 16114,
     },
   },
@@ -139,7 +129,6 @@ const HISTORICAL_RESULTS = [
       Malin: 12603,
       Glen: 13536,
       Lotte: 13410,
-      Thorjan: 18645,
       'Tor Arve': 0,
       Sigurd: 7246,
     },
@@ -151,7 +140,6 @@ const HISTORICAL_RESULTS = [
       Malin: 7101,
       Glen: 9885,
       Lotte: 5912,
-      Thorjan: 10812,
       'Tor Arve': 10645,
       Sigurd: 10409,
     },
@@ -161,9 +149,7 @@ const HISTORICAL_RESULTS = [
     scores: {
       'Tor Arve': 10619,
       Thomas: 12233,
-      Thorjan: 9356,
       Malin: 3848,
-      Eirik: 9053,
       Glen: 2022,
     },
   },
@@ -172,10 +158,8 @@ const HISTORICAL_RESULTS = [
     scores: {
       'Tor Arve': 15924,
       Thomas: 17746,
-      Thorjan: 18169,
       Sigurd: 12951,
       Malin: 19505,
-      Eirik: 19535,
       Glen: 19105,
     },
   },
@@ -184,18 +168,14 @@ const HISTORICAL_RESULTS = [
     scores: {
       'Tor Arve': 16312,
       Thomas: 12865,
-      Thorjan: 9161,
       Sigurd: 7517,
       Malin: 7155,
-      Eirik: 6169,
     },
   },
   {
     date: '2025-10-31',
     scores: {
       Thomas: 14828,
-      Eirik: 14349,
-      Thorjan: 13433,
       Malin: 12887,
       'Tor Arve': 10751,
       Sigurd: 7935,
@@ -205,31 +185,26 @@ const HISTORICAL_RESULTS = [
     date: '2025-10-17',
     scores: {
       Thomas: 13476,
-      Thorjan: 11608,
       Malin: 12059,
       Glen: 18361,
       Sigurd: 14827,
       'Tor Arve': 20210,
-      Eirik: 15598,
     },
   },
   {
     date: '2025-10-10',
     scores: {
       Thomas: 14456,
-      Thorjan: 16027,
       Malin: 10095,
       Glen: 10182,
       Sigurd: 5653,
       'Tor Arve': 15994,
-      Eirik: 14926,
     },
   },
   {
     date: '2025-09-26',
     scores: {
       Thomas: 8050,
-      Thorjan: 8816,
       Malin: 7181,
       Glen: 12268,
       'Tor Arve': 8483,
@@ -239,7 +214,6 @@ const HISTORICAL_RESULTS = [
     date: '2025-09-19',
     scores: {
       Thomas: 14987,
-      Thorjan: 16128,
       Malin: 9546,
       Sigurd: 9038,
       Glen: 13208,
@@ -250,19 +224,17 @@ const HISTORICAL_RESULTS = [
     date: '2025-09-12',
     scores: {
       Thomas: 15763,
-      Thorjan: 15100,
       Malin: 13233,
       Sigurd: 13762,
       Glen: 11489,
       'Tor Arve': 13968,
-      Margaux: 15743,
+      Emilie: 15743,
     },
   },
   {
     date: '2025-09-05',
     scores: {
       Thomas: 21190,
-      Thorjan: 14541,
       Malin: 7261,
       Sigurd: 6178,
       Glen: 15915,
@@ -273,7 +245,6 @@ const HISTORICAL_RESULTS = [
     date: '2025-08-29',
     scores: {
       Thomas: 20613,
-      Thorjan: 17042,
       Malin: 13386,
       Sigurd: 12898,
       'Tor Arve': 10240,
@@ -284,7 +255,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Thomas: 8863,
       Malin: 7910,
-      Thorjan: 5967,
       Sigurd: 5331,
       'Tor Arve': 5034,
     },
@@ -293,8 +263,7 @@ const HISTORICAL_RESULTS = [
     date: '2025-08-14',
     scores: {
       Thomas: 14095,
-      Margaux: 12871,
-      Thorjan: 14473,
+      Emilie: 12871,
       'Tor Arve': 16943,
       Sigurd: 17296,
     },
@@ -303,8 +272,7 @@ const HISTORICAL_RESULTS = [
     date: '2025-08-08',
     scores: {
       Thomas: 17472,
-      Margaux: 7909,
-      Thorjan: 12731,
+      Emilie: 7909,
       'Tor Arve': 14464,
       Sigurd: 8585,
     },
@@ -314,7 +282,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 7332,
       Thomas: 9290,
-      Thorjan: 7287,
       'Tor Arve': 8591,
       Sigurd: 6197,
     },
@@ -328,26 +295,24 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 11426,
       Thomas: 15835,
-      Thorjan: 12917,
       'Tor Arve': 17891,
       Sigurd: 9051,
     },
   },
   {
     date: '2025-06-06',
-    scores: { Glen: 10881, Thomas: 15818, Thorjan: 14737, 'Tor Arve': 14206 },
+    scores: { Glen: 10881, Thomas: 15818, 'Tor Arve': 14206 },
   },
   {
     date: '2025-05-30',
-    scores: { Glen: 10292, Thomas: 8660, Thorjan: 10188, Sigurd: 5528 },
+    scores: { Glen: 10292, Thomas: 8660, Sigurd: 5528 },
   },
   {
     date: '2025-05-23',
     scores: {
       Glen: 8909,
       Thomas: 8540,
-      Margaux: 13059,
-      Thorjan: 16194,
+      Emilie: 13059,
       'Tor Arve': 8277,
       Sigurd: 3362,
     },
@@ -361,22 +326,20 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 2887,
       Thomas: 13599,
-      Margaux: 9751,
-      Thorjan: 16319,
+      Emilie: 9751,
       'Tor Arve': 19665,
       Sigurd: 14034,
     },
   },
   {
     date: '2025-05-02',
-    scores: { Glen: 15924, Thomas: 20236, Thorjan: 17911, 'Tor Arve': 15678 },
+    scores: { Glen: 15924, Thomas: 20236, 'Tor Arve': 15678 },
   },
   {
     date: '2025-04-11',
     scores: {
       Glen: 9220,
       Thomas: 9553,
-      Thorjan: 16244,
       'Tor Arve': 17601,
       Sigurd: 1865,
     },
@@ -386,7 +349,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 11680,
       Thomas: 7594,
-      Thorjan: 16515,
       'Tor Arve': 10289,
       Sigurd: 13924,
     },
@@ -395,8 +357,7 @@ const HISTORICAL_RESULTS = [
     date: '2025-03-14',
     scores: {
       Thomas: 14036,
-      Margaux: 19170,
-      Thorjan: 13663,
+      Emilie: 19170,
       'Tor Arve': 15058,
       Sigurd: 8771,
     },
@@ -406,8 +367,7 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 8466,
       Thomas: 3132,
-      Margaux: 7513,
-      Thorjan: 6473,
+      Emilie: 7513,
       'Tor Arve': 7460,
       Sigurd: 2673,
     },
@@ -417,8 +377,7 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 8583,
       Thomas: 3305,
-      Margaux: 6815,
-      Thorjan: 11934,
+      Emilie: 6815,
       'Tor Arve': 10890,
     },
   },
@@ -427,7 +386,6 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 13010,
       Thomas: 17557,
-      Thorjan: 13868,
       'Tor Arve': 13993,
       Sigurd: 14360,
     },
@@ -437,23 +395,21 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 11267,
       Thomas: 13397,
-      Margaux: 16044,
-      Thorjan: 13521,
+      Emilie: 16044,
       'Tor Arve': 7100,
       Sigurd: 7006,
     },
   },
   {
     date: '2025-01-17',
-    scores: { Glen: 10902, Thomas: 14912, Margaux: 17455, Thorjan: 18254 },
+    scores: { Glen: 10902, Thomas: 14912, Emilie: 17455 },
   },
   {
     date: '2025-01-10',
     scores: {
       Glen: 6977,
       Thomas: 7832,
-      Margaux: 11496,
-      Thorjan: 12130,
+      Emilie: 11496,
       'Tor Arve': 9762,
     },
   },
@@ -462,18 +418,17 @@ const HISTORICAL_RESULTS = [
     scores: {
       Glen: 15675,
       Thomas: 12790,
-      Margaux: 11038,
-      Thorjan: 20633,
+      Emilie: 11038,
       'Tor Arve': 14877,
     },
   },
   {
     date: '2024-11-29',
-    scores: { Glen: 12320, Thomas: 7825, Margaux: 9324, Thorjan: 11426 },
+    scores: { Glen: 12320, Thomas: 7825, Emilie: 9324 },
   },
   {
     date: '2024-11-22',
-    scores: { Thomas: 8315, Margaux: 13558, Thorjan: 11363, 'Tor Arve': 11847 },
+    scores: { Thomas: 8315, Emilie: 13558, 'Tor Arve': 11847 },
   },
 ] as const;
 

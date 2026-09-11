@@ -1,24 +1,24 @@
-export type HighestScoreHolder = {
+type HighestScoreHolder = {
   playerName: string;
   date: string; // YYYY-MM-DD
 };
 
-export type WinStreakHolder = {
+type WinStreakHolder = {
   playerName: string;
   startDate: string; // YYYY-MM-DD
   endDate: string; // YYYY-MM-DD
 };
 
-export type SeasonTotalHolder = {
+type SeasonTotalHolder = {
   playerName: string;
   year: number;
 };
 
-export type HonorableMentionHolder = {
+type HonorableMentionHolder = {
   playerName: string;
 };
 
-export type MarginHolder = {
+type MarginHolder = {
   playerName: string;
   date: string; // YYYY-MM-DD — the round it happened
 };

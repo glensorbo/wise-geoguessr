@@ -1,4 +1,4 @@
-export type AppErrorType =
+type AppErrorType =
   | 'not_found'
   | 'validation'
   | 'conflict'

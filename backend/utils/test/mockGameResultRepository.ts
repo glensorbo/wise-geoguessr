@@ -6,7 +6,7 @@ const mockData: GameResult[] = [
     id: '00000000-0000-0000-0000-000000000001',
     date: '2026-03-27',
     gameLink: null,
-    scores: { Glen: 15000, Thomas: 12000, Thorjan: 18000 },
+    scores: { Glen: 15000, Thomas: 12000, Emilie: 18000 },
   },
   {
     id: '00000000-0000-0000-0000-000000000002',

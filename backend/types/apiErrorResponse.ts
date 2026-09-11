@@ -1,6 +1,6 @@
 import type { FieldError } from './fieldError';
 
-export type ErrorType =
+type ErrorType =
   | 'validation'
   | 'notFound'
   | 'unauthorized'
