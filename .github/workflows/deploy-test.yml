@@ -1,0 +1,16 @@
+name: 🧪 Deploy to Test
+
+on:
+  push:
+    tags:
+      - 'v*-rc*'
+
+jobs:
+  deploy-test:
+    name: Trigger Coolify test deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: |
+          curl -X GET "${{ secrets.COOLIFY_URL }}?uuid=${{ secrets.COOLIFY_TEST_UUID }}&force=false" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}"

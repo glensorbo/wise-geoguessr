@@ -1,0 +1,20 @@
+# ── E2E app image ─────────────────────────────────────────────────────────────
+# Full dep install (not --production) so drizzle-kit is available for
+# migrations. Frontend is built so the production server can serve it.
+# On startup: migrate → seed admin → start server.
+FROM oven/bun:1
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY . .
+
+RUN bun run build
+
+EXPOSE 3000
+
+# db:migrate needs drizzle-kit (devDep) — full install above makes that work.
+# db:seed is idempotent: safe to run on every container start.
+CMD ["sh", "-c", "bun run db:migrate && bun run db:seed && bun run start"]

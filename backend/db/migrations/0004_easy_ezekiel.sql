@@ -1,0 +1,1 @@
+ALTER TABLE "game_rounds" ADD COLUMN "game_link" varchar(500);

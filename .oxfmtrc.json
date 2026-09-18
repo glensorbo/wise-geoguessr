@@ -1,0 +1,29 @@
+{
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 80,
+  "sortImports": {
+    "newlinesBetween": false,
+    "internalPattern": ["@frontend/", "@backend/", "./", "../"],
+    "groups": [
+      ["value-external", "value-builtin"],
+      { "newlinesBetween": true },
+      ["value-internal", "value-parent", "value-sibling", "value-index"],
+      { "newlinesBetween": true },
+      "type",
+      { "newlinesBetween": true },
+      ["style", "side_effect_style"],
+      { "newlinesBetween": true },
+      "side_effect"
+    ]
+  },
+  "ignorePatterns": [
+    "dist/",
+    "coverage/",
+    "backend/db/migrations",
+    "CHANGELOG.md"
+  ],
+  "sortPackageJson": true
+}

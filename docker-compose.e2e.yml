@@ -1,0 +1,94 @@
+# Full self-contained E2E stack.
+#
+# Usage:
+#   docker compose -f docker-compose.e2e.yml up --build --exit-code-from e2e
+#
+# Or via the convenience script (recommended for cron):
+#   ./scripts/e2e-ci.sh
+#
+# All variables have safe defaults baked in so the file works out of the box.
+# Override by exporting env vars or creating a .env.e2e file:
+#   export POSTGRES_PASSWORD=something && ./scripts/e2e-ci.sh
+#
+# The database uses tmpfs (RAM) — it is destroyed when the stack stops.
+# No persistent volume is created, so every run starts from a clean slate.
+
+name: wise-geoguessr-e2e
+
+services:
+  # ── Ephemeral database ──────────────────────────────────────────────────────
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-geoguessr_e2e}
+      POSTGRES_USER: ${POSTGRES_USER:-e2e_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-e2e_pass}
+    tmpfs:
+      - /var/lib/postgresql # RAM-backed — keeps Postgres 18's PGDATA subdir happy
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${POSTGRES_USER:-e2e_user} -d ${POSTGRES_DB:-geoguessr_e2e}',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── App server ──────────────────────────────────────────────────────────────
+  # Runs: migrate → seed admin user → start production server.
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.app-e2e
+    environment:
+      NODE_ENV: production
+      POSTGRES_USER: ${POSTGRES_USER:-e2e_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-e2e_pass}
+      POSTGRES_SERVER: db:5432
+      POSTGRES_DB: ${POSTGRES_DB:-geoguessr_e2e}
+      JWT_SECRET: ${JWT_SECRET:-e2e-only-jwt-secret-not-for-production}
+      APP_URL: http://app:3000
+      CORS_ORIGIN: '*'
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@e2e.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-e2e-admin-password-local-only}
+      SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-E2E Admin}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'bun',
+          '-e',
+          "const res = await fetch('http://127.0.0.1:3000/healthcheck'); if (!res.ok) process.exit(1);",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20 # allow time for migrations + seed on first boot
+
+  # ── Playwright test runner ──────────────────────────────────────────────────
+  # Waits for the app to be healthy, then runs the full suite (API + browser).
+  # The seed scripts (global-setup, global-teardown) connect to the DB directly,
+  # so POSTGRES_* vars must match the db service above.
+  e2e:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.e2e
+    environment:
+      # Point Playwright at the app container — disables webServer auto-start
+      E2E_BASE_URL: http://app:3000
+      # Direct DB access for seed scripts in global-setup / global-teardown
+      POSTGRES_USER: ${POSTGRES_USER:-e2e_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-e2e_pass}
+      POSTGRES_SERVER: db:5432
+      POSTGRES_DB: ${POSTGRES_DB:-geoguessr_e2e}
+      # E2E test user credentials (defaults match global-setup.ts)
+      E2E_TEST_EMAIL: ${E2E_TEST_EMAIL:-e2e-playwright@local.test}
+      E2E_TEST_PASSWORD: ${E2E_TEST_PASSWORD:-correct-horse-battery-staple-purple-elephant-dancing-at-midnight-with-seven-golden-penguins-in-antarctica-42}
+      E2E_TEST_NAME: ${E2E_TEST_NAME:-Playwright E2E User}
+      CI: 'true'
+    depends_on:
+      app:
+        condition: service_healthy
