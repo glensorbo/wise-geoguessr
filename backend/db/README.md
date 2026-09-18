@@ -12,7 +12,7 @@ backend/db/
 │   ├── users.ts        # users table with user_role enum (admin | user)
 │   ├── gameRounds.ts   # game_rounds table (id, date unique, game_link optional URL VARCHAR(500), timestamps)
 │   └── gameScores.ts   # game_scores table (id, round_id FK → game_rounds cascade, player_name, score, created_at)
-└── migrations/      # Auto-generated SQL migration files
+└── migrations/      # SQL migration files (schema + data migrations)
 ```
 
 ## 🔌 Environment Setup
@@ -153,4 +153,14 @@ SEED_ADMIN_NAME=Admin         # optional, defaults to "Admin"
 
 The script is **idempotent** — if the email already exists it exits cleanly without error. The admin user can then use `POST /api/auth/create-user` to invite other users.
 
-The seed script also creates 48 historical game rounds with scores. These use `INSERT … ON CONFLICT DO NOTHING` so re-running is safe.
+The seed script only creates the admin user. `bun run db:migrate` applies the `0005_seed_game_results` **data migration** once per database; later deploys skip the recorded migration.
+
+### Data migrations
+
+Generate one with:
+
+```bash
+bunx --bun drizzle-kit generate --custom --name my_data_migration
+```
+
+Write and review the SQL by hand. Data migrations must be idempotent and must not overwrite existing rows. Use conflict checks that match the data identity so partially populated databases receive only missing rows.

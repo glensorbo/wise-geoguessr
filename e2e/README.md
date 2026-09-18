@@ -30,7 +30,7 @@ Playwright coverage for API and browser flows lives here.
 | `frontend/navigation.spec.ts`      | Sidebar navigation — link clicks between Dashboard, Results, and Statistics                                      |
 | `frontend/addScore.spec.ts`        | Add results modal — form flows, validation, and toast feedback                                                   |
 | `frontend/scores-workflow.spec.ts` | Comprehensive scores lifecycle — year filtering, DataGrid content, full workflow                                 |
-| `seed-game-data.ts`                | Wipes and re-seeds the 48 canonical historical game records before each run                                      |
+| `seed-game-data.ts`                | Replaces game data with an independent 48-record fixture before and after each run                               |
 | `seed-test-user.ts`                | Inserts the test user directly into PostgreSQL                                                                   |
 
 ## Rules
@@ -46,11 +46,11 @@ Playwright coverage for API and browser flows lives here.
 
 ## Docker flow
 
-| Component | Role                                                           |
-| --------- | -------------------------------------------------------------- |
-| `db`      | Starts an ephemeral Postgres instance on tmpfs                 |
-| `app`     | Runs migrations, seeds data, and starts the app                |
-| `e2e`     | Waits for `app`, then runs Playwright API and browser projects |
+| Component | Role                                                                         |
+| --------- | ---------------------------------------------------------------------------- |
+| `db`      | Starts an ephemeral Postgres instance on tmpfs                               |
+| `app`     | Runs migrations, seeds the admin user, and starts the app                    |
+| `e2e`     | Replaces migrated game data with its 48-record fixture, then runs Playwright |
 
 Safe defaults live in `docker-compose.e2e.yml`. Override them at the shell when needed:
 

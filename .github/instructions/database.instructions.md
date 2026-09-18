@@ -57,11 +57,13 @@ const db = getDb(); // cached connection, safe to call repeatedly
 3. **Review the generated SQL** in `backend/db/migrations/` before applying
 4. Apply to the database: `bun run db:migrate`
 
-Never edit migration files manually. Re-generate if you need to change them.
+Never edit generated schema migrations manually. Re-generate them if the schema change is wrong.
+
+For data-only changes, generate a custom migration with `bunx --bun drizzle-kit generate --custom --name <name>`, then write and review its SQL. Data migrations must be idempotent and must not overwrite existing rows.
 
 ## Seed
 
-`backend/db/seed.ts` creates the initial admin user. It is **idempotent** — safe to run multiple times without duplicating data. Run with `bun run db:seed`.
+`backend/db/seed.ts` only creates the initial admin user. It is **idempotent** — safe to run multiple times without duplicating data. Run with `bun run db:seed`. Historical game results belong in the `0005_seed_game_results` data migration and run through `bun run db:migrate`.
 
 ## Drizzle Studio
 
