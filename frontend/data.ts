@@ -689,7 +689,7 @@ export const getPlayerDetails = () => {
 
   for (const d of sortedData) {
     for (const [key, value] of Object.entries(d)) {
-      const player = details.find((d) => d.name === key);
+      const player = details.find((v) => v.name === key);
       if (!player) {
         continue;
       }
