@@ -30,7 +30,7 @@ export const mockRefreshTokenRepository = {
   },
 
   /** Reset between tests */
-  _reset: () => {
+  reset: () => {
     store = [];
   },
 };

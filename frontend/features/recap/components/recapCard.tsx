@@ -47,7 +47,7 @@ export const RecapCard = ({ slide, direction }: RecapCardProps) => {
       });
     }, 750);
     return () => clearTimeout(timer);
-  }, [slide.confetti, slide.key]);
+  }, [slide.confetti]);
 
   return (
     <AnimatePresence mode="wait" custom={direction}>

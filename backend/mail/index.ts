@@ -13,7 +13,7 @@ type MailOptions = {
   from?: string;
 };
 
-let _transporter: Transporter<SMTPTransport.SentMessageInfo> | null = null;
+let transporter: Transporter<SMTPTransport.SentMessageInfo> | null = null;
 
 export const initMail = (): void => {
   const host = Bun.env.SMTP_HOST;
@@ -26,7 +26,7 @@ export const initMail = (): void => {
   const user = Bun.env.SMTP_USER;
   const pass = Bun.env.SMTP_PASS;
 
-  _transporter = nodemailer.createTransport({
+  transporter = nodemailer.createTransport({
     host,
     port,
     secure,
@@ -35,7 +35,7 @@ export const initMail = (): void => {
 
   logger.info(`📧 Mail enabled → ${host}:${port}`);
 
-  _transporter.verify().catch((err: unknown) => {
+  transporter.verify().catch((err: unknown) => {
     const message = err instanceof Error ? err.message : String(err);
     logger.warn('📧 Mail transporter failed verification — check SMTP config', {
       error: message,
@@ -43,15 +43,15 @@ export const initMail = (): void => {
   });
 };
 
-export const isMailEnabled = (): boolean => _transporter !== null;
+export const isMailEnabled = (): boolean => transporter !== null;
 
 export const checkMailHealth = async (): Promise<boolean> => {
-  if (!_transporter) {
+  if (!transporter) {
     return false;
   }
   try {
     await Promise.race([
-      _transporter.verify(),
+      transporter.verify(),
       new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('timeout')), 3000),
       ),
@@ -63,7 +63,7 @@ export const checkMailHealth = async (): Promise<boolean> => {
 };
 
 export const sendMail = async (options: MailOptions): Promise<void> => {
-  if (!_transporter) {
+  if (!transporter) {
     return;
   }
 
@@ -77,7 +77,7 @@ export const sendMail = async (options: MailOptions): Promise<void> => {
 
   const from = options.from ?? Bun.env.SMTP_FROM ?? 'no-reply@localhost';
 
-  const info = await _transporter.sendMail({
+  const info = await transporter.sendMail({
     from,
     to: options.to,
     subject: options.subject,

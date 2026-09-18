@@ -138,33 +138,35 @@ export const RecapPage = () => {
   const [direction, setDirection] = useState<1 | -1>(1);
 
   const safeIndex = Math.min(currentIndex, slides.length - 1);
+  const slideCount = slides.length;
 
-  const goNext = useCallback(() => {
-    if (safeIndex < slides.length - 1) {
-      setDirection(1);
-      setCurrentIndex((i) => i + 1);
-    }
-  }, [safeIndex, slides.length]);
-
-  const goPrev = useCallback(() => {
-    if (safeIndex > 0) {
-      setDirection(-1);
-      setCurrentIndex((i) => i - 1);
-    }
-  }, [safeIndex]);
+  const changeSlide = useCallback(
+    (delta: 1 | -1) => {
+      setCurrentIndex((i) => {
+        const nextIndex = i + delta;
+        if (nextIndex < 0 || nextIndex >= slideCount) {
+          return i;
+        }
+        setDirection(delta);
+        return nextIndex;
+      });
+    },
+    // oxlint-disable-next-line react/memo-dependencies
+    [slideCount],
+  );
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
-        goNext();
+        changeSlide(1);
       }
       if (e.key === 'ArrowLeft') {
-        goPrev();
+        changeSlide(-1);
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [goNext, goPrev]);
+  }, [changeSlide]);
 
   const currentSlide = slides[safeIndex]!;
 
@@ -241,7 +243,7 @@ export const RecapPage = () => {
             sx={{ alignItems: 'center', justifyContent: 'center' }}
           >
             <IconButton
-              onClick={goPrev}
+              onClick={() => changeSlide(-1)}
               disabled={safeIndex === 0}
               aria-label="Previous slide"
               size="large"
@@ -271,7 +273,7 @@ export const RecapPage = () => {
             </Stack>
 
             <IconButton
-              onClick={goNext}
+              onClick={() => changeSlide(1)}
               disabled={safeIndex === slides.length - 1}
               aria-label="Next slide"
               size="large"

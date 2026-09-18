@@ -49,16 +49,16 @@ type SpanHandle = {
 const SERVICE_NAME = 'wise-geoguessr';
 
 /** True once initTelemetry() has registered providers. */
-let _enabled = false;
+let enabled = false;
 
 /** OTel logger for structured log shipping. */
 let otelLogger: OtelLogger | null = null;
 
 /** HTTP request duration histogram (ms). Null when OTel is disabled. */
-let _reqDuration: Histogram | null = null;
+let reqDuration: Histogram | null = null;
 
 /** HTTP request count counter. Null when OTel is disabled. */
-let _reqCount: Counter | null = null;
+let reqCount: Counter | null = null;
 
 // ---------------------------------------------------------------------------
 // Init
@@ -102,11 +102,11 @@ export const initTelemetry = (): void => {
 
   // Pre-build instruments — cheap to keep around.
   const meter = meterProvider.getMeter(serviceName);
-  _reqDuration = meter.createHistogram('http.server.request.duration', {
+  reqDuration = meter.createHistogram('http.server.request.duration', {
     description: 'Duration of inbound HTTP requests in milliseconds.',
     unit: 'ms',
   });
-  _reqCount = meter.createCounter('http.server.request.count', {
+  reqCount = meter.createCounter('http.server.request.count', {
     description: 'Total number of inbound HTTP requests.',
   });
 
@@ -114,14 +114,14 @@ export const initTelemetry = (): void => {
   const loggerProvider = new LoggerProvider({
     resource,
     processors: [
-      new BatchLogRecordProcessor(
-        new OTLPLogExporter({ url: `${endpoint}/v1/logs` }),
-      ),
+      new BatchLogRecordProcessor({
+        exporter: new OTLPLogExporter({ url: `${endpoint}/v1/logs` }),
+      }),
     ],
   });
 
   otelLogger = loggerProvider.getLogger(serviceName);
-  _enabled = true;
+  enabled = true;
 
   console.log(
     `🔭 OpenTelemetry enabled → ${endpoint} (service: ${serviceName})`,
@@ -153,7 +153,7 @@ export const startHttpSpan = (
   path: string,
   getHeader: (name: string) => string | null,
 ): SpanHandle | null => {
-  if (!_enabled) {
+  if (!enabled) {
     return null;
   }
 
@@ -207,8 +207,8 @@ export const startHttpSpan = (
         [ATTR_HTTP_ROUTE]: route,
         [ATTR_HTTP_RESPONSE_STATUS_CODE]: statusCode,
       };
-      _reqDuration?.record(durationMs, labels);
-      _reqCount?.add(1, labels);
+      reqDuration?.record(durationMs, labels);
+      reqCount?.add(1, labels);
     },
   };
 };

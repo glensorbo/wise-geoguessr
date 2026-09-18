@@ -22,6 +22,8 @@ export const PageLayout = () => {
 
   useEffect(() => {
     if (isDesktop) {
+      // Reset the temporary drawer when crossing into desktop layout.
+      // oxlint-disable-next-line
       setMobileOpen(false);
     }
   }, [isDesktop]);
@@ -52,7 +54,7 @@ export const PageLayout = () => {
         onMenuClick={handleMenuClick}
       />
       <LeftNav
-        mobileOpen={mobileOpen}
+        mobileOpen={!isDesktop && mobileOpen}
         onMobileClose={() => setMobileOpen(false)}
         collapsed={desktopCollapsed}
       />

@@ -1,13 +1,11 @@
 const PLAYER_COLORS: Record<string, string> = {
   Glen: '#ec4899',
-  Thorjan: '#ef4444',
   Thomas: '#65a30d',
   'Tor Arve': '#f97316',
   Sigurd: '#7c3aed',
   Malin: '#d97706',
   Lotte: '#0891b2',
-  Margaux: '#2563eb',
-  Eirik: '#0f766e',
+  Emilie: '#2563eb',
 };
 
 const FALLBACK_COLORS = [

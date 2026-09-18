@@ -16,7 +16,7 @@ import type { ApiErrorResponse } from '@backend/types/apiErrorResponse';
 const VALID_PASSWORD = 'correctpass123';
 
 beforeEach(() => {
-  mockRefreshTokenRepository._reset();
+  mockRefreshTokenRepository.reset();
 });
 
 const makeAuthController = async () => {

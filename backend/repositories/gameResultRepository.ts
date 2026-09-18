@@ -9,11 +9,11 @@ import type { GameResult } from '@backend/types/gameResult';
 
 export const gameResultRepository = {
   async getAll(): Promise<GameResult[]> {
-    return this._fetchAndAssemble();
+    return this.fetchAndAssemble();
   },
 
   async getByYear(year: number): Promise<GameResult[]> {
-    return this._fetchAndAssemble(year);
+    return this.fetchAndAssemble(year);
   },
 
   async getById(id: string): Promise<GameResult | null> {
@@ -109,7 +109,7 @@ export const gameResultRepository = {
     return { id: round.id, date, gameLink: round.gameLink ?? null, scores };
   },
 
-  async _fetchAndAssemble(year?: number): Promise<GameResult[]> {
+  async fetchAndAssemble(year?: number): Promise<GameResult[]> {
     const db = getDb();
 
     const query = db

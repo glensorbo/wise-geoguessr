@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { getCurrentYear } from '../logic';
@@ -6,8 +6,6 @@ import {
   useGetResultsQuery,
   useGetYearsQuery,
 } from '@frontend/redux/api/gameResultApi';
-
-import type { GameResult } from '../logic/types';
 
 const currentYear = getCurrentYear();
 
@@ -24,16 +22,10 @@ export const useResults = () => {
   };
 
   const {
-    data: freshResults,
+    data: results = [],
     isFetching: resultsFetching,
     error,
   } = useGetResultsQuery(year);
-
-  const previousResultsRef = useRef<GameResult[]>([]);
-  if (freshResults !== undefined) {
-    previousResultsRef.current = freshResults;
-  }
-  const results = freshResults ?? previousResultsRef.current;
 
   const yearOptions = useMemo(
     () =>

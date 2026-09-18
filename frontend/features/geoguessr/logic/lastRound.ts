@@ -2,7 +2,7 @@ import { getWinners } from './winners';
 
 import type { GameResult } from './types';
 
-export type LastRoundEntry = {
+type LastRoundEntry = {
   rank: number;
   name: string;
   score: number;

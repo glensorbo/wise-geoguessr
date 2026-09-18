@@ -7,6 +7,6 @@
     "frontend/shared/components/skeleton.tsx"
   ],
   "project": ["backend/**/*.ts", "frontend/**/*.{ts,tsx}"],
-  "ignoreDependencies": ["@babel/preset-react", "@babel/preset-typescript"],
-  "ignoreBinaries": ["gh"]
+  "ignore": ["e2e/global-setup.ts", "e2e/global-teardown.ts"],
+  "ignoreDependencies": ["@babel/preset-react", "@babel/preset-typescript"]
 }

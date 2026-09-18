@@ -224,7 +224,7 @@ test.describe('Results page — DataGrid column headers', () => {
   test('DataGrid shows known player names from 2026 data as column headers', async ({
     page,
   }) => {
-    // Players in 2026: Glen, Thorjan, Thomas, Tor Arve, Sigurd, Malin, Lotte
+    // Players in 2026: Glen, Thomas, Tor Arve, Sigurd, Malin, Lotte
     const grid = page.locator('[role="grid"]');
     await expect(
       grid.locator('[role="columnheader"]', { hasText: 'Thomas' }),

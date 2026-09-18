@@ -16,6 +16,12 @@
     "typescript/no-unsafe-assignment": "warn",
     "eslint/no-unused-vars": "error",
     "eslint/curly": ["error", "all"],
+    "eslint/no-underscore-dangle": [
+      "warn",
+      {
+        "allow": ["__APP_CONFIG__"]
+      }
+    ],
     "react/react-in-jsx-scope": "off"
   },
   "options": {

@@ -34,7 +34,6 @@ const KNOWN_RECORD = {
     Sigurd: 11300,
     Malin: 11926,
     'Tor Arve': 11400,
-    Thorjan: 12814,
   },
 };
 
@@ -366,14 +365,12 @@ authedTest.describe('POST /api/results — round-trip verification', () => {
     async ({ authedRequest }) => {
       const manyScores: Record<string, number> = {
         Glen: 18000,
-        Thorjan: 17000,
         Thomas: 16000,
         'Tor Arve': 15000,
         Sigurd: 14000,
         Malin: 13000,
         Lotte: 12000,
-        Margaux: 11000,
-        Eirik: 10000,
+        Emilie: 11000,
       };
 
       const post = await authedRequest.post('/api/results', {

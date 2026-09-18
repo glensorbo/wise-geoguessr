@@ -5,7 +5,7 @@ import { getWinners } from './winners';
 
 import type { GameResult, Player } from './types';
 
-export type RivalryPlayer = {
+type RivalryPlayer = {
   name: Player;
   wins: number;
 };

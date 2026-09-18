@@ -17,14 +17,12 @@ import { useAddResultMutation } from '@frontend/redux/api/gameResultApi';
 
 const KNOWN_PLAYERS = [
   'Glen',
-  'Thorjan',
   'Thomas',
   'Tor Arve',
   'Sigurd',
   'Malin',
   'Lotte',
-  'Margaux',
-  'Eirik',
+  'Emilie',
 ];
 
 type ScoreRow = { player: string; score: string };
