@@ -61,7 +61,7 @@
     "framer-motion": "^13.4.4",
     "husky": "^9.1.7",
     "jose": "^6.2.12",
-    "nodemailer": "^10.0.10",
+    "nodemailer": "^10.0.11",
     "pg": "^8.23.0",
     "postgres": "^3.4.9",
     "react": "^19.3.0",
