@@ -61,7 +61,7 @@
     "framer-motion": "^13.4.4",
     "husky": "^9.1.7",
     "jose": "^6.2.12",
-    "nodemailer": "^10.0.10",
+    "nodemailer": "^10.0.12",
     "pg": "^8.23.0",
     "postgres": "^3.4.9",
     "react": "^19.3.0",
@@ -87,9 +87,9 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "knip": "^6.38.0",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
     "oxlint-tsgolint": "^7.0.2003",
-    "typescript-eslint": "^8.70.1"
+    "typescript-eslint": "^8.71.0"
   }
 }
