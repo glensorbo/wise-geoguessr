@@ -78,8 +78,10 @@ bun add -d @types/nodemailer
 
 ```ts
 import nodemailer from 'nodemailer';
-import type { Transporter } from 'nodemailer';
+
 import { logger } from '@backend/telemetry';
+
+import type { Transporter } from 'nodemailer';
 
 export type MailOptions = {
   to: string | string[];

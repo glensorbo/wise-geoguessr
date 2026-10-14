@@ -74,6 +74,7 @@ After starting the stack:
 
 ```ts
 import { OpenPanel } from '@openpanel/web';
+
 import { config } from '@frontend/config';
 
 const { clientId, apiUrl, sessionReplay } = config.openpanel;

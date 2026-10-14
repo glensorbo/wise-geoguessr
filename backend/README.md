@@ -97,8 +97,8 @@ const testService = createUserService(mockUserRepository);
 Unit tests use mock data and repositories from `@backend/utils/test/`. Injecting the mock via the factory means no database connection is needed:
 
 ```ts
-import { mockUsers } from '@backend/utils/test/mockUsers';
 import { mockUserRepository } from '@backend/utils/test/mockUserRepository';
+import { mockUsers } from '@backend/utils/test/mockUsers';
 
 const service = createUserService(mockUserRepository);
 const controller = createUserController(service);
