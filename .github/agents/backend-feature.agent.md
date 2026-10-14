@@ -54,8 +54,10 @@ Pure data access only — no business logic, no HTTP concerns:
 
 ```ts
 import { eq } from 'drizzle-orm';
+
 import { getDb } from '@backend/db/client';
 import { things } from '@backend/db/schemas/things';
+
 import type { NewThing } from '@backend/types/thing';
 
 export const thingRepository = {
@@ -79,6 +81,7 @@ Business logic only. Use the **factory pattern**. Return `ErrorOr<T>` for expect
 
 ```ts
 import { thingRepository } from '@backend/repositories/thingRepository';
+
 import type { thingRepository as ThingRepositoryType } from '@backend/repositories/thingRepository';
 import type { Thing } from '@backend/types/thing';
 
@@ -107,6 +110,7 @@ import {
 } from '@backend/utils/response';
 import { uuidSchema } from '@backend/validation/schemas/common';
 import { validateParam } from '@backend/validation/utils/validateParam';
+
 import type { thingService as ThingServiceType } from '@backend/services/thingService';
 
 export const createThingController = (service: typeof ThingServiceType) => ({
@@ -176,6 +180,7 @@ Update `rest/README.md` to include the new file in its table.
 
 ```ts
 import { describe, test, expect } from 'bun:test';
+
 import { createThingService } from '../thingService';
 import { mockThingRepository } from '@backend/utils/test';
 

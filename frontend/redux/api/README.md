@@ -44,6 +44,7 @@ if (error) {
 
 ```ts
 import { baseApi } from './baseApi';
+
 import type { ApiSuccessResponse } from '@backend/types/apiSuccessResponse';
 import type { MyThing } from '@backend/types/myThing';
 

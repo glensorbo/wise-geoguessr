@@ -9,8 +9,8 @@ One file per resource, named `<resource>Routes.ts`. The exported object keys are
 ```ts
 // backend/routes/myResourceRoutes.ts
 import { myResourceController } from '@backend/controllers/myResourceController';
-import { authMiddleware } from '@backend/middleware/authMiddleware';
 import { withMiddleware } from '@backend/middleware';
+import { authMiddleware } from '@backend/middleware/authMiddleware';
 
 export const myResourceRoutes = {
   '/api/my-resource': {

@@ -48,9 +48,9 @@ export const userController = createUserController(userService);
 Use `validateRequest` from `@backend/validation/utils/validateRequest` with schemas from `@backend/validation/schemas/`:
 
 ```ts
-import { validateRequest } from '@backend/validation/utils/validateRequest';
 import { validationErrorResponse } from '@backend/utils/response/validationErrorResponse';
 import { createUserSchema } from '@backend/validation/schemas/auth';
+import { validateRequest } from '@backend/validation/utils/validateRequest';
 
 const validation = validateRequest(
   createUserSchema,

@@ -17,8 +17,8 @@ The store is provided at the app root via `<Provider store={store}>` in `main.ts
 Import hooks directly from the relevant api file:
 
 ```ts
-import { useGetUsersQuery } from '@frontend/redux/api/usersApi';
 import { useCreateUserMutation } from '@frontend/redux/api/authApi';
+import { useGetUsersQuery } from '@frontend/redux/api/usersApi';
 ```
 
 ## Adding a new slice

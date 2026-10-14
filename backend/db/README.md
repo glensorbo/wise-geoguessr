@@ -53,8 +53,8 @@ await pingDb(); // called in server.ts before Bun.serve()
 Register every new schema in the schema object inside `client.ts`:
 
 ```ts
-import { users } from './schemas/users';
 import { blogPosts } from './schemas/blogPosts';
+import { users } from './schemas/users';
 
 cachedDb = drizzle(cachedClient, { schema: { users, blogPosts } });
 ```
