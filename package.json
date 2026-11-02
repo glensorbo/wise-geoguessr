@@ -58,7 +58,7 @@
     "dayjs": "^1.11.23",
     "drizzle-kit": "^0.31.11",
     "drizzle-orm": "^0.45.4",
-    "framer-motion": "^14.6.0",
+    "framer-motion": "^14.7.1",
     "husky": "^9.1.7",
     "jose": "^6.2.13",
     "nodemailer": "^10.2.1",
@@ -67,8 +67,8 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-error-boundary": "^6.1.6",
-    "react-redux": "^9.3.0",
-    "react-router": "^8.5.0",
+    "react-redux": "^9.3.1",
+    "react-router": "^8.5.1",
     "react-toastify": "^11.1.0",
     "zod": "^4.6.7"
   },
@@ -87,8 +87,8 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "knip": "^6.43.0",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "oxlint-tsgolint": "^7.0.2005",
     "typescript-eslint": "^8.72.1"
   }
