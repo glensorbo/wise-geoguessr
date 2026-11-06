@@ -11,7 +11,7 @@
         "@mui/material": "^9.5.0",
         "@mui/x-charts": "^9.17.0",
         "@mui/x-data-grid": "^9.17.0",
-        "@openpanel/web": "^1.4.3",
+        "@openpanel/web": "^1.4.4",
         "@opentelemetry/api": "^1.10.0",
         "@opentelemetry/api-logs": "^0.223.0",
         "@opentelemetry/exporter-logs-otlp-http": "^0.300.0",
@@ -295,9 +295,9 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.2.4", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.4", "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.4" } }, "sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g=="],
 
-    "@openpanel/sdk": ["@openpanel/sdk@1.3.3", "", {}, "sha512-wEx780Q9iUifpzmMbvY72BKFm2OazH3esQ93CHy5PTTNDZBe0VKUDCmILLRmi4qR8ASxjoAd4qc+SW5yM69B+A=="],
+    "@openpanel/sdk": ["@openpanel/sdk@1.3.4", "", {}, "sha512-Qy/hW4Xgkf+xzIqGzaGV9Sy6lBiXseJ2I5aNV2BGGDgF48iWM21nv+xuIRuOLIHlaaMZSv2jAZv0deiW0vnR4g=="],
 
-    "@openpanel/web": ["@openpanel/web@1.4.3", "", { "dependencies": { "@openpanel/sdk": "1.3.3", "@rrweb/types": "2.0.0-alpha.20", "rrweb": "2.0.0-alpha.20" } }, "sha512-uz9Ua4/52RxBg4OxnJ0CwIeRj9aNBGTTfSKikwKJ0Au0nDVA8XR8lknqfa5KDbGaHz3kidCQAQTR26KDWyQAMQ=="],
+    "@openpanel/web": ["@openpanel/web@1.4.4", "", { "dependencies": { "@openpanel/sdk": "1.3.4", "@rrweb/types": "2.0.0-alpha.20", "rrweb": "2.0.0-alpha.20" } }, "sha512-wMjOaOpv8tggmYBF7HpkzxFPo3Aqr+vda0ZKBIoyW8kY9rN0o0SygkWR9XX46XETdA8aX8nR/TwE6CEyvPsJ3g=="],
 
     "@opentelemetry/api": ["@opentelemetry/api@1.10.0", "", {}, "sha512-lMkyes8iHrG+mk6WH7X70MdCLI2RS0FwNBY1PyQ8UemaijE2m5mv5A0Niy3HtbYTFrgkUEQjFMXmSAk2hQDuPQ=="],
 
