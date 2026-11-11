@@ -60,7 +60,7 @@
     "drizzle-orm": "^0.45.4",
     "framer-motion": "^14.10.1",
     "husky": "^9.1.7",
-    "jose": "^6.2.15",
+    "jose": "^6.2.16",
     "nodemailer": "^10.4.0",
     "pg": "^8.23.1",
     "postgres": "^4.1.0",
