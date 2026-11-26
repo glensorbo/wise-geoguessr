@@ -1,4 +1,4 @@
-FROM postgres:18-alpine
+FROM postgres:19-alpine
 
 # Set environment variables from .env file
 # These will be overridden by docker-compose
